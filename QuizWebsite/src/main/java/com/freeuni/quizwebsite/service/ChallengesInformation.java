@@ -18,9 +18,22 @@ public class ChallengesInformation {
 
         resultSet = connection.prepareStatement("SELECT * FROM CHALLENGES WHERE SENDER_USER = "
                 + senderId).executeQuery();
-        if (!resultSet.next()) {
-            return null;
+        Challenge challenge;
+        while (resultSet.next()) {
+            challenge = new Challenge(resultSet.getInt("sender_user"), resultSet.getInt("receiver_user"),
+                    resultSet.getInt("quiz_id"), resultSet.getString("description"),
+                    resultSet.getTimestamp("send_time"));
+            result.add(challenge);
         }
+        return result;
+    }
+
+    public static ArrayList<Challenge> getUserReceivedChallenges(int receiverId) throws SQLException {
+        ArrayList<Challenge> result = new ArrayList<>();
+        ResultSet resultSet;
+
+        resultSet = connection.prepareStatement("SELECT * FROM CHALLENGES WHERE RECEIVER_USER = "
+                + receiverId).executeQuery();
         Challenge challenge;
         while (resultSet.next()) {
             challenge = new Challenge(resultSet.getInt("sender_user"), resultSet.getInt("receiver_user"),

@@ -9,15 +9,13 @@ import java.sql.Timestamp;
 @Data
 @Builder
 @AllArgsConstructor
-public class Challenge {
+public class NoteMail {
 
     private final int senderUserId;
 
     private final int receiverUserId;
 
-    private final int quizId;
-
-    private String description;
+    private String note;
 
     private Timestamp sendTime;
 }
