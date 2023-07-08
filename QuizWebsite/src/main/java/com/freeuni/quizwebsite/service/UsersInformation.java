@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class UsersInformation {
 
-    private static Connection connection = ConnectToDB.getConnection();
+    private static final Connection connection = ConnectToDB.getConnection();
 
     public static User findUserById(int id) throws SQLException {
         ResultSet resultSet;

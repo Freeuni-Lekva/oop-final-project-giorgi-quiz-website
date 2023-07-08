@@ -62,7 +62,7 @@ CREATE TABLE ANNOUNCEMENTS
 CREATE TABLE QUIZES
 (
     quiz_id          INT AUTO_INCREMENT PRIMARY KEY,
-    player_id        INT,
+    user_id          INT,
     name             VARCHAR(100) UNIQUE,
     description      VARCHAR(300),
     sorted           TINYINT(1),
@@ -70,24 +70,24 @@ CREATE TABLE QUIZES
     instant_feedback TINYINT(1),
     practice_mode    TINYINT(1),
     view_count       INT       default 0,
-    timestamp        TIMESTAMP DEFAULT NOW()
+    creation_date    TIMESTAMP DEFAULT NOW()
 );
 
 
-INSERT INTO QUIZES (player_id, name, description, sorted, one_or_multiple, instant_feedback, practice_mode)
+INSERT INTO QUIZES (user_id, name, description, sorted, one_or_multiple, instant_feedback, practice_mode)
 VALUES (1, 'Cars quiz', 'magari', 1, 0, 1, 1);
 
 -- QUIZ History
 
 CREATE TABLE QUIZ_HISTORY
 (
-    player_id INT,
+    user_id   INT,
     quiz_id   INT,
     score     DECIMAL(5, 2),
-    timestamp TIMESTAMP DEFAULT NOW()
+    take_date TIMESTAMP DEFAULT NOW()
 );
 
-INSERT INTO QUIZ_HISTORY (player_id, quiz_id, score)
+INSERT INTO QUIZ_HISTORY (user_id, quiz_id, score)
 VALUES (1, 1, 75.5),
        (2, 1, 80.0),
        (2, 1, 90.25),
@@ -96,13 +96,13 @@ VALUES (1, 1, 75.5),
 
 CREATE TABLE FRIENDS
 (
-    player_one          INT,
-    player_two          INT,
+    user_one            INT,
+    user_two            INT,
     relationship_status VARCHAR(100),
-    timestamp           TIMESTAMP DEFAULT NOW()
+    add_date            TIMESTAMP DEFAULT NOW()
 );
 
-INSERT INTO FRIENDS (player_one, player_two, relationship_status)
+INSERT INTO FRIENDS (user_one, user_two, relationship_status)
 VALUES (1, 2, 'FRIENDS');
 
 
@@ -110,36 +110,36 @@ VALUES (1, 2, 'FRIENDS');
 
 CREATE TABLE FRIEND_REQUESTS
 (
-    player_one INT,
-    player_two INT,
-    timestamp  TIMESTAMP DEFAULT NOW()
+    user_one          INT,
+    user_two          INT,
+    request_send_date TIMESTAMP DEFAULT NOW()
 );
 
-INSERT INTO FRIEND_REQUESTS (player_one, player_two)
+INSERT INTO FRIEND_REQUESTS (user_one, user_two)
 VALUES (1, 3);
 
 
 CREATE TABLE CHALLENGES
 (
-    player_one  INT,
-    player_two  INT,
-    quiz_id     INT,
-    description VARCHAR(100),
-    timestamp   TIMESTAMP DEFAULT NOW()
+    sender_user   INT,
+    receiver_user INT,
+    quiz_id       INT,
+    description   VARCHAR(100),
+    send_time     TIMESTAMP DEFAULT NOW()
 );
 
-INSERT INTO CHALLENGES (player_one, player_two, quiz_id, description)
+INSERT INTO CHALLENGES (sender_user, receiver_user, quiz_id, description)
 VALUES (2, 1, 1, 'aba qeni');
 
 CREATE TABLE NOTE_MAIL
 (
-    player_one INT,
-    player_two INT,
-    note       VARCHAR(300),
-    timestamp  TIMESTAMP DEFAULT NOW()
+    sender_user   INT,
+    receiver_user INT,
+    note          VARCHAR(300),
+    send_time     TIMESTAMP DEFAULT NOW()
 );
 
-INSERT INTO NOTE_MAIL (player_one, player_two, note)
+INSERT INTO NOTE_MAIL (sender_user, receiver_user, note)
 VALUES (1, 3, 'damamate');
 
 
