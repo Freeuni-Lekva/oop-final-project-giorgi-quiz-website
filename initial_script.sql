@@ -1,5 +1,5 @@
 use
-QUIZ_DB;
+    QUIZ_DB;
 
 
 -- player part
@@ -69,13 +69,17 @@ CREATE TABLE QUIZES
     one_or_multiple  TINYINT(1),
     instant_feedback TINYINT(1),
     practice_mode    TINYINT(1),
+    quiz_state		 varchar(20),
     view_count       INT       default 0,
     creation_date    TIMESTAMP DEFAULT NOW()
 );
 
 
-INSERT INTO QUIZES (user_id, name, description, sorted, one_or_multiple, instant_feedback, practice_mode)
-VALUES (1, 'Cars quiz', 'magari', 1, 0, 1, 1);
+INSERT INTO QUIZES (user_id, name, description, sorted, one_or_multiple, instant_feedback, practice_mode,quiz_state,view_count)
+VALUES (1, 'Cars quiz', 'magari', 1, 0, 1, 1,'PUBLISHED',1),
+       (1,'History quiz','educational',1,0,1,1,'CREATED',2),
+       (1,'Math quiz','educational',1,0,1,1,'DELETED',0),
+       (1,'signal processing quiz','university',1,0,1,1,'PUBLISHED',3);
 
 -- QUIZ History
 
