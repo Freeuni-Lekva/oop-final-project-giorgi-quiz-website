@@ -11,25 +11,13 @@ import java.sql.Timestamp;
 @Builder
 @AllArgsConstructor
 public class QuizHistory {
-    private final int quizId;
 
-    private final int userId;
+    private int user_id;
 
-    private String name;
+    private int quiz_id;
 
-    private String description;
+    private double score;
 
-    private boolean sorted;
+    private Timestamp tadeDate;
 
-    private boolean oneOrMultiple;
-
-    private boolean instantFeedback;
-
-    private boolean practiceMode;
-
-    private String quizStates;
-
-    private int viewCount;
-
-    private Timestamp creationDate;
 }
