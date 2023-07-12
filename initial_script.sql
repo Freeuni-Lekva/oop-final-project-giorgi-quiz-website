@@ -42,13 +42,13 @@ CREATE TABLE ACHIEVEMENTS
 );
 
 INSERT INTO ACHIEVEMENTS (user_id, achievement)
-VALUES (1, 'I AM THE GRATEST'),
-       (1, 'AMATEUR AUTHOR'),
-       (2, 'AMATEUR AUTHOR'),
-       (2, 'QUIZ MACHINE');
+VALUES (1, 'I_AM_THE_GRATEST'),
+       (1, 'AMATEUR_AUTHOR'),
+       (2, 'AMATEUR_AUTHOR'),
+       (2, 'QUIZ_MACHINE');
 
 INSERT INTO ACHIEVEMENTS (user_id, achievement)
-VALUES (1, 'WELCOME TO OUT WEB SITE');
+VALUES (1, 'WELCOME_TO_OUT_WEB_SITE');
 
 
 CREATE TABLE ANNOUNCEMENTS
@@ -96,6 +96,7 @@ VALUES (1, 1, 75.5),
        (2, 1, 80.0),
        (2, 1, 90.25),
        (1, 1, 95.75);
+
 
 
 CREATE TABLE FRIENDS
@@ -175,4 +176,3 @@ CREATE TABLE POSSIBLE_ANSWERS
     question_id     INT,
     possible_answer varchar(256)
 )
-

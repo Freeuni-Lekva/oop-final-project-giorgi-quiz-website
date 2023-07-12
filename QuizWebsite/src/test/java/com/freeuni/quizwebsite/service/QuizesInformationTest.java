@@ -25,7 +25,7 @@ public class QuizesInformationTest {
     public void findQuizzesByUserId() throws SQLException {
         List<Quiz> quizzes = QuizzesInformation.findQuizzesByUserId(1);
         assert quizzes !=null;
-        assertEquals(quizzes.size(),2);
+        assertEquals(3,quizzes.size());
     }
 
 
