@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class ConnectToDB {
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "root";
+    private static final String PASSWORD = "worldInMyEyes";
 
     private static final String DB_NAME = "QUIZ_DB";  // fill in after creating sql script
 

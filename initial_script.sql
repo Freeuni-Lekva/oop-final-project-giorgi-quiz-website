@@ -32,8 +32,8 @@ CREATE TABLE USERS
 INSERT INTO USERS (first_name, last_name, username, bio, password, is_admin)
 VALUES ('Mariam', 'Kelaptrishvili', 'Neimar', 'Zalian chkviani', 'neimari1234', 1),
        ('Tamazi', 'Mukeria', 'Tazuka', 'bote', 'tamazi111', 1),
-       ('Sandro', 'Khutchua', 'Sandrika', 'injineri', 'jandieri111', 0);
-
+       ('Sandro', 'Khutchua', 'Sandrika', 'injineri', 'jandieri111', 0),
+       ('ney', 'da silva', 'junior', 'footballer', 'neymar05', 0);
 
 CREATE TABLE ACHIEVEMENTS
 (
@@ -54,9 +54,20 @@ VALUES (1, 'WELCOME_TO_OUT_WEB_SITE');
 CREATE TABLE ANNOUNCEMENTS
 (
     user_id      INT,
-    announcement TEXT
+    announcement TEXT,
+    creation_date TIMESTAMP DEFAULT NOW()
 );
-
+INSERT INTO ANNOUNCEMENTS (user_id, announcement)
+VALUES (1, 'Luis Enrique has become main coach of PSG');
+DO SLEEP(1);
+INSERT INTO ANNOUNCEMENTS (user_id, announcement)
+VALUES (2, 'Busquets and Alba might sign a contract with Inter Miami');
+DO SLEEP(1);
+INSERT INTO ANNOUNCEMENTS (user_id, announcement)
+VALUES (3, 'Messi will be playing for Inter Miami');
+DO SLEEP(1);
+INSERT INTO ANNOUNCEMENTS (user_id, announcement)
+VALUES (1, 'England has won under21 european championship');
 -- Quizes part
 
 CREATE TABLE QUIZES
@@ -109,6 +120,12 @@ CREATE TABLE FRIENDS
 
 INSERT INTO FRIENDS (user_one, user_two, relationship_status)
 VALUES (1, 2, 'FRIENDS');
+DO SLEEP(1);
+INSERT INTO FRIENDS (user_one, user_two, relationship_status)
+VALUES (3, 1, 'FRIENDS');
+DO SLEEP(1);
+INSERT INTO FRIENDS (user_one, user_two, relationship_status)
+VALUES (3, 2, 'BESTIES');
 
 
 -- friend request
@@ -122,7 +139,12 @@ CREATE TABLE FRIEND_REQUESTS
 
 INSERT INTO FRIEND_REQUESTS (user_one, user_two)
 VALUES (1, 3);
-
+DO SLEEP(1);
+INSERT INTO FRIEND_REQUESTS (user_one, user_two)
+VALUES (1,4);
+DO SLEEP(1);
+INSERT INTO FRIEND_REQUESTS (user_one, user_two)
+VALUES (4,3);
 
 CREATE TABLE CHALLENGES
 (
