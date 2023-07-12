@@ -6,6 +6,9 @@ import com.freeuni.quizwebsite.model.db.User;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UsersInformation {
 
@@ -19,9 +22,116 @@ public class UsersInformation {
             return null;
         }
         return new User(resultSet.getInt("user_id"),
-                resultSet.getString("first_name"), resultSet.getString("last_name"),
-                resultSet.getString("username"), resultSet.getString("bio"),
-                resultSet.getString("password"), resultSet.getTimestamp("creation_date"),
+                resultSet.getString("first_name"),
+                resultSet.getString("last_name"),
+                resultSet.getString("username"),
+                resultSet.getString("bio"),
+                resultSet.getString("password"),
+                resultSet.getTimestamp("creation_date"),
                 resultSet.getBoolean("is_admin"));
     }
+
+    public static User findUserByUserName(String userName) throws SQLException {
+        ResultSet resultSet;
+
+        resultSet = connection.prepareStatement("SELECT * FROM USERS WHERE username = \"" + userName+"\"").executeQuery();
+        if(!resultSet.next()){
+            return null;
+        }
+        return new User(resultSet.getInt("user_id"),
+                resultSet.getString("first_name"),
+                resultSet.getString("last_name"),
+                resultSet.getString("username"),
+                resultSet.getString("bio"),
+                resultSet.getString("password"),
+                resultSet.getTimestamp("creation_date"),
+                resultSet.getBoolean("is_admin"));
+    }
+
+    // creation_date < T
+    public static List<User> CreatedBefore(Timestamp T) throws SQLException {
+        ResultSet resultSet;
+        resultSet = connection.prepareStatement("SELECT * FROM USERS u " +
+                "WHERE u.creation_date<  \"" + T+"\"").executeQuery();
+        List<User> userlist = new ArrayList<>();
+        while (resultSet.next()) {
+            User curUser = new User(
+                    resultSet.getInt("user_id"),
+                    resultSet.getString("first_name"),
+                    resultSet.getString("last_name"),
+                    resultSet.getString("username"),
+                    resultSet.getString("bio"),
+                    resultSet.getString("password"),
+                    resultSet.getTimestamp("creation_date"),
+                    resultSet.getBoolean("is_admin"));
+            userlist.add(curUser);
+        }
+        return userlist;
+    }
+
+    // creation_date > = T
+    public static List<User> CreatedAfter(Timestamp T) throws SQLException {
+        ResultSet resultSet;
+        resultSet = connection.prepareStatement("SELECT * FROM USERS u " +
+                "WHERE u.creation_date>= \"" + T+"\"").executeQuery();
+        List<User> userlist = new ArrayList<>();
+        while (resultSet.next()) {
+            User curUser = new User(
+                    resultSet.getInt("user_id"),
+                    resultSet.getString("first_name"),
+                    resultSet.getString("last_name"),
+                    resultSet.getString("username"),
+                    resultSet.getString("bio"),
+                    resultSet.getString("password"),
+                    resultSet.getTimestamp("creation_date"),
+                    resultSet.getBoolean("is_admin"));
+            userlist.add(curUser);
+        }
+        return userlist;
+    }
+//returns admins user list
+    public static List<User> findAdmins() throws SQLException {
+        ResultSet resultSet;
+        resultSet = connection.prepareStatement("SELECT * FROM USERS u " +
+                "WHERE u.is_admin= 1 ").executeQuery();
+        List<User> userlist = new ArrayList<>();
+        while (resultSet.next()) {
+            User curUser = new User(
+                    resultSet.getInt("user_id"),
+                    resultSet.getString("first_name"),
+                    resultSet.getString("last_name"),
+                    resultSet.getString("username"),
+                    resultSet.getString("bio"),
+                    resultSet.getString("password"),
+                    resultSet.getTimestamp("creation_date"),
+                    resultSet.getBoolean("is_admin"));
+            userlist.add(curUser);
+        }
+        return userlist;
+    }
+
+    //returns all users exept admins
+    public static List<User> exceptAdmins() throws SQLException {
+        ResultSet resultSet;
+        resultSet = connection.prepareStatement("SELECT * FROM USERS u " +
+                "WHERE u.is_admin= 0 ").executeQuery();
+        List<User> userlist = new ArrayList<>();
+        while (resultSet.next()) {
+            User curUser = new User(
+                    resultSet.getInt("user_id"),
+                    resultSet.getString("first_name"),
+                    resultSet.getString("last_name"),
+                    resultSet.getString("username"),
+                    resultSet.getString("bio"),
+                    resultSet.getString("password"),
+                    resultSet.getTimestamp("creation_date"),
+                    resultSet.getBoolean("is_admin"));
+            userlist.add(curUser);
+        }
+        return userlist;
+    }
+
+
+
+
 }
