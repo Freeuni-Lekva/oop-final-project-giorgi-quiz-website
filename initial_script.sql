@@ -177,8 +177,6 @@ CREATE TABLE QUESTIONS
     picture_url   VARCHAR(2050) DEFAULT '',
     question      TEXT,
     quiz_id       INT
-
-#     sort_order    INT(11) NOT NULL DEFAULT '0'
 );
 
 INSERT INTO QUESTIONS (question_type, question)
