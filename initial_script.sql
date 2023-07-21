@@ -173,15 +173,14 @@ VALUES (1, 3, 'damamate');
 CREATE TABLE QUESTIONS
 (
     question_id   INT AUTO_INCREMENT PRIMARY KEY,
-    quiz_id       INT,
+    question_type ENUM('QUESTION-RESPONSE', 'FILL_IN_BLANK', 'PICTURE_RESPONSE', 'MULTIPLE_CHOICE', 'MULTIPLE_CHOICE_MULTIPLE_ANSWER'),
     picture_url   VARCHAR(2050) DEFAULT '',
-    question_type VARCHAR(50),
     question      TEXT,
-    sort_order    INT(11) NOT NULL DEFAULT '0'
+    quiz_id       INT
 );
 
-INSERT INTO QUESTIONS (quiz_id, question_type, question)
-VALUES (1, 'QUESTION-RESPONSE', 'Ra hqvia Giorgis?');
+INSERT INTO QUESTIONS (question_type, question)
+VALUES ('QUESTION_RESPONSE', 'Ra hqvia Giorgis?');
 
 CREATE TABLE ANSWERS
 (
