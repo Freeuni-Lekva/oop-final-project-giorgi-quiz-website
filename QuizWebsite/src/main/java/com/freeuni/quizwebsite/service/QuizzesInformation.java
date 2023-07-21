@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuizzesInformation {
+
     private static final Connection connection = ConnectToDB.getConnection();
 
     private static List<Quiz> findQuizzes(String script) throws SQLException {

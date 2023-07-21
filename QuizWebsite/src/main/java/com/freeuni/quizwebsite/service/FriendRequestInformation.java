@@ -9,7 +9,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class FriendRequestInformation {
+
     private static final Connection connection = ConnectToDB.getConnection();
+
     //returns unordered friendRequests sent by the user
     public static ArrayList<FriendRequest> getSentFriendRequests(int userId) throws SQLException {
         return getRequests(userId, true, false);
@@ -29,6 +31,7 @@ public class FriendRequestInformation {
     public static ArrayList<FriendRequest> getLatestReceivedFriendRequests(int userId) throws SQLException {
         return getRequests(userId, false, true);
     }
+
     //returns list of friendRequests that satisfy given conditions
     private static ArrayList<FriendRequest> getRequests(int userId, boolean sender, boolean latest) throws SQLException {
         String userColumn = "";

@@ -130,8 +130,4 @@ public class UsersInformation {
         }
         return userlist;
     }
-
-
-
-
 }

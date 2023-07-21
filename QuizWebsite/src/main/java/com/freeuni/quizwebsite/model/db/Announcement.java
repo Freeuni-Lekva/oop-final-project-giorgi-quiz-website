@@ -10,7 +10,10 @@ import java.sql.Timestamp;
 @Builder
 @AllArgsConstructor
 public class Announcement {
+
     private int userId;
+
     private String announcement;
+
     private Timestamp creationDate;
 }

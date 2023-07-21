@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 @Builder
 @AllArgsConstructor
 public class Friend {
+
     private int userOneId;
 
     private int userTwoId;

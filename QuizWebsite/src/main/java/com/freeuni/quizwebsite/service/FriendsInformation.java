@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class FriendsInformation {
     private static final Connection connection = ConnectToDB.getConnection();
+
     public static ArrayList<Friend> getPeopleOfStatus(int userId, String status, int order) throws SQLException {
         ArrayList<Friend> friendsOrSo = new ArrayList<>();
         String script = "SELECT * FROM FRIENDS WHERE (user_one = " + userId + " OR user_two = "+ userId + ") AND relationship_status = '" + status + "'";
@@ -28,9 +29,11 @@ public class FriendsInformation {
         }
         return friendsOrSo;
     }
+
     public static ArrayList<Friend> getNewestPeopleOfStatus(int userId, String status) throws SQLException {
         return getPeopleOfStatus(userId, status, 1);
     }
+
     public static ArrayList<Friend> getOldestPeopleOfStatus(int userId, String status) throws SQLException {
         return getPeopleOfStatus(userId, status, -1);
     }
@@ -42,6 +45,7 @@ public class FriendsInformation {
     public static ArrayList<Friend> getNewestFriends(int userId) throws SQLException {
         return getNewestPeopleOfStatus(userId, "FRIENDS");
     }
+
     public static ArrayList<Friend> getOldestFriends(int userId) throws SQLException {
         return getOldestPeopleOfStatus(userId, "FRIENDS");
     }
@@ -52,6 +56,7 @@ public class FriendsInformation {
         ResultSet resultSet = connection.prepareStatement(script).executeQuery();
         return resultSet.next();
     }
+
     public static boolean areFriends(int userOne, int userTwo) throws SQLException {
         return areOfStatus(userOne, userTwo, "FRIENDS");
     }

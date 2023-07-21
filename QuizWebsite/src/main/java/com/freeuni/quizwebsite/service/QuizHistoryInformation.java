@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuizHistoryInformation {
+
     private static final Connection connection = ConnectToDB.getConnection();
 
     private static List<QuizHistory> findQuizzesHistory(String script) throws SQLException {
@@ -49,6 +50,5 @@ public class QuizHistoryInformation {
                 " qh1.score = (SELECT max(qh2.score) from QUIZ_HISTORY qh2 where " +
                 "qh1.quiz_id = qh2.quiz_id)" + " order by take_date";
         return findQuizzesHistory(script);
-
     }
 }

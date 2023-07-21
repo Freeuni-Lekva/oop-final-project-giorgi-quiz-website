@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AchievementsInformation {
+
     private static final Connection connection = ConnectToDB.getConnection();
+
     //this method finds all Achievements of user id
     public static List<Achievement> findAchievementsByUserId(int id) throws SQLException {
         ResultSet resultSet;
@@ -25,6 +27,7 @@ public class AchievementsInformation {
         }
         return achievementList;
     }
+
     public static List<Achievement> findAchievementsByUserName(String name) throws SQLException {
         ResultSet resultSet;
         resultSet = connection.prepareStatement("SELECT * FROM ACHIEVEMENTS A left join users u on A.user_id=u.user_id " +
@@ -38,6 +41,7 @@ public class AchievementsInformation {
         }
         return achievementList;
     }
+
     public static List<Achievement> findAchievementsByAchievementName(String Achivmentname) throws SQLException {
         ResultSet resultSet;
         resultSet = connection.prepareStatement("SELECT * FROM ACHIEVEMENTS A " +

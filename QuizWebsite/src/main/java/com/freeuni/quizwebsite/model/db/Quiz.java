@@ -16,6 +16,7 @@ import java.util.Objects;
 @Builder
 @AllArgsConstructor
 public class Quiz {
+
     private final int quizId;
 
     private final int userId;
