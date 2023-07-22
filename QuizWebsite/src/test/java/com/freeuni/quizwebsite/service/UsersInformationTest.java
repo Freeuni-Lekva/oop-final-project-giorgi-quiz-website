@@ -27,10 +27,10 @@ class UsersInformationTest {
     @Test
     public void CreatedBefore() throws SQLException {
         Timestamp T = new Timestamp(126, 5, 11, 10, 30, 0, 0);
-        List<User> userList = UsersInformation.CreatedBefore(T);
+        List<User> userList = UsersInformation.createdBefore(T);
         assertEquals(3,userList.size());
         Timestamp T1 = new Timestamp(120, 5, 11, 10, 30, 0, 0);
-        List<User> userList1 = UsersInformation.CreatedBefore(T1);
+        List<User> userList1 = UsersInformation.createdBefore(T1);
         assertEquals(0,userList1.size());
 
     }
@@ -38,10 +38,10 @@ class UsersInformationTest {
     @Test
     public void CreatedAfter() throws SQLException {
         Timestamp T = new Timestamp(120 , 6, 11, 10, 30, 0, 0);
-        List<User> userList = UsersInformation.CreatedAfter(T);
+        List<User> userList = UsersInformation.createdAfter(T);
         assertEquals(3,userList.size());
         Timestamp T1 = new Timestamp(126, 5, 11, 10, 30, 0, 0);
-        List<User> userList1 = UsersInformation.CreatedAfter(T1);
+        List<User> userList1 = UsersInformation.createdAfter(T1);
         assertEquals(0,userList1.size());
 
     }

@@ -2,6 +2,7 @@ package com.freeuni.quizwebsite.service;
 
 import com.freeuni.quizwebsite.db_connection.ConnectToDB;
 import com.freeuni.quizwebsite.model.db.User;
+import com.freeuni.quizwebsite.service.manipulation.UsersManipulation;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -49,7 +50,7 @@ public class UsersInformation {
     }
 
     // creation_date < T
-    public static List<User> CreatedBefore(Timestamp T) throws SQLException {
+    public static List<User> createdBefore(Timestamp T) throws SQLException {
         ResultSet resultSet;
         resultSet = connection.prepareStatement("SELECT * FROM USERS u " +
                 "WHERE u.creation_date<  \"" + T+"\"").executeQuery();
@@ -70,7 +71,7 @@ public class UsersInformation {
     }
 
     // creation_date > = T
-    public static List<User> CreatedAfter(Timestamp T) throws SQLException {
+    public static List<User> createdAfter(Timestamp T) throws SQLException {
         ResultSet resultSet;
         resultSet = connection.prepareStatement("SELECT * FROM USERS u " +
                 "WHERE u.creation_date>= \"" + T+"\"").executeQuery();
@@ -130,4 +131,21 @@ public class UsersInformation {
         }
         return userlist;
     }
+
+    public static boolean verifyPassword(int userId, String password) throws SQLException {
+        User user = findUserById(userId);
+        if (user == null) {
+            // User not found
+            return false;
+        }
+
+        String hashedPassword = UsersManipulation.hashPassword(password);
+        if (hashedPassword == null) {
+            // Hashing failed
+            return false;
+        }
+
+        return hashedPassword.equals(user.getPassword());
+    }
+
 }
