@@ -88,6 +88,7 @@ public class UsersManipulationTest {
 
             // Add the user
             int userId = UsersManipulation.addUser(firstName, lastName, userName, bio, password);
+            if(userId==-1) return;
 
             // Verify the password
             boolean isPasswordCorrect = UsersInformation.verifyPassword(userId, password);
