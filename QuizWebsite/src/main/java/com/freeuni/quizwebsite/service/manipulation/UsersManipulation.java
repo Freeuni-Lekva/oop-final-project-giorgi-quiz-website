@@ -16,7 +16,9 @@ import java.security.NoSuchAlgorithmException;
 
 
 public class UsersManipulation {
+
     private static final Connection connection = ConnectToDB.getConnection();
+
     public static String hashPassword(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -32,6 +34,7 @@ public class UsersManipulation {
         }
         return null;
     }
+
     public static int addUser(String firstName, String lastName, String userName, String bio, String password) throws SQLException {
         String hashedPassword = hashPassword(password);
         if (hashedPassword == null) {
