@@ -11,6 +11,8 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class Announcement {
 
+    private int AnnouncementId;
+
     private int userId;
 
     private String announcement;

@@ -16,6 +16,15 @@ public class AnnouncementInformation {
         return getAnnouncements(user, false);
     }
 
+    public static Announcement getAnnouncementById(int announcementId) throws SQLException, SQLException {
+        String script = "SELECT * FROM ANNOUNCEMENTS WHERE announcement_id = " + announcementId;
+        ResultSet resultSet;
+        resultSet = connection.prepareStatement(script).executeQuery();
+        resultSet.next();
+        return new Announcement(resultSet.getInt("announcement_id"),resultSet.getInt("user_id"), resultSet.getString("announcement"),
+                resultSet.getTimestamp("creation_date"));
+    }
+
     //unordered announcements from all users
     public static ArrayList<Announcement> getCreatedAnnouncements() throws SQLException, SQLException {
         return getCreatedAnnouncementsById(-1);
@@ -42,7 +51,7 @@ public class AnnouncementInformation {
         if(latest) script+=" ORDER BY creation_date DESC";
         ResultSet resultSet = connection.prepareStatement(script).executeQuery();
         while(resultSet.next()) {
-            announcements.add(new Announcement(resultSet.getInt("user_id"), resultSet.getString("announcement"),
+            announcements.add(new Announcement(resultSet.getInt("announcement_id"),resultSet.getInt("user_id"), resultSet.getString("announcement"),
                     resultSet.getTimestamp("creation_date")));
         }
         return announcements;
@@ -51,6 +60,6 @@ public class AnnouncementInformation {
     public static Announcement getAnnouncementCreator(String text) throws SQLException {
         ResultSet resultSet = connection.prepareStatement("SELECT * FROM ANNOUNCEMENTS WHERE announcement = '" + text + "'").executeQuery();
         resultSet.next();
-        return new Announcement(resultSet.getInt("user_id"), resultSet.getString("announcement"), resultSet.getTimestamp("creation_date"));
+        return new Announcement(resultSet.getInt("announcement_id"),resultSet.getInt("user_id"), resultSet.getString("announcement"), resultSet.getTimestamp("creation_date"));
     }
 }

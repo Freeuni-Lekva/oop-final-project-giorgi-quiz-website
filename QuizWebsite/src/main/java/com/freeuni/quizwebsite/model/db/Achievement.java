@@ -8,6 +8,7 @@ import lombok.Data;
 @Builder
 @AllArgsConstructor
 public class Achievement {
+    private int achievementId;
 
     private final int userId;
 
