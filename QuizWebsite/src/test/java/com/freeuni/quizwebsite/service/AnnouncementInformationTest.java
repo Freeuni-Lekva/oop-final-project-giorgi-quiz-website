@@ -47,5 +47,10 @@ class AnnouncementInformationTest {
         assertEquals(1, announcement.getUserId());
     }
 
+    @Test
+    void getAnnouncementById() throws SQLException {
+        System.out.println(AnnouncementInformation.getAnnouncementById(2).getAnnouncement());
+    }
+
 
 }

@@ -54,6 +54,7 @@ VALUES (1, 'WELCOME_TO_OUT_WEB_SITE');
 
 CREATE TABLE ANNOUNCEMENTS
 (
+    announcement_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id      INT,
     announcement TEXT,
     creation_date TIMESTAMP DEFAULT NOW()
