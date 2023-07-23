@@ -37,6 +37,7 @@ VALUES ('Mariam', 'Kelaptrishvili', 'Neimar', 'Zalian chkviani', 'neimari1234', 
 
 CREATE TABLE ACHIEVEMENTS
 (
+    achievement_id       INT AUTO_INCREMENT PRIMARY KEY,
     user_id     INT,
     achievement VARCHAR(50)
 );

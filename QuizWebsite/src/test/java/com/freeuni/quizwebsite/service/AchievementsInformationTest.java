@@ -46,4 +46,11 @@ class AchievementsInformationTest {
         List<Achievement>  achlist1 = AchievementsInformation.findAchievementsByUserName(Achievements.QUIZ_MACHINE.name());
         assertEquals(0,achlist1.size());
     }
+
+    @Test
+    void findAchievementsById() throws SQLException {
+        Achievement a = AchievementsInformation.findAchievementsById(6);
+        assertEquals(a.getUserId(), 1);
+        assertEquals(a.getAchivementName(), "QUIZ_MACHINE");
+    }
 }

@@ -8,7 +8,7 @@ public class ConnectToDB {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "password";
 
-    private static final String DB_NAME = "QUIZ_TEST_DB";  // fill in after creating sql script
+    private static final String DB_NAME = "QUIZ_DB";  // fill in after creating sql script
 
     private static final Connection connection;
 
