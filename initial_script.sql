@@ -173,14 +173,15 @@ VALUES (1, 3, 'damamate');
 CREATE TABLE QUESTIONS
 (
     question_id   INT AUTO_INCREMENT PRIMARY KEY,
-    question_type ENUM('QUESTION-RESPONSE', 'FILL_IN_BLANK', 'PICTURE_RESPONSE', 'MULTIPLE_CHOICE', 'MULTIPLE_CHOICE_MULTIPLE_ANSWER'),
+    question_type ENUM('QUESTION_RESPONSE', 'FILL_IN_BLANK', 'PICTURE_RESPONSE', 'MULTIPLE_CHOICE', 'MULTIPLE_CHOICE_MULTIPLE_ANSWER'),
     picture_url   VARCHAR(2050) DEFAULT '',
     question      TEXT,
     quiz_id       INT
 );
 
-INSERT INTO QUESTIONS (question_type, question)
-VALUES ('QUESTION_RESPONSE', 'Ra hqvia Giorgis?');
+INSERT INTO QUESTIONS (question_type, question, quiz_id)
+VALUES ('QUESTION_RESPONSE', 'Ra hqvia Giorgis?', 1),
+       ('MULTIPLE_CHOICE', 'Vin misca kalata witelqudas?', 1);
 
 CREATE TABLE ANSWERS
 (
@@ -190,10 +191,17 @@ CREATE TABLE ANSWERS
 
 INSERT INTO ANSWERS (question_id, answer)
 VALUES (1, 'Giorgi'),
-       (1, 'Gio');
+       (1, 'Gio'),
+       (2, 'deda');
 
 CREATE TABLE POSSIBLE_ANSWERS
 (
     question_id     INT,
     possible_answer varchar(256)
-)
+);
+
+INSERT INTO POSSIBLE_ANSWERS (question_id, possible_answer)
+VALUES (2, 'deda'),
+       (2, 'dzma'),
+       (2, 'mama'),
+       (2, 'da');
