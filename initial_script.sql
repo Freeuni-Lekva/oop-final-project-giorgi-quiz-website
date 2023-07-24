@@ -150,6 +150,7 @@ VALUES (4,3);
 
 CREATE TABLE CHALLENGES
 (
+    challenge_id INT AUTO_INCREMENT PRIMARY KEY,
     sender_user   INT,
     receiver_user INT,
     quiz_id       INT,
