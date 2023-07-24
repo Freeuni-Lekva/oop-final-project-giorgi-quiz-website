@@ -8,7 +8,7 @@ public class AnnouncementManipulationTest {
 
     @Test
     public void addAnnouncement() throws SQLException {
-        AnnouncementManipulation.addAnnouncement(1,"vau vau vau");
+        System.out.println(AnnouncementManipulation.addAnnouncement(1,"vau vau vau"));
     }
     @Test
     public void deleteAnnouncementById() throws SQLException {
