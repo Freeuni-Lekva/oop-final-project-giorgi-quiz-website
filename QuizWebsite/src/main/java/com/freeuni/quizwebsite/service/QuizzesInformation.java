@@ -3,6 +3,7 @@ package com.freeuni.quizwebsite.service;
 import com.freeuni.quizwebsite.db_connection.ConnectToDB;
 import com.freeuni.quizwebsite.model.QuizStates;
 import com.freeuni.quizwebsite.model.db.Quiz;
+import com.freeuni.quizwebsite.model.db.User;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -42,7 +43,7 @@ public class QuizzesInformation {
     public static Quiz findQuizById(int id) throws SQLException {
         String script = "SELECT * FROM Quizes WHERE quiz_id = " + id;
         List<Quiz> quizzes = findQuizzes(script);
-        if(quizzes.isEmpty()) return null;
+        if (quizzes.isEmpty()) return null;
         return quizzes.get(0);
     }
 
@@ -55,7 +56,7 @@ public class QuizzesInformation {
     }
 
     public static List<Quiz> findQuizzesByName(String name) throws SQLException {
-        String script ="SELECT * FROM Quizes WHERE lower(name) like \"" + "%" +
+        String script = "SELECT * FROM Quizes WHERE lower(name) like \"" + "%" +
                 name.toLowerCase() + "%" + "\""
                 + " AND NOT quiz_state = \"" + QuizStates.DELETED + "\"";
         return findQuizzes(script);
@@ -74,5 +75,14 @@ public class QuizzesInformation {
         return findQuizzes(script);
     }
 
+    public static List<Quiz> getFriendsQuizzes(int userId) throws SQLException {
+        List<User> friends = FriendsInformation.getAllFriends(userId);
+        List<Quiz> quizzes = new ArrayList<>();
+        for (User friend : friends) {
+            List<Quiz> quizzes1 = findQuizzesByUserId(friend.getUserId());
+            quizzes.addAll(quizzes1);
+        }
+        return quizzes;
+    }
 
 }
