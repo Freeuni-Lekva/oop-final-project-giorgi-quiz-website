@@ -1,24 +1,82 @@
 package com.freeuni.quizwebsite.service.manipulation;
 
 import com.freeuni.quizwebsite.db_connection.ConnectToDB;
+import com.freeuni.quizwebsite.model.db.FriendRequest;
+import com.freeuni.quizwebsite.model.db.User;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class FriendRequestManipulation {
 
     private static final Connection connection = ConnectToDB.getConnection();
 
-    public static void deleteFriendRequest(int senderId, int receiverId) throws SQLException {
-        String update = String.format("DELETE FROM FRIEND_REQUESTS " +
-                "WHERE (user_one = %s AND user_two = %s)" +
-                " OR (user_one = %s AND user_two = %s)", senderId, receiverId, receiverId, senderId);
+    public static void addFriendRequest(FriendRequest fr) throws SQLException {
+        String update = String.format("INSERT INTO FRIEND_REQUESTS (user_one, user_two, request_send_date) " +
+                                      "VALUES (%s, %s, %s)",
+                    fr.getUserOneId(), fr.getUserTwoId(), fr.getFriendshipDate());
         connection.prepareStatement(update).executeUpdate();
     }
 
-    public static void addFriendRequest(int senderId, int receiverId) throws SQLException {
-        String update = String.format("INSERT INTO FRIEND_REQUESTS (user_one, user_two) VALUES (%s, %s)", senderId, receiverId);
+    public static void addFriendRequestByIds(int senderId, int receiverId) throws SQLException {
+        String update = String.format("INSERT INTO FRIEND_REQUESTS (user_one, user_two) " +
+                                      "VALUES (%s, %s)",
+                    senderId, receiverId);
         connection.prepareStatement(update).executeUpdate();
     }
+
+    public static void deleteFriendRequest(FriendRequest fr) throws SQLException {
+        String update = String.format("DELETE FROM FRIEND_REQUESTS " +
+                        "WHERE (user_one = %1$s AND user_two = %2$s) " +
+                        "OR (user_one = %2$s AND user_two = %1$s)",
+                    fr.getUserOneId(), fr.getUserTwoId());
+        connection.prepareStatement(update).executeUpdate();
+    }
+
+    public static void deleteFriendRequestByIds(int senderId, int receiverId) throws SQLException {
+        String update = String.format("DELETE FROM FRIEND_REQUESTS " +
+                        "WHERE (user_one = %1$s AND user_two = %2$s) " +
+                        "OR (user_one = %2$s AND user_two = %1$s)",
+                    senderId, receiverId);
+        connection.prepareStatement(update).executeUpdate();
+    }
+
+    public static void deleteAllSentRequests(User user) throws SQLException {
+        String update = "DELETE FROM FRIENDS " +
+                        "WHERE user_one = " + user.getUserId() + ";";
+        connection.prepareStatement(update).executeUpdate();
+    }
+
+    public static void deleteAllReceivedRequests(User user) throws SQLException {
+        String update = "DELETE FROM FRIENDS " +
+                        "WHERE user_two = " + user.getUserId() + ";";
+        connection.prepareStatement(update).executeUpdate();
+    }
+
+    public static void deleteAllRequests(User user) throws SQLException {
+        String update = "DELETE FROM FRIENDS " +
+                        "WHERE user_one = " + user.getUserId() + " OR " +
+                        "user_two = " + user.getUserId() + ";";
+        connection.prepareStatement(update).executeUpdate();
+    }
+
+    public static void deleteAllSentRequestsById(int userId) throws SQLException {
+        String update = "DELETE FROM FRIENDS " +
+                        "WHERE user_one = " + userId + ";";
+        connection.prepareStatement(update).executeUpdate();
+    }
+
+    public static void deleteAllReceivedRequestsById(int userId) throws SQLException {
+        String update = "DELETE FROM FRIENDS " +
+                        "WHERE user_two = " + userId + ";";
+        connection.prepareStatement(update).executeUpdate();
+    }
+
+    public static void deleteAllRequestsById(int userId) throws SQLException {
+        String update = "DELETE FROM FRIENDS " +
+                        "WHERE user_one = " + userId + " OR " +
+                        "user_two = " + userId + ";";
+        connection.prepareStatement(update).executeUpdate();
+    }
+
 }

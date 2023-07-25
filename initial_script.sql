@@ -112,6 +112,7 @@ VALUES (1, 1, 75.5),
 
 CREATE TABLE FRIENDS
 (
+    friend_id           INT AUTO_INCREMENT PRIMARY KEY,
     user_one            INT,
     user_two            INT,
     relationship_status VARCHAR(100),
