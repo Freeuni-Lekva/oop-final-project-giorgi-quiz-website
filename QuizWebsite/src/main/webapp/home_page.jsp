@@ -169,6 +169,7 @@
 <body>
 <div id="header">
     <h1>Quiz Website</h1>
+    <button class="fun-button" style="margin-right: auto;" onclick="redirectTo('logout.jsp')">Log Out</button>
 </div>
 <div id="container">
     <div id="left-column">

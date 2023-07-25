@@ -1,15 +1,11 @@
 package com.freeuni.quizwebsite.model.db;
 
 
-import com.freeuni.quizwebsite.model.QuizStates;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import java.sql.Timestamp;
-import java.util.Objects;
 
 
 @Data
