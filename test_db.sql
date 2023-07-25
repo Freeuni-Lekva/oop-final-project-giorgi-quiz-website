@@ -163,6 +163,7 @@ VALUES (2, 1, 1, 'aba qeni');
 
 CREATE TABLE NOTE_MAIL
 (
+    mail_id       INT AUTO_INCREMENT PRIMARY KEY,
     sender_user   INT,
     receiver_user INT,
     note          VARCHAR(300),
@@ -171,6 +172,12 @@ CREATE TABLE NOTE_MAIL
 
 INSERT INTO NOTE_MAIL (sender_user, receiver_user, note)
 VALUES (1, 3, 'damamate');
+DO SLEEP(1);
+INSERT INTO NOTE_MAIL (sender_user, receiver_user, note)
+VALUES (2, 3, 'damamate!');
+DO SLEEP(1);
+INSERT INTO NOTE_MAIL (sender_user, receiver_user, note)
+VALUES (1, 4, 'damamate?');
 
 
 CREATE TABLE QUESTIONS
