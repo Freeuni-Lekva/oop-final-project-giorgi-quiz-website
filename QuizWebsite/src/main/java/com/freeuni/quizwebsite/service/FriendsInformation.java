@@ -2,6 +2,7 @@ package com.freeuni.quizwebsite.service;
 
 import com.freeuni.quizwebsite.db_connection.ConnectToDB;
 import com.freeuni.quizwebsite.model.db.Friend;
+import com.freeuni.quizwebsite.model.db.User;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -13,14 +14,14 @@ public class FriendsInformation {
 
     public static ArrayList<Friend> getPeopleOfStatus(int userId, String status, int order) throws SQLException {
         ArrayList<Friend> friendsOrSo = new ArrayList<>();
-        String script = "SELECT * FROM FRIENDS WHERE (user_one = " + userId + " OR user_two = "+ userId + ") AND relationship_status = '" + status + "'";
-        if(order==1) script+= " ORDER BY add_date DESC";
-        if(order==-1) script+= " ORDER BY add_date ASC";
+        String script = "SELECT * FROM FRIENDS WHERE (user_one = " + userId + " OR user_two = " + userId + ") AND relationship_status = '" + status + "'";
+        if (order == 1) script += " ORDER BY add_date DESC";
+        if (order == -1) script += " ORDER BY add_date ASC";
         ResultSet resultSet = connection.prepareStatement(script).executeQuery();
-        while(resultSet.next()) {
+        while (resultSet.next()) {
             int userOne = resultSet.getInt("user_one");
             int userTwo = resultSet.getInt("user_two");
-            if(userOne!=userId) {
+            if (userOne != userId) {
                 userTwo = userOne;
                 userOne = userId;
             }
@@ -28,6 +29,24 @@ public class FriendsInformation {
                     resultSet.getString("relationship_status"), resultSet.getTimestamp("add_date")));
         }
         return friendsOrSo;
+    }
+
+    public static ArrayList<User> getAllFriends(int userId) throws SQLException {
+        ArrayList<User> friends = new ArrayList<>();
+        String script = "SELECT * FROM FRIENDS WHERE (user_one = " + userId + " OR user_two = " + userId + ");";
+
+        ResultSet resultSet = connection.prepareStatement(script).executeQuery();
+
+        while (resultSet.next()) {
+            int userOne = resultSet.getInt("user_one");
+            int userTwo = resultSet.getInt("user_two");
+            if (userOne != userId) {
+                friends.add(UsersInformation.findUserById(userOne));
+            } else {
+                friends.add(UsersInformation.findUserById(userTwo));
+            }
+        }
+        return friends;
     }
 
     public static ArrayList<Friend> getNewestPeopleOfStatus(int userId, String status) throws SQLException {
@@ -42,6 +61,7 @@ public class FriendsInformation {
     public static ArrayList<Friend> getFriends(int userId) throws SQLException {
         return getPeopleOfStatus(userId, "FRIENDS", 0);
     }
+
     public static ArrayList<Friend> getNewestFriends(int userId) throws SQLException {
         return getNewestPeopleOfStatus(userId, "FRIENDS");
     }
