@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ChallengesInformationTest {
+    @Test
+    void cetChallengeById() throws SQLException {
+        System.out.println(ChallengesInformation.getChallengeByChallengeId(1).getDescription());
+    }
 
     @Test
     void getUserSentChallenges() throws SQLException {

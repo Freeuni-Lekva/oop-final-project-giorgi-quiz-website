@@ -3,20 +3,15 @@ package com.freeuni.quizwebsite.service.manipulation;
 import com.freeuni.quizwebsite.db_connection.ConnectToDB;
 import com.freeuni.quizwebsite.service.UsersInformation;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.sql.Timestamp;
-import java.sql.SQLException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.*;
 
 
 public class UsersManipulation {
+
     private static final Connection connection = ConnectToDB.getConnection();
+
     public static String hashPassword(String password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -32,6 +27,7 @@ public class UsersManipulation {
         }
         return null;
     }
+
     public static int addUser(String firstName, String lastName, String userName, String bio, String password) throws SQLException {
         String hashedPassword = hashPassword(password);
         if (hashedPassword == null) {
