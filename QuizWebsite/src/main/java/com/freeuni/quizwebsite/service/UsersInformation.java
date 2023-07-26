@@ -148,5 +148,24 @@ public class UsersInformation {
         return hashedPassword.equals(user.getPassword());
     }
 
+    public static List<User> findAllUsers() throws SQLException {
+        ResultSet resultSet;
+        resultSet = connection.prepareStatement("SELECT * FROM USERS").executeQuery();
+        List<User> userlist = new ArrayList<>();
+        while (resultSet.next()) {
+            User curUser = new User(
+                    resultSet.getInt("user_id"),
+                    resultSet.getString("first_name"),
+                    resultSet.getString("last_name"),
+                    resultSet.getString("username"),
+                    resultSet.getString("bio"),
+                    resultSet.getString("password"),
+                    resultSet.getTimestamp("creation_date"),
+                    resultSet.getBoolean("is_admin"));
+            userlist.add(curUser);
+        }
+        return userlist;
+    }
+
 }
 
