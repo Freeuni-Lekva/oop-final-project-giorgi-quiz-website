@@ -1,7 +1,7 @@
 package com.freeuni.quizwebsite.service;
 
 import com.freeuni.quizwebsite.model.db.FriendRequest;
-import com.freeuni.quizwebsite.service.manipulation.FriendshipManipulation;
+import com.freeuni.quizwebsite.service.manipulation.FriendRequestManipulation;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
@@ -55,8 +55,4 @@ class FriendRequestInformationTest {
         assertEquals(1, receivedRequests.get(1).getUserOneId());
     }
 
-    @Test
-    void addFriendship() throws SQLException {
-        FriendshipManipulation.deleteFriendRequest(1, 2);
-    }
 }
