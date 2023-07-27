@@ -265,10 +265,10 @@
                     </a>
                 </div>
                 <div>
-                    <button class="fun-button" onclick="acceptFriend('<%=friendRequest.getUserOneId()%>')">
+                    <button class="fun-button" onclick="redirectTo('accept_friend.jsp', <%=friendRequest.getUserOneId()%>)">
                         <i class="fun-icon fas fa-check"></i> Accept
                     </button>
-                    <button class="fun-button" onclick="rejectFriend('<%=friendRequest.getUserOneId()%>')">
+                    <button class="fun-button" onclick="redirectTo('reject_friend.jsp', <%=friendRequest.getUserOneId()%>)">
                         <i class="fun-icon fas fa-times"></i> Reject
                     </button>
                 </div>
@@ -278,5 +278,11 @@
         <!-- Add any additional content for the right column here -->
     </div>
 </div>
+<script>
+    function redirectTo(url, userId) {
+        const fullURL = `${url}?user_id=${userId}`;
+        window.location.href = fullURL;
+    }
+</script>
 </body>
 </html>
