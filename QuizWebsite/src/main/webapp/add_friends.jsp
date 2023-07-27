@@ -106,8 +106,8 @@
     <h1>Add Friends</h1>
     <button class="home-button" onclick="redirectToHome()">Home</button>
     <div class="search-container">
-        <input type="text" class="search-bar" placeholder="Search...">
-        <button class="search-button">Search</button>
+        <input type="text" id="search-input" class="search-bar" placeholder="Search...">
+        <button class="search-button" onclick="searchUsers()">Search</button>
     </div>
     <ul>
         <% List<User> allUsers = (List<User>) request.getAttribute("allUsers");
@@ -117,21 +117,21 @@
                 allUsers.remove(friend);
             }
             List<FriendRequest> friendRequests = FriendRequestInformation.getSentFriendRequests((Integer) session.getAttribute("current_active"));
-            for (FriendRequest friendRequest : friendRequests){
-                if(friendRequest.getUserOneId() == (Integer) session.getAttribute("current_active")){
+            for (FriendRequest friendRequest : friendRequests) {
+                if (friendRequest.getUserOneId() == (Integer) session.getAttribute("current_active")) {
                     User u = UsersInformation.findUserById(friendRequest.getUserTwoId());
                     allUsers.remove(u);
-                }else{
+                } else {
                     User u = UsersInformation.findUserById(friendRequest.getUserOneId());
                     allUsers.remove(u);
                 }
             }
             List<FriendRequest> friendReceived = FriendRequestInformation.getReceivedFriendRequests((Integer) session.getAttribute("current_active"));
-            for (FriendRequest friendRequestReceived : friendReceived){
-                if(friendRequestReceived.getUserOneId() == (Integer) session.getAttribute("current_active")){
+            for (FriendRequest friendRequestReceived : friendReceived) {
+                if (friendRequestReceived.getUserOneId() == (Integer) session.getAttribute("current_active")) {
                     User u = UsersInformation.findUserById(friendRequestReceived.getUserTwoId());
                     allUsers.remove(u);
-                }else{
+                } else {
                     User u = UsersInformation.findUserById(friendRequestReceived.getUserOneId());
                     allUsers.remove(u);
                 }
@@ -149,6 +149,20 @@
 <script>
     function redirectToHome() {
         window.location.href = "home_page.jsp";
+    }
+
+    function searchUsers() {
+        const searchInput = document.getElementById("search-input").value.toLowerCase(); // Get the user input and convert it to lowercase
+        const userList = document.querySelectorAll("ul li"); // Get all the user list items
+
+        userList.forEach(userItem => {
+            const userName = userItem.querySelector(".user-profile-link").innerText.toLowerCase(); // Get the username and convert it to lowercase
+            if (userName.includes(searchInput)) {
+                userItem.style.display = "flex"; // Show the user item if the username contains the search query
+            } else {
+                userItem.style.display = "none"; // Hide the user item if the username does not contain the search query
+            }
+        });
     }
 </script>
 </body>
