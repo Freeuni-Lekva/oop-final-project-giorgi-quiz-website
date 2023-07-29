@@ -1,13 +1,14 @@
-<%@ page import="com.freeuni.quizwebsite.service.UsersInformation" %>
 <%@ page import="com.freeuni.quizwebsite.model.db.User" %>
-<%@ page import="com.freeuni.quizwebsite.service.FriendsInformation" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.sql.SQLException" %>
 <%@ page import="com.freeuni.quizwebsite.model.db.Quiz" %>
-<%@ page import="com.freeuni.quizwebsite.service.QuizzesInformation" %>
-<%@ page import="com.freeuni.quizwebsite.service.FriendRequestInformation" %>
 <%@ page import="com.freeuni.quizwebsite.model.db.FriendRequest" %>
+<%@ page import="com.freeuni.quizwebsite.model.db.Announcement" %>
+<%@ page import="com.freeuni.quizwebsite.service.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.sql.Timestamp" %>
+
 <html>
 <head>
     <title>Quiz Website - Home</title>
@@ -158,6 +159,40 @@
             display: flex;
             gap: 10px;
         }
+        /* Announcement styles */
+        #announcements {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: palegreen;
+        }
+
+        .announcement-item {
+            border: 1px solid #c5e1a5;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .announcement-header {
+            font-weight: bold;
+        }
+
+        .announcement-content {
+            max-height: 100px; /* Set a maximum height for the announcement content */
+            overflow: hidden; /* Hide any content that exceeds the max-height */
+        }
+
+        .expand-button {
+            cursor: pointer;
+            background-color: dodgerblue;
+            color: white;
+            padding: 10px 20px; /* Optional: Add padding for better appearance */
+            border: none; /* Optional: Remove border for a cleaner look */
+        }
+        .small-text {
+            font-size: 10px; /* Adjust the font size to make the text smaller */
+            color: #888888;
+        }
+
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script>
@@ -282,6 +317,58 @@
     function redirectTo(url, userId) {
         const fullURL = `${url}?user_id=${userId}`;
         window.location.href = fullURL;
+    }
+</script>
+<div id="announcements">
+    <h2>Announcements</h2>
+    <% List<Announcement> announcements;
+        try {
+            announcements = AnnouncementInformation.getLatestAnnouncements();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        for (Announcement announcement : announcements) { %>
+    <div class="announcement-item">
+        <div class="announcement-header">
+            Announcement by
+            <a href="profile?user_id=<%= announcement.getUserId() %>">
+                <%= UsersInformation.findUserById(announcement.getUserId()).getUsername() %>
+            </a>
+        </div>
+
+        <div class="announcement-content" id="announcement-content-<%= announcement.getAnnouncementId() %>">
+            <p><%= announcement.getAnnouncement() %></p>
+        </div>
+        <%-- Check if the announcement content exceeds a maximum height --%>
+        <% if (announcement.getAnnouncement().length() > 150) { %>
+        <button class="expand-button" id="expand-button-<%= announcement.getAnnouncementId() %>" onclick="toggleExpand(<%= announcement.getAnnouncementId() %>)">Expand</button>
+        <% } %>
+        <%!
+            private String formatDate(java.util.Date date) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                return sdf.format(date);
+            }
+        %>
+        <%-- Add small text below the announcement content --%>
+        <p class="small-text">Posted on <%= formatDate(announcement.getCreationDate()) %></p>
+
+    </div>
+
+
+    <% } %>
+</div>
+<script>
+    function toggleExpand(announcementId) {
+        const announcementContent = document.getElementById(`announcement-content-${announcementId}`);
+        const expandButton = document.getElementById(`expand-button-${announcementId}`);
+
+        if (announcementContent.style.maxHeight) {
+            announcementContent.style.maxHeight = null;
+            expandButton.innerText = "Expand";
+        } else {
+            announcementContent.style.maxHeight = announcementContent.scrollHeight + "px";
+            expandButton.innerText = "Collapse";
+        }
     }
 </script>
 </body>
