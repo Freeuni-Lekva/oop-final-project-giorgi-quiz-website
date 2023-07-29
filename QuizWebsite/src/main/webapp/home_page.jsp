@@ -330,8 +330,12 @@
         for (Announcement announcement : announcements) { %>
     <div class="announcement-item">
         <div class="announcement-header">
-            <span>Announcement by <%= UsersInformation.findUserById(announcement.getUserId()).getUsername() %></span>
+            Announcement by
+            <a href="profile?user_id=<%= announcement.getUserId() %>">
+                <%= UsersInformation.findUserById(announcement.getUserId()).getUsername() %>
+            </a>
         </div>
+
         <div class="announcement-content" id="announcement-content-<%= announcement.getAnnouncementId() %>">
             <p><%= announcement.getAnnouncement() %></p>
         </div>
