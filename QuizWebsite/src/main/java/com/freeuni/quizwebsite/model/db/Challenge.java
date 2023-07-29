@@ -11,8 +11,6 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class Challenge {
 
-    private final int challengeId;
-
     private final int senderUserId;
 
     private final int receiverUserId;

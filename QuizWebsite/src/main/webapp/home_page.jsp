@@ -170,6 +170,7 @@
 <div id="header">
     <h1>Quiz Website</h1>
     <button class="fun-button" style="margin-right: auto;" onclick="redirectTo('logout.jsp')">Log Out</button>
+    <button class="fun-button" style="margin-right: 10px;" onclick="redirectTo('challenges',<%=(Integer) session.getAttribute("current_active")%>)">Challenges</button>
 </div>
 <div id="container">
     <div id="left-column">
@@ -226,7 +227,6 @@
     <div id="right-column">
         <div id="friends-list">
             <h2>Friends</h2>
-            <%-- Create a list of users using JSTL --%>
             <%
                 List<User> friendsList;
                 try {
@@ -243,7 +243,7 @@
                 </div>
             </div>
             <% } %>
-            <button class="fun-button" onclick="redirectTo('add-friends')">
+            <button class="fun-button" onclick="redirectTo('add-friends', <%=(Integer) session.getAttribute("current_active")%>)">
                 <!-- Replace 'add-friends' with your add friends URL -->
                 <i class="fun-icon fas fa-user-plus"></i> Add Friends
             </button>
