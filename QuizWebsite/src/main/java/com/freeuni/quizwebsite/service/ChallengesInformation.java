@@ -16,9 +16,9 @@ public class ChallengesInformation {
         ResultSet resultSet;
 
         resultSet = connection.prepareStatement("SELECT * FROM CHALLENGES WHERE challenge_id = "
-                + challengeId).executeQuery();
+                + challengeId + " ORDER BY send_time DESC").executeQuery();
         resultSet.next();
-        Challenge challenge = new Challenge(resultSet.getInt("challenge_id"),resultSet.getInt("sender_user"), resultSet.getInt("receiver_user"),
+        Challenge challenge = new Challenge(resultSet.getInt("sender_user"), resultSet.getInt("receiver_user"),
                 resultSet.getInt("quiz_id"), resultSet.getString("description"),
                 resultSet.getTimestamp("send_time"));
         return challenge;
@@ -32,7 +32,7 @@ public class ChallengesInformation {
                 + senderId).executeQuery();
         Challenge challenge;
         while (resultSet.next()) {
-            challenge = new Challenge(resultSet.getInt("challenge_id"),resultSet.getInt("sender_user"), resultSet.getInt("receiver_user"),
+            challenge = new Challenge(resultSet.getInt("sender_user"), resultSet.getInt("receiver_user"),
                     resultSet.getInt("quiz_id"), resultSet.getString("description"),
                     resultSet.getTimestamp("send_time"));
             result.add(challenge);
@@ -48,7 +48,7 @@ public class ChallengesInformation {
                 + receiverId).executeQuery();
         Challenge challenge;
         while (resultSet.next()) {
-            challenge = new Challenge(resultSet.getInt("challenge_id"),resultSet.getInt("sender_user"), resultSet.getInt("receiver_user"),
+            challenge = new Challenge(resultSet.getInt("sender_user"), resultSet.getInt("receiver_user"),
                     resultSet.getInt("quiz_id"), resultSet.getString("description"),
                     resultSet.getTimestamp("send_time"));
             result.add(challenge);

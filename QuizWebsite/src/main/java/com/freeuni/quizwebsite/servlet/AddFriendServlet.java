@@ -24,7 +24,7 @@ public class AddFriendServlet extends HttpServlet {
 
         String friendIdString = httpServletRequest.getParameter("user_id");
         if (friendIdString == null || friendIdString.isEmpty()) {
-            httpServletResponse.sendRedirect("add-friends"); // Replace 'add-friends' with the actual 'Add Friends' page URL
+            httpServletResponse.sendRedirect("add-friends");
             return;
         }
         try {

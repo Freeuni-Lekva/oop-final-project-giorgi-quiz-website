@@ -105,6 +105,7 @@
 <div id="container">
     <h1>Add Friends</h1>
     <button class="home-button" onclick="redirectToHome()">Home</button>
+    <p></p>
     <div class="search-container">
         <input type="text" id="search-input" class="search-bar" placeholder="Search...">
         <button class="search-button" onclick="searchUsers()">Search</button>
