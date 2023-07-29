@@ -10,7 +10,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #e8f5e9; /* Light green background */
+            background-color: #f5f5f5; /* Light gray background */
             margin: 0;
             padding: 0;
             color: #333333;
@@ -28,9 +28,15 @@
             margin-bottom: 20px;
             padding: 20px;
             border: 1px solid #cccccc;
-            background-color: #f9f9f9;
+            background-color: #ffffff; /* White background */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
+            position: relative; /* To accommodate the animation */
+        }
+
+        .challenge-item:hover {
+            transform: translateY(-5px); /* Add a slight lift on hover */
+            transition: transform 0.2s ease; /* Smooth animation */
         }
 
         .challenge-item a {
@@ -74,18 +80,24 @@
         .complete-button:hover {
             background-color: #4caf50;
         }
+
+        /* Styling for send time */
+        .send-time {
+            color: #999999;
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
 <div class="challenges-container">
-    <h1>Challenges</h1>
+    <h1 style="text-align: center; margin-bottom: 30px;">Challenges</h1>
     <button class="home-button" onclick="redirectTo('home_page.jsp')">Home</button>
     <p></p>
     <%
         List<Challenge> challenges = (List<Challenge>) request.getAttribute("challenges");
         if (challenges.isEmpty()) {
     %>
-    <p>No challenges at the moment.</p>
+    <p style="text-align: center; margin-top: 50px; font-size: 18px; color: #888;">No challenges at the moment.</p>
     <%
     } else {
         for (Challenge challenge : challenges) {
@@ -99,7 +111,7 @@
         </a></p>
         <p><b>Description:</b> <%= challenge.getDescription() %>
         </p>
-        <p><b>Send Time:</b> <%= challenge.getSendTime() %>
+        <p><b>Send Time:</b> <span class="send-time"><%= challenge.getSendTime().toString().substring(0, 16) %></span>
         </p>
         <button class="complete-button" onclick="redirectToQuiz('<%= challenge.getQuizId() %>')">Complete</button>
     </div>
