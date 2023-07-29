@@ -6,6 +6,9 @@
 <%@ page import="com.freeuni.quizwebsite.model.db.Announcement" %>
 <%@ page import="com.freeuni.quizwebsite.service.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.sql.Timestamp" %>
+
 <html>
 <head>
     <title>Quiz Website - Home</title>
@@ -185,6 +188,10 @@
             padding: 10px 20px; /* Optional: Add padding for better appearance */
             border: none; /* Optional: Remove border for a cleaner look */
         }
+        .small-text {
+            font-size: 10px; /* Adjust the font size to make the text smaller */
+            color: #888888;
+        }
 
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -332,7 +339,17 @@
         <% if (announcement.getAnnouncement().length() > 150) { %>
         <button class="expand-button" id="expand-button-<%= announcement.getAnnouncementId() %>" onclick="toggleExpand(<%= announcement.getAnnouncementId() %>)">Expand</button>
         <% } %>
+        <%!
+            private String formatDate(java.util.Date date) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                return sdf.format(date);
+            }
+        %>
+        <%-- Add small text below the announcement content --%>
+        <p class="small-text">Posted on <%= formatDate(announcement.getCreationDate()) %></p>
+
     </div>
+
 
     <% } %>
 </div>
