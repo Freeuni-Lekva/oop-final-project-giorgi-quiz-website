@@ -327,6 +327,11 @@
     </script>
 </head>
 <body>
+<%
+    if(session.getAttribute("current_active") == null){
+        throw new RuntimeException();
+    }
+%>
 <div id="header">
     <h1>Quiz Website</h1>
     <button id="challenges-button" class="fun-button" style="margin-right: 10px;" onclick="redirectTo('challenges',<%=(Integer) session.getAttribute("current_active")%>)">Challenges</button>
