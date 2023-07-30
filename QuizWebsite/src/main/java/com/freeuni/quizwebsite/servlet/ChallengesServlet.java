@@ -19,6 +19,9 @@ public class ChallengesServlet extends HttpServlet {
         if (httpServletRequest.getSession().getAttribute("current_active") == null) {
             throw new RuntimeException();
         }
+        if(Integer.parseInt(httpServletRequest.getParameter("user_id")) != ((Integer) httpServletRequest.getSession().getAttribute("current_active")).intValue()){
+            throw new RuntimeException();
+        }
         int userId = Integer.parseInt(httpServletRequest.getParameter("user_id"));
         List<Challenge> challenges;
         try {
