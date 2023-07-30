@@ -1,7 +1,7 @@
 package com.freeuni.quizwebsite.service.manipulation;
 
 import com.freeuni.quizwebsite.model.QuestionType;
-import com.freeuni.quizwebsite.service.QuestionsInformation;
+import com.freeuni.quizwebsite.service.QuestionInformation;
 import com.freeuni.quizwebsite.service.QuizzesInformation;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -16,18 +16,18 @@ class QuestionsManipulationTest {
 
     @AfterAll
     static void deleteQuestionById() throws SQLException {
-        int size = QuestionsInformation.getQuestionsInQuiz(5).size();
+        int size = QuestionInformation.getQuestionsInQuiz(5).size();
         QuestionsManipulation.deleteQuestionById(b);
-        assertEquals(0, QuestionsInformation.getPossibleAnswers(b).size());
-        assertEquals(0, QuestionsInformation.getCorrectAnswers(b).size());
-        assertEquals(size - 1, QuestionsInformation.getQuestionsInQuiz(5).size());
+        assertEquals(0, QuestionInformation.getPossibleAnswers(b).size());
+        assertEquals(0, QuestionInformation.getCorrectAnswers(b).size());
+        assertEquals(size - 1, QuestionInformation.getQuestionsInQuiz(5).size());
     }
 
     @Test
     void deleteQuestionByQuizId() throws SQLException {
-        assertEquals(1, QuestionsInformation.getQuestionsInQuiz(4).size());
+        assertEquals(1, QuestionInformation.getQuestionsInQuiz(4).size());
         QuestionsManipulation.deleteQuestionByQuizId(4);
-        assertEquals(0, QuestionsInformation.getQuestionsInQuiz(4).size());
+        assertEquals(0, QuestionInformation.getQuestionsInQuiz(4).size());
     }
 
     //tests adding questions using two methods explicitly (and one implicitly, since these two methods call one other public method internally)
@@ -40,23 +40,23 @@ class QuestionsManipulationTest {
 
     @Test
     void addPossibleAnswer() throws SQLException {
-        assertEquals(0, QuestionsInformation.getPossibleAnswers(b).size());
+        assertEquals(0, QuestionInformation.getPossibleAnswers(b).size());
         QuestionsManipulation.addPossibleAnswer(b, "1");
         QuestionsManipulation.addPossibleAnswer(b, "3");
         QuestionsManipulation.addPossibleAnswer(b, "5");
         QuestionsManipulation.addPossibleAnswer(b, "15");
         QuestionsManipulation.addPossibleAnswer(b, "14");
         QuestionsManipulation.addPossibleAnswer(b, "2");
-        assertEquals(6, QuestionsInformation.getPossibleAnswers(b).size());
+        assertEquals(6, QuestionInformation.getPossibleAnswers(b).size());
     }
 
     @Test
     void addCorrectAnswer() throws SQLException {
-        assertEquals(0, QuestionsInformation.getCorrectAnswers(b).size());
+        assertEquals(0, QuestionInformation.getCorrectAnswers(b).size());
         QuestionsManipulation.addCorrectAnswer(b, "1");
         QuestionsManipulation.addCorrectAnswer(b, "3");
         QuestionsManipulation.addCorrectAnswer(b, "5");
         QuestionsManipulation.addCorrectAnswer(b, "15");
-        assertEquals(4, QuestionsInformation.getCorrectAnswers(b).size());
+        assertEquals(4, QuestionInformation.getCorrectAnswers(b).size());
     }
 }

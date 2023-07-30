@@ -2,7 +2,7 @@ package com.freeuni.quizwebsite.service.manipulation;
 
 import com.freeuni.quizwebsite.db_connection.ConnectToDB;
 import com.freeuni.quizwebsite.model.db.Question;
-import com.freeuni.quizwebsite.service.QuestionsInformation;
+import com.freeuni.quizwebsite.service.QuestionInformation;
 
 import java.sql.*;
 import java.util.List;
@@ -26,7 +26,7 @@ public class QuestionsManipulation {
 
     //deletes all the questions (their characteristics and answers) that are part of the specified quiz
     public static void deleteQuestionByQuizId(int quizId) throws SQLException {
-        List<Question> questions = QuestionsInformation.getQuestionsInQuiz(quizId);
+        List<Question> questions = QuestionInformation.getQuestionsInQuiz(quizId);
         for (Question question: questions) {
             deleteQuestionById(question.getQuestionId());
         }
