@@ -16,7 +16,7 @@ public class ChallengesInformation {
         ResultSet resultSet;
 
         resultSet = connection.prepareStatement("SELECT * FROM CHALLENGES WHERE challenge_id = "
-                + challengeId).executeQuery();
+                + challengeId + " ORDER BY send_time DESC").executeQuery();
         resultSet.next();
         Challenge challenge = new Challenge(resultSet.getInt("challenge_id"),resultSet.getInt("sender_user"), resultSet.getInt("receiver_user"),
                 resultSet.getInt("quiz_id"), resultSet.getString("description"),
