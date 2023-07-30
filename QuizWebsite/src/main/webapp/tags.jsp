@@ -28,6 +28,17 @@
             border: 1px solid #cccccc;
             background-color: #f9f9f9;
         }
+        /* Home button style */
+        .home-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
 
         .tag-item a {
             font-size: 16px;
@@ -59,6 +70,7 @@
     </div>
     <div id="right-column">
         <div id="tags-list">
+            <button class="home-button" onclick="redirectTo('home_page.jsp')">Home</button>
             <h2>Tags</h2>
             <%-- Get the list of tags from TagInformation --%>
             <% List<String> tags = TagsInformation.AllTagNames(); %>
@@ -89,6 +101,9 @@
 </div>
 <!-- Add any additional content and scripts common to all pages here -->
 <script>
+    function redirectTo(url) {
+        window.location.href = url;
+    }
     function redirectToTagPage(tagName) {
         // Assuming you have a JSP page named tag_page.jsp to display the details of each tag.
         window.location.href = 'tag_page.jsp?tagName=' + encodeURIComponent(tagName);
