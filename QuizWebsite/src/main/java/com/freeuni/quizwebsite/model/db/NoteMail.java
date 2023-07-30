@@ -11,6 +11,8 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class NoteMail {
 
+    private final int mailId;
+
     private final int senderUserId;
 
     private final int receiverUserId;
