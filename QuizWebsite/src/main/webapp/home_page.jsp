@@ -239,6 +239,7 @@
             <button class="fun-button" onclick="redirectTo('search-results')">
                 <i class="fun-icon fas fa-search"></i> Search
             </button>
+            <button class="fun-button" onclick="redirectTo('tags.jsp')">TAGS</button>
         </div>
         <div id="quizzes">
             <h2>Your Friends' Quizzes</h2>
