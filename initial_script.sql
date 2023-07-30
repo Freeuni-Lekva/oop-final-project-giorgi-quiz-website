@@ -163,6 +163,7 @@ VALUES (2, 1, 1, 'aba qeni');
 
 CREATE TABLE NOTE_MAIL
 (
+    mail_id       INT AUTO_INCREMENT PRIMARY KEY,
     sender_user   INT,
     receiver_user INT,
     note          VARCHAR(300),

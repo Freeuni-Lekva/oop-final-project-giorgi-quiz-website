@@ -172,12 +172,6 @@ CREATE TABLE NOTE_MAIL
 
 INSERT INTO NOTE_MAIL (sender_user, receiver_user, note)
 VALUES (1, 3, 'damamate');
-DO SLEEP(1);
-INSERT INTO NOTE_MAIL (sender_user, receiver_user, note)
-VALUES (2, 3, 'damamate!');
-DO SLEEP(1);
-INSERT INTO NOTE_MAIL (sender_user, receiver_user, note)
-VALUES (1, 4, 'damamate?');
 
 
 CREATE TABLE QUESTIONS
