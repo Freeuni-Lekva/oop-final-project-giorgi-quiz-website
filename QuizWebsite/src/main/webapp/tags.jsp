@@ -60,6 +60,9 @@
     <!-- Link any necessary external stylesheets and scripts here -->
 </head>
 <body>
+<% if (Integer.parseInt(request.getParameter("user_id")) != ((Integer) session.getAttribute("current_active")).intValue()) {
+        throw new RuntimeException();
+ } %>
 <div id="header">
     <h1>Quiz Website</h1>
     <!-- Add any header content common to all pages here -->

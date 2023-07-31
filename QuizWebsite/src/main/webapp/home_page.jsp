@@ -334,8 +334,8 @@
 %>
 <div id="header">
     <h1>Quiz Website</h1>
-    <button id="note_Mail-button" class="fun-button" style="margin-right: 10px;" onclick="redirectTo('note_Mail',<%=(Integer) session.getAttribute("current_active")%>)">Note Mail</button>
     <button class="fun-button" style="margin-right: 10px;" onclick="redirectTo('tags.jsp',<%=(Integer) session.getAttribute("current_active")%>)">TAGS</button>
+    <button id="note_Mail-button" class="fun-button" style="margin-right: 10px;" onclick="redirectTo('note_Mail',<%=(Integer) session.getAttribute("current_active")%>)">Note Mail</button>
     <button id="challenges-button" class="fun-button" style="margin-right: 10px;" onclick="redirectTo('challenges',<%=(Integer) session.getAttribute("current_active")%>)">Challenges</button>
     <button class="fun-button" style="margin-right: auto;" onclick="redirectTo('logout.jsp')">Log Out</button>
 </div>
