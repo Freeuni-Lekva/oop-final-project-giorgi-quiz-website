@@ -334,6 +334,7 @@
 %>
 <div id="header">
     <h1>Quiz Website</h1>
+    <button id="note_Mail-button" class="fun-button" style="margin-right: 10px;" onclick="redirectTo('note_Mail',<%=(Integer) session.getAttribute("current_active")%>)">Note Mail</button>
     <button class="fun-button" style="margin-right: 10px;" onclick="redirectTo('tags.jsp',<%=(Integer) session.getAttribute("current_active")%>)">TAGS</button>
     <button id="challenges-button" class="fun-button" style="margin-right: 10px;" onclick="redirectTo('challenges',<%=(Integer) session.getAttribute("current_active")%>)">Challenges</button>
     <button class="fun-button" style="margin-right: auto;" onclick="redirectTo('logout.jsp')">Log Out</button>
@@ -373,7 +374,6 @@
             <button class="fun-button" onclick="redirectTo('search-results')">
                 <i class="fun-icon fas fa-search"></i> Search
             </button>
-
         </div>
         <div id="quizzes">
             <h2>Your Friends' Quizzes</h2>
@@ -517,13 +517,24 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         const challengesButton = document.getElementById('challenges-button');
+        const noteMailButton = document.getElementById('note_Mail-button');
         const previousChallengesCount = localStorage.getItem('challengesCount');
+        const previousNoteMailsCount = localStorage.getItem('noteMailsCount');
         const currentChallengesCount = <%= ChallengesInformation.getUserReceivedChallenges((Integer) session.getAttribute("current_active")).size() %>;
+        const currentNoteMailsCount = <%= NoteMailInformation.getUserReceivedNotes((Integer) session.getAttribute("current_active")).size() %>;
+
         if (previousChallengesCount && parseInt(previousChallengesCount) < currentChallengesCount) {
             challengesButton.style.backgroundColor = 'red';
         }
+
+        if (previousNoteMailsCount && parseInt(previousNoteMailsCount) < currentNoteMailsCount) {
+            noteMailButton.style.backgroundColor = 'red';
+        }
+
         localStorage.setItem('challengesCount', currentChallengesCount.toString());
+        localStorage.setItem('noteMailsCount', currentNoteMailsCount.toString());
     });
+
 </script>
 </body>
 </html>
