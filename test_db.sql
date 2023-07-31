@@ -5,6 +5,7 @@ QUIZ_TEST_DB;
 -- player part
 
 DROP TABLE IF EXISTS USERS;
+DROP TABLE IF EXISTS TAGS;
 DROP TABLE IF EXISTS ACHIEVEMENTS;
 DROP TABLE IF EXISTS QUIZES;
 DROP TABLE IF EXISTS QUIZ_HISTORY;
@@ -163,6 +164,7 @@ VALUES (2, 1, 1, 'aba qeni');
 
 CREATE TABLE NOTE_MAIL
 (
+    mail_id       INT AUTO_INCREMENT PRIMARY KEY,
     sender_user   INT,
     receiver_user INT,
     note          VARCHAR(300),
@@ -200,4 +202,18 @@ CREATE TABLE POSSIBLE_ANSWERS
 (
     question_id     INT,
     possible_answer varchar(256)
-)
+);
+CREATE TABLE TAGS
+(
+    quiz_id int,
+    tag_name varchar(256)
+);
+INSERT INTO TAGS (quiz_id, tag_name) VALUES
+                                         (1, 'Science'),
+                                         (1, 'Biology'),
+                                         (1, 'History'),
+                                         (1, 'Ancient Civilizations'),
+                                         (1, 'Archaeology'),
+                                         (2, 'Mathematics'),
+                                         (2, 'Science'),
+                                         (2, 'Algebra');
