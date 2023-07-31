@@ -334,6 +334,7 @@
 %>
 <div id="header">
     <h1>Quiz Website</h1>
+    <button class="fun-button" style="margin-right: 10px;" onclick="redirectTo('tags.jsp',<%=(Integer) session.getAttribute("current_active")%>)">TAGS</button>
     <button id="challenges-button" class="fun-button" style="margin-right: 10px;" onclick="redirectTo('challenges',<%=(Integer) session.getAttribute("current_active")%>)">Challenges</button>
     <button class="fun-button" style="margin-right: auto;" onclick="redirectTo('logout.jsp')">Log Out</button>
 </div>
@@ -372,7 +373,7 @@
             <button class="fun-button" onclick="redirectTo('search-results')">
                 <i class="fun-icon fas fa-search"></i> Search
             </button>
-            <button class="fun-button" onclick="redirectTo('tags.jsp')">TAGS</button>
+
         </div>
         <div id="quizzes">
             <h2>Your Friends' Quizzes</h2>
