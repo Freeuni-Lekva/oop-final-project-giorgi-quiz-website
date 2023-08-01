@@ -164,7 +164,8 @@
         }
 
         function addFriend() {
-            window.location.href = "friend-request?profile_id="+<%=profileInfo.getUserId()%>;
+            window.location.href = "friend-request?profile_id="+<%=profileInfo.getUserId()%>
+                                            + "&req=false&rej=false";
         }
 
         function cancelRequest() {
@@ -193,7 +194,7 @@
     <h1>
         <a color="white" href="home_page.jsp">
             Quiz Website
-        </a>
+        </a><br>
     </h1>
 </div>
 <div id="container">
@@ -244,9 +245,10 @@
     </div>
 
     <div id="right-column">
-        <div class="friend-buttons">
-            <% if (currentUser.getUserId() != profileInfo.getUserId()) {
-                 if (FriendsInformation.areFriends(currentUser.getUserId(), profileInfo.getUserId())) { %>
+        <% if (currentUser.getUserId() != profileInfo.getUserId()) { %>
+            <div class="friend-buttons">
+
+                 <% if (FriendsInformation.areFriends(currentUser.getUserId(), profileInfo.getUserId())) { %>
                     <button class="fun-button"
                             onclick="unfriend()">
                         Unfriend
@@ -254,31 +256,27 @@
                 <% } else if (FriendRequestInformation
                                     .getSentFriendRequestsReceiverIds(currentUser.getUserId())
                                         .contains(profileInfo.getUserId())) { %>
-                <button class="fun-button"
-                        onclick="cancelRequest()">
-                    Cancel Request
-                </button>
+                    <button class="fun-button"
+                            onclick="cancelRequest()">
+                        Cancel Request
+                    </button>
 
                 <% } else if (FriendRequestInformation
                                     .getReceivedFriendRequestsSenderIds(currentUser.getUserId())
                                         .contains(profileInfo.getUserId())) { %>
-            <div>
-                <button class="fun-button"
-                        onclick="addFriend()">
-                    Approve Request
-                </button>
-            </div>
+                    <button class="fun-button"
+                            onclick="addFriend()">
+                        Approve Request
+                    </button>
                 <% } else {%>
-                    <div>
-                        <button class="fun-button"
-                                onclick="sendRequest()">
-                            Add Friend
-                        </button>
-                    </div>
+                    <button class="fun-button"
+                            onclick="sendRequest()">
+                        Add Friend
+                    </button>
                 <% } %>
-            <% } %>
-        </div>
-        <div id="friends-list">
+            </div>
+        <% } %>
+    <div id="friends-list">
             <h2><%= profileInfo.getUsername() %>'s Friends</h2>
             <%-- Create a list of users using JSTL --%>
             <%
