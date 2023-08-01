@@ -217,3 +217,76 @@ INSERT INTO TAGS (quiz_id, tag_name) VALUES
                                          (2, 'Mathematics'),
                                          (2, 'Science'),
                                          (2, 'Algebra');
+
+
+-- pasword is 1234 test user
+INSERT INTO `quiz_db`.`users`
+(`user_id`,
+ `first_name`,
+ `last_name`,
+ `username`,
+ `bio`,
+ `password`)
+VALUES
+    (9999,
+     'Eduard',
+     'Shevardnadze',
+     'TestUser',
+     'Test Bio 1233 !@#$ <>?',
+     '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4');
+INSERT INTO ACHIEVEMENTS (user_id, achievement)
+VALUES (9999, 'I_AM_THE_GRATEST'),
+       (9999, 'AMATEUR_AUTHOR');
+INSERT INTO CHALLENGES (sender_user, receiver_user, quiz_id, description)
+VALUES (1,9999, 1, 'midi qeni ra');
+INSERT INTO CHALLENGES (sender_user, receiver_user, quiz_id, description)
+VALUES (9999,1, 1, 'midi shen qeni ra');
+INSERT INTO FRIENDS (user_one, user_two, relationship_status)
+VALUES (1, 9999, 'FRIENDS');
+INSERT INTO FRIEND_REQUESTS (user_one, user_two)
+VALUES (2, 9999);
+INSERT INTO FRIEND_REQUESTS (user_one, user_two)
+VALUES (3, 9999);
+INSERT INTO NOTE_MAIL (sender_user, receiver_user, note)
+VALUES (1, 9999, 'gau');
+INSERT INTO NOTE_MAIL (sender_user, receiver_user, note)
+VALUES (9999, 1, 'rogor xar');
+INSERT INTO QUIZES (quiz_id,user_id, name, description, sorted, one_or_multiple, instant_feedback, practice_mode,quiz_state,view_count)
+VALUES (9999,9999, 'test car quizz', 'magari', 1, 0, 1, 1,'PUBLISHED',1),
+       (9998,9999,'test history quizz','educational',1,0,1,1,'CREATED',2);
+
+-- pasword is 1234 testAdmin
+INSERT INTO `quiz_db`.`users`
+(`user_id`,
+ `first_name`,
+ `last_name`,
+ `username`,
+ `bio`,
+ `password`)
+VALUES
+    (10000,
+     'Mikheil',
+     'Saakashvili',
+     'TestUserAdmin',
+     'Test Bio 1233 !@#$ <>?',
+     '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4');
+INSERT INTO ACHIEVEMENTS (user_id, achievement)
+VALUES (10000, 'I_AM_THE_GRATEST'),
+       (10000, 'AMATEUR_AUTHOR');
+INSERT INTO CHALLENGES (sender_user, receiver_user, quiz_id, description)
+VALUES (1,10000, 1, 'midi qeni ra');
+INSERT INTO CHALLENGES (sender_user, receiver_user, quiz_id, description)
+VALUES (10000,1, 1, 'midi shen qeni ra');
+INSERT INTO FRIENDS (user_one, user_two, relationship_status)
+VALUES (1, 10000, 'FRIENDS');
+INSERT INTO FRIEND_REQUESTS (user_one, user_two)
+VALUES (2, 10000);
+INSERT INTO FRIEND_REQUESTS (user_one, user_two)
+VALUES (3, 10000);
+INSERT INTO NOTE_MAIL (sender_user, receiver_user, note)
+VALUES (1, 10000, 'gau');
+INSERT INTO NOTE_MAIL (sender_user, receiver_user, note)
+VALUES (10000, 1, 'rogor xar');
+INSERT INTO QUIZES (quiz_id,user_id, name, description, sorted, one_or_multiple, instant_feedback, practice_mode,quiz_state,view_count)
+VALUES (10000,10000, 'admin car quizz', 'magari', 1, 0, 1, 1,'PUBLISHED',1),
+       (10001,10000,'admin history quizz','educational',1,0,1,1,'CREATED',2);

@@ -6,7 +6,6 @@
 <html>
 <head>
     <title>Quiz Website - Challenges</title>
-    <!-- Add any CSS styles you need for the challenges page here -->
     <style>
         body {
             font-family: Arial, sans-serif;

@@ -11,13 +11,13 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #e8f5e9; /* Light green background */
+            background-color: #e8f5e9;
             margin: 0;
             padding: 0;
         }
 
         #header {
-            background-color: #43a047; /* Dark green header */
+            background-color: #43a047;
             color: white;
             padding: 10px;
         }
