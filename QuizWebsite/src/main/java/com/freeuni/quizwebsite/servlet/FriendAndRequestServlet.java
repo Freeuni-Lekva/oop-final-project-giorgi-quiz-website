@@ -18,23 +18,17 @@ public class FriendAndRequestServlet extends HttpServlet {
         Integer current_id = (Integer) request.getSession().getAttribute("current_active");
         if(current_id == null) throw new RuntimeException("current_id in null!");
         boolean aboutRequest = Boolean.parseBoolean(request.getParameter("req"));
-        if(aboutRequest) System.out.println("aboutReq");
         boolean isReject = Boolean.parseBoolean(request.getParameter("rej"));
-        if(isReject) System.out.println("isReject");
         try {
             if(aboutRequest && isReject) {
                 FriendRequestManipulation.deleteFriendRequestByIds(current_id, profile_id);
-                System.out.println("reject");
             } else if (aboutRequest && !isReject) {
                 FriendRequestManipulation.addFriendRequestByIds(current_id, profile_id);
-                System.out.println("send request");
             } else if (!aboutRequest && isReject) {
                 FriendsManipulation.deleteFriendByIds(current_id, profile_id);
-                System.out.println("unfriend");
             } else {
                 FriendRequestManipulation.deleteFriendRequestByIds(current_id, profile_id);
                 FriendsManipulation.addFriendByIds(current_id, profile_id);
-                System.out.println("accept");
             }
         } catch (Exception e) {
             throw new RuntimeException();
