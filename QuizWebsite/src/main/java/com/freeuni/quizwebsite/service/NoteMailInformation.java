@@ -18,7 +18,7 @@ public class NoteMailInformation {
         ResultSet resultSet;
 
         resultSet = connection.prepareStatement("SELECT * FROM NOTE_MAIL WHERE SENDER_USER = "
-                + senderId).executeQuery();
+                + senderId+" order by send_time DESC").executeQuery();
         NoteMail mail;
         while (resultSet.next()) {
             mail = new NoteMail(resultSet.getInt("mail_id"), resultSet.getInt("sender_user"), resultSet.getInt("receiver_user"),
@@ -34,7 +34,7 @@ public class NoteMailInformation {
         ResultSet resultSet;
 
         resultSet = connection.prepareStatement("SELECT * FROM NOTE_MAIL WHERE RECEIVER_USER = "
-                + receiverId).executeQuery();
+                + receiverId+" order by send_time DESC").executeQuery();
         NoteMail mail;
         while (resultSet.next()) {
             mail = new NoteMail(resultSet.getInt("mail_id"), resultSet.getInt("sender_user"), resultSet.getInt("receiver_user"),
