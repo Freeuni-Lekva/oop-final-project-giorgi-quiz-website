@@ -1,13 +1,14 @@
-<%@ page import="com.freeuni.quizwebsite.service.UsersInformation" %>
 <%@ page import="com.freeuni.quizwebsite.model.db.User" %>
-<%@ page import="com.freeuni.quizwebsite.service.FriendsInformation" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.sql.SQLException" %>
 <%@ page import="com.freeuni.quizwebsite.model.db.Quiz" %>
-<%@ page import="com.freeuni.quizwebsite.service.QuizzesInformation" %>
-<%@ page import="com.freeuni.quizwebsite.service.FriendRequestInformation" %>
 <%@ page import="com.freeuni.quizwebsite.model.db.FriendRequest" %>
+<%@ page import="com.freeuni.quizwebsite.model.db.Announcement" %>
+<%@ page import="com.freeuni.quizwebsite.service.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.sql.Timestamp" %>
+
 <html>
 <head>
     <title>Quiz Website - Home</title>
@@ -158,6 +159,165 @@
             display: flex;
             gap: 10px;
         }
+        /* Announcement styles */
+        #announcements {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: palegreen;
+        }
+
+        .announcement-item {
+            border: 1px solid #c5e1a5;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .announcement-header {
+            font-weight: bold;
+        }
+
+        .announcement-content {
+            max-height: 100px; /* Set a maximum height for the announcement content */
+            overflow: hidden; /* Hide any content that exceeds the max-height */
+        }
+
+        .expand-button {
+            cursor: pointer;
+            background-color: dodgerblue;
+            color: white;
+            padding: 10px 20px; /* Optional: Add padding for better appearance */
+            border: none; /* Optional: Remove border for a cleaner look */
+        }
+        .small-text {
+            font-size: 10px; /* Adjust the font size to make the text smaller */
+            color: #888888;
+        }
+
+        /* Style for the header */
+        #header {
+            background-color: #43a047;
+            color: white;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        #header h1 {
+            font-size: 32px;
+            margin: 0;
+            flex: 1;
+        }
+
+        /* Style for the user profile section */
+        .user-profile {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #cccccc;
+        }
+
+        .user-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .user-name {
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        /* Style for the "My Quizzes" section */
+        #my-quizzes {
+            margin-bottom: 20px;
+        }
+
+        #my-quizzes h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #43a047;
+        }
+
+        /* Style for the "Your Friends' Quizzes" section */
+        #quizzes {
+            margin-bottom: 20px;
+        }
+
+        #quizzes h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #43a047;
+        }
+
+        /* Style for the "Friends" section */
+        #friends-list {
+            margin-bottom: 20px;
+        }
+
+        #friends-list h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #43a047;
+        }
+
+        .friend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            cursor: pointer;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            background-color: #f2f2f2;
+            transition: background-color 0.3s;
+        }
+
+        .friend-item img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .friend-item:hover {
+            background-color: #c5e1a5;
+        }
+
+        /* Style for the "Friend Requests" section */
+        #friend-requests {
+            margin-bottom: 20px;
+        }
+
+        #friend-requests h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #43a047;
+        }
+
+        .friend-request-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            background-color: #f2f2f2;
+            transition: background-color 0.3s;
+        }
+
+        .friend-request-item img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .friend-request-item:hover {
+            background-color: #c5e1a5;
+        }
+
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script>
@@ -167,8 +327,16 @@
     </script>
 </head>
 <body>
+<%
+    if(session.getAttribute("current_active") == null){
+        throw new RuntimeException();
+    }
+%>
 <div id="header">
     <h1>Quiz Website</h1>
+    <button class="fun-button" style="margin-right: 10px;" onclick="redirectTo('tags.jsp',<%=(Integer) session.getAttribute("current_active")%>)">TAGS</button>
+    <button id="note_Mail-button" class="fun-button" style="margin-right: 10px;" onclick="redirectTo('note_Mail',<%=(Integer) session.getAttribute("current_active")%>)">Note Mail</button>
+    <button id="challenges-button" class="fun-button" style="margin-right: 10px;" onclick="redirectTo('challenges',<%=(Integer) session.getAttribute("current_active")%>)">Challenges</button>
     <button class="fun-button" style="margin-right: auto;" onclick="redirectTo('logout.jsp')">Log Out</button>
 </div>
 <div id="container">
@@ -183,20 +351,23 @@
         <button class="fun-button" onclick="redirectTo('create_quiz')">Create Quiz</button>
         <div id="my-quizzes">
             <h2>My Quizzes</h2>
-            <%
-                List<Quiz> myQuizzes;
+            <% List<Quiz> myQuizzes;
                 try {
                     myQuizzes = QuizzesInformation.findQuizzesByUserId((Integer) session.getAttribute("current_active"));
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
+                if (myQuizzes.isEmpty()) { %>
+            <p>You have no quizzes yet ;)</p>
+            <% } else {
                 for (Quiz quiz : myQuizzes) { %>
             <div class="quiz-item">
                 <a href="quiz?id=<%=quiz.getQuizId()%>">
                     <%=quiz.getName() %>
                 </a>
             </div>
-            <% } %>
+            <% }
+            } %>
         </div>
         <div id="search-bar">
             <input type="text" placeholder="Search">
@@ -206,34 +377,38 @@
         </div>
         <div id="quizzes">
             <h2>Your Friends' Quizzes</h2>
-            <%
-                List<Quiz> quizzes;
+            <% List<Quiz> quizzes;
                 try {
                     quizzes = QuizzesInformation.getFriendsQuizzes((Integer) session.getAttribute("current_active"));
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
+                if (quizzes.isEmpty()) { %>
+            <p>There are no quizzes from your friends</p>
+            <% } else {
                 for (Quiz quiz : quizzes) { %>
             <div class="quiz-item">
                 <a href="quiz?id=<%=quiz.getQuizId()%>">
                     <%=quiz.getName() %> by <%=UsersInformation.findUserById(quiz.getUserId()).getUsername() %>
                 </a>
             </div>
-            <% } %>
+            <% }
+            } %>
         </div>
     </div>
 
     <div id="right-column">
         <div id="friends-list">
             <h2>Friends</h2>
-            <%-- Create a list of users using JSTL --%>
-            <%
-                List<User> friendsList;
+            <% List<User> friendsList;
                 try {
                     friendsList = FriendsInformation.getAllFriends((Integer) session.getAttribute("current_active"));
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
+                if (friendsList.isEmpty()) { %>
+            <p>You have no friends yet. Start adding friends to see their quizzes!</p>
+            <% } else {
                 for (User friend : friendsList) { %>
             <div class="friend-item">
                 <div class="friend-name">
@@ -242,21 +417,25 @@
                     </a>
                 </div>
             </div>
-            <% } %>
-            <button class="fun-button" onclick="redirectTo('add-friends')">
+            <% }
+            } %>
+            <button class="fun-button" onclick="redirectTo('add-friends', <%=(Integer) session.getAttribute("current_active")%>)">
                 <!-- Replace 'add-friends' with your add friends URL -->
                 <i class="fun-icon fas fa-user-plus"></i> Add Friends
             </button>
         </div>
+
         <div id="friend-requests">
             <h2>Friend Requests</h2>
-            <!-- Create a list of pending friend requests using JSTL -->
             <% List<FriendRequest> friendRequests;
                 try {
                     friendRequests = FriendRequestInformation.getReceivedFriendRequests((Integer) session.getAttribute("current_active"));
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
+                if (friendRequests.isEmpty()) { %>
+            <p>Nobody wants to be your friend</p>
+            <% } else {
                 for (FriendRequest friendRequest : friendRequests) { %>
             <div class="friend-request-item">
                 <div class="friend-name">
@@ -273,9 +452,9 @@
                     </button>
                 </div>
             </div>
-            <% } %>
+            <% }
+            } %>
         </div>
-        <!-- Add any additional content for the right column here -->
     </div>
 </div>
 <script>
@@ -283,6 +462,79 @@
         const fullURL = `${url}?user_id=${userId}`;
         window.location.href = fullURL;
     }
+</script>
+<div id="announcements">
+    <h2>Announcements</h2>
+    <% List<Announcement> announcements;
+        try {
+            announcements = AnnouncementInformation.getLatestAnnouncements();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        for (Announcement announcement : announcements) { %>
+    <div class="announcement-item">
+        <div class="announcement-header">
+            Announcement by
+            <a href="profile?user_id=<%= announcement.getUserId() %>">
+                <%= UsersInformation.findUserById(announcement.getUserId()).getUsername() %>
+            </a>
+        </div>
+
+        <div class="announcement-content" id="announcement-content-<%= announcement.getAnnouncementId() %>">
+            <p><%= announcement.getAnnouncement() %></p>
+        </div>
+        <%-- Check if the announcement content exceeds a maximum height --%>
+        <% if (announcement.getAnnouncement().length() > 150) { %>
+        <button class="expand-button" id="expand-button-<%= announcement.getAnnouncementId() %>" onclick="toggleExpand(<%= announcement.getAnnouncementId() %>)">Expand</button>
+        <% } %>
+        <%!
+            private String formatDate(java.util.Date date) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                return sdf.format(date);
+            }
+        %>
+        <%-- Add small text below the announcement content --%>
+        <p class="small-text">Posted on <%= formatDate(announcement.getCreationDate()) %></p>
+
+    </div>
+
+
+    <% } %>
+</div>
+<script>
+    function toggleExpand(announcementId) {
+        const announcementContent = document.getElementById(`announcement-content-${announcementId}`);
+        const expandButton = document.getElementById(`expand-button-${announcementId}`);
+
+        if (announcementContent.style.maxHeight) {
+            announcementContent.style.maxHeight = null;
+            expandButton.innerText = "Expand";
+        } else {
+            announcementContent.style.maxHeight = announcementContent.scrollHeight + "px";
+            expandButton.innerText = "Collapse";
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const challengesButton = document.getElementById('challenges-button');
+        const noteMailButton = document.getElementById('note_Mail-button');
+        const previousChallengesCount = localStorage.getItem('challengesCount');
+        const previousNoteMailsCount = localStorage.getItem('noteMailsCount');
+        const currentChallengesCount = <%= ChallengesInformation.getUserReceivedChallenges((Integer) session.getAttribute("current_active")).size() %>;
+        const currentNoteMailsCount = <%= NoteMailInformation.getUserReceivedNotes((Integer) session.getAttribute("current_active")).size() %>;
+
+        if (previousChallengesCount && parseInt(previousChallengesCount) < currentChallengesCount) {
+            challengesButton.style.backgroundColor = 'red';
+        }
+
+        if (previousNoteMailsCount && parseInt(previousNoteMailsCount) < currentNoteMailsCount) {
+            noteMailButton.style.backgroundColor = 'red';
+        }
+
+        localStorage.setItem('challengesCount', currentChallengesCount.toString());
+        localStorage.setItem('noteMailsCount', currentNoteMailsCount.toString());
+    });
+
 </script>
 </body>
 </html>

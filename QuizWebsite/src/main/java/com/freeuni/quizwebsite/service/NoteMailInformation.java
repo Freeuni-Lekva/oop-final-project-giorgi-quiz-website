@@ -21,7 +21,7 @@ public class NoteMailInformation {
                 + senderId).executeQuery();
         NoteMail mail;
         while (resultSet.next()) {
-            mail = new NoteMail(resultSet.getInt("sender_user"), resultSet.getInt("receiver_user"),
+            mail = new NoteMail(resultSet.getInt("mail_id"), resultSet.getInt("sender_user"), resultSet.getInt("receiver_user"),
                     resultSet.getString("note"),
                     resultSet.getTimestamp("send_time"));
             result.add(mail);
@@ -37,7 +37,7 @@ public class NoteMailInformation {
                 + receiverId).executeQuery();
         NoteMail mail;
         while (resultSet.next()) {
-            mail = new NoteMail(resultSet.getInt("sender_user"), resultSet.getInt("receiver_user"),
+            mail = new NoteMail(resultSet.getInt("mail_id"), resultSet.getInt("sender_user"), resultSet.getInt("receiver_user"),
                     resultSet.getString("note"),
                     resultSet.getTimestamp("send_time"));
             result.add(mail);

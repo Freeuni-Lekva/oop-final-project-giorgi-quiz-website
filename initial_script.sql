@@ -1,11 +1,11 @@
-
 use
-    QUIZ_DB;
+QUIZ_DB;
 
 
 -- player part
 
 DROP TABLE IF EXISTS USERS;
+DROP TABLE IF EXISTS TAGS;
 DROP TABLE IF EXISTS ACHIEVEMENTS;
 DROP TABLE IF EXISTS QUIZES;
 DROP TABLE IF EXISTS QUIZ_HISTORY;
@@ -38,6 +38,7 @@ VALUES ('Mariam', 'Kelaptrishvili', 'Neimar', 'Zalian chkviani', 'neimari1234', 
 
 CREATE TABLE ACHIEVEMENTS
 (
+    achievement_id       INT AUTO_INCREMENT PRIMARY KEY,
     user_id     INT,
     achievement VARCHAR(50)
 );
@@ -54,6 +55,7 @@ VALUES (1, 'WELCOME_TO_OUT_WEB_SITE');
 
 CREATE TABLE ANNOUNCEMENTS
 (
+    announcement_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id      INT,
     announcement TEXT,
     creation_date TIMESTAMP DEFAULT NOW()
@@ -113,7 +115,6 @@ VALUES (1, 1, 75.5),
 
 CREATE TABLE FRIENDS
 (
-    friend_id           INT AUTO_INCREMENT PRIMARY KEY,
     user_one            INT,
     user_two            INT,
     relationship_status VARCHAR(100) DEFAULT 'FRIENDS',
@@ -150,6 +151,7 @@ VALUES (4,3);
 
 CREATE TABLE CHALLENGES
 (
+    challenge_id INT AUTO_INCREMENT PRIMARY KEY,
     sender_user   INT,
     receiver_user INT,
     quiz_id       INT,
@@ -162,6 +164,7 @@ VALUES (2, 1, 1, 'aba qeni');
 
 CREATE TABLE NOTE_MAIL
 (
+    mail_id       INT AUTO_INCREMENT PRIMARY KEY,
     sender_user   INT,
     receiver_user INT,
     note          VARCHAR(300),
@@ -175,15 +178,15 @@ VALUES (1, 3, 'damamate');
 CREATE TABLE QUESTIONS
 (
     question_id   INT AUTO_INCREMENT PRIMARY KEY,
-    question_type ENUM('QUESTION_RESPONSE', 'FILL_IN_BLANK', 'PICTURE_RESPONSE', 'MULTIPLE_CHOICE', 'MULTIPLE_CHOICE_MULTIPLE_ANSWER'),
+    quiz_id       INT,
     picture_url   VARCHAR(2050) DEFAULT '',
+    question_type VARCHAR(50),
     question      TEXT,
-    quiz_id       INT
+    sort_order    INT(11) NOT NULL DEFAULT '0'
 );
 
-INSERT INTO QUESTIONS (question_type, question, quiz_id)
-VALUES ('QUESTION_RESPONSE', 'Ra hqvia Giorgis?', 1),
-       ('MULTIPLE_CHOICE', 'Vin misca kalata witelqudas?', 1);
+INSERT INTO QUESTIONS (quiz_id, question_type, question)
+VALUES (1, 'QUESTION-RESPONSE', 'Ra hqvia Giorgis?');
 
 CREATE TABLE ANSWERS
 (
@@ -193,8 +196,7 @@ CREATE TABLE ANSWERS
 
 INSERT INTO ANSWERS (question_id, answer)
 VALUES (1, 'Giorgi'),
-       (1, 'Gio'),
-       (2, 'deda');
+       (1, 'Gio');
 
 CREATE TABLE POSSIBLE_ANSWERS
 (
@@ -251,14 +253,16 @@ INSERT INTO quiz_db.`users`
  last_name,
  username,
  bio,
- password)
+ password,
+ is_admin)
 VALUES
     (10000,
      'Mikheil',
      'Saakashvili',
      'TestUserAdmin',
      'Test Bio 1233 !@#$ <>?',
-     '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4');
+     '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4',
+     1);
 INSERT INTO ACHIEVEMENTS (user_id, achievement)
 VALUES (10000, 'I_AM_THE_GRATEST'),
        (10000, 'AMATEUR_AUTHOR');

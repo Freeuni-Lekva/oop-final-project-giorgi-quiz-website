@@ -18,13 +18,13 @@ public class AddFriendServlet extends HttpServlet {
         // Get the current active user_id from the session
         Integer currentUserId = (Integer) httpServletRequest.getSession().getAttribute("current_active");
         if (currentUserId == null) {
-            httpServletResponse.sendRedirect("login"); // Replace 'login' with the actual login page URL
+            httpServletResponse.sendRedirect("login");
             return;
         }
 
         String friendIdString = httpServletRequest.getParameter("user_id");
         if (friendIdString == null || friendIdString.isEmpty()) {
-            httpServletResponse.sendRedirect("add-friends"); // Replace 'add-friends' with the actual 'Add Friends' page URL
+            httpServletResponse.sendRedirect("add-friends");
             return;
         }
         try {
