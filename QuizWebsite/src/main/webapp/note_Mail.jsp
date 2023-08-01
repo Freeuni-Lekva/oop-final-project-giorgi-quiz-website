@@ -30,6 +30,7 @@
             padding: 20px;
         }
 
+
         .note-item {
              margin-bottom: 20px;
              padding: 20px;
@@ -40,8 +41,6 @@
              position: relative; /* To accommodate the animation */
              word-wrap: break-word; /* Breaks words to prevent overflow */
         }
-
-
     .note-item:hover {
             transform: translateY(-5px); /* Add a slight lift on hover */
             transition: transform 0.2s ease; /* Smooth animation */
@@ -106,7 +105,9 @@
             transition: .4s;
         }
         #toggleLabel {
+
             color: black;
+
         }
 
         .slider:before {
