@@ -13,11 +13,7 @@
 <%@ page import="com.freeuni.quizwebsite.model.db.Quiz" %>
 <%@ page import="com.freeuni.quizwebsite.service.QuizzesInformation" %>
 <%@ page import="com.freeuni.quizwebsite.service.FriendRequestInformation" %>
-<%@ page import="com.freeuni.quizwebsite.model.db.FriendRequest" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="com.freeuni.quizwebsite.service.manipulation.FriendRequestManipulation" %>
-<%@ page import="com.freeuni.quizwebsite.service.manipulation.FriendsManipulation" %>
-<%@ page import="com.freeuni.quizwebsite.service.manipulation.UsersManipulation" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -162,47 +158,34 @@
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script>
-        function removeRequest() {
-            <%
-//                FriendRequestManipulation.deleteFriendRequestByIds(currentUser.getUserId(), profileInfo.getUserId());
-            %>
-            location.reload();
+
+        function redirectTo(url) {
+            window.location.href = url;
         }
 
-        function unfriend() {
-            <%
-//                FriendsManipulation.addFriendByIds(currentUser.getUserId(), profileInfo.getUserId());
-            %>
-            location.reload();
+        function addFriend() {
+            window.location.href = "friend-request?profile_id="+<%=profileInfo.getUserId()%>;
+        }
+
+        function cancelRequest() {
+            window.location.href = "friend-request?profile_id="+<%=profileInfo.getUserId()%>
+                                            + "&req=true&rej=true";
         }
 
         function sendRequest() {
-            <%
-//                FriendRequestManipulation.addFriendRequestByIds(currentUser.getUserId(), profileInfo.getUserId());
-            %>
-            location.reload();
-        }
-        function addFriend() {
-            <%
-//                FriendsManipulation.addFriendByIds(currentUser.getUserId(), profileInfo.getUserId());
-            %>
-            location.reload();
+            window.location.href = "friend-request?profile_id="+<%=profileInfo.getUserId()%>
+                                            + "&req=true&rej=false";
         }
 
-
-        function removeUser() {
-<%--            <%  UsersManipulation.deleteUserById(profileInfo.getUserId());--%>
-<%--                if (profileInfo.getUserId() == currentUser.getUserId()) { %>--%>
-<%--                    redirectTo("index.jsp");--%>
-<%--                <% } else { %>--%>
-<%--                    redirectTo("home_page.jsp");--%>
-<%--                <% } %>--%>
+        function unfriend() {
+            window.location.href = "friend-request?profile_id="+<%=profileInfo.getUserId()%>
+                                            + "&req=false&rej=true";
         }
 
-        function redirectTo(url, userId) {
-            const fullURL = `${url}?user_id=${userId}`;
-            window.location.href = fullURL;
+        function deleteUser() {
+            window.location.href = "delete-user?profile_id="+<%=profileInfo.getUserId()%>;
         }
+
     </script>
 </head>
 <body>
@@ -233,7 +216,7 @@
         </div>
         <% if ((currentUser.getUserId() == profileInfo.getUserId())
                         || UsersInformation.findAdmins().contains(currentUser)) { %>
-            <button class="del-button" onclick="removeUser()">Delete Account</button>
+            <button class="del-button" onclick="deleteUser()">Delete Account</button>
         <% } %>
         <div id="quizzes">
             <h2><%= profileInfo.getUsername() %>'s Quizzes</h2>
@@ -257,32 +240,27 @@
             <% if (quizzes.isEmpty()) { %>
                 Looks like there's nothing to show yet :(
             <% } %>
-
-
-
         </div>
     </div>
 
     <div id="right-column">
         <div class="friend-buttons">
-            <% if (currentUser.getUserId() != profileInfo.getUserId()) { %>
-                <% if (FriendsInformation.areFriends(currentUser.getUserId(), profileInfo.getUserId())) { %>
-                    <div>
-                        <button class="fun-button"
-                                onclick="unfriend()">
-                            Unfriend
-                        </button>
-                    </div>
+            <% if (currentUser.getUserId() != profileInfo.getUserId()) {
+                 if (FriendsInformation.areFriends(currentUser.getUserId(), profileInfo.getUserId())) { %>
+                    <button class="fun-button"
+                            onclick="unfriend()">
+                        Unfriend
+                    </button>
                 <% } else if (FriendRequestInformation
-                                    .getSentFriendRequestsReceiversIds(currentUser.getUserId())
+                                    .getSentFriendRequestsReceiverIds(currentUser.getUserId())
                                         .contains(profileInfo.getUserId())) { %>
                 <button class="fun-button"
-                        onclick="removeRequest()">
+                        onclick="cancelRequest()">
                     Cancel Request
                 </button>
 
                 <% } else if (FriendRequestInformation
-                                    .getReceivedFriendRequestsSendersIds(currentUser.getUserId())
+                                    .getReceivedFriendRequestsSenderIds(currentUser.getUserId())
                                         .contains(profileInfo.getUserId())) { %>
             <div>
                 <button class="fun-button"

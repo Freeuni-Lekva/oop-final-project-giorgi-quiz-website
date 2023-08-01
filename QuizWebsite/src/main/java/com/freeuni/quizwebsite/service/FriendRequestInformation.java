@@ -18,7 +18,7 @@ public class FriendRequestInformation {
         return getRequests(userId, true, false);
     }
 
-    public static List<Integer> getSentFriendRequestsReceiversIds(int userId) throws SQLException {
+    public static List<Integer> getSentFriendRequestsReceiverIds(int userId) throws SQLException {
         String query = "SELECT * FROM FRIEND_REQUESTS WHERE user_one = " + userId + ";";
         ResultSet rs = connection.prepareStatement(query).executeQuery();
         List<Integer> receiverIds = new ArrayList<>();
@@ -33,7 +33,7 @@ public class FriendRequestInformation {
         return getRequests(userId, false, false);
     }
 
-    public static List<Integer> getReceivedFriendRequestsSendersIds(int userId) throws SQLException {
+    public static List<Integer> getReceivedFriendRequestsSenderIds(int userId) throws SQLException {
         String query = "SELECT * FROM FRIEND_REQUESTS WHERE user_two = " + userId + ";";
         ResultSet rs = connection.prepareStatement(query).executeQuery();
         List<Integer> senderIds = new ArrayList<>();
