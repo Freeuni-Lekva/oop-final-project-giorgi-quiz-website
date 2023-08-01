@@ -13,7 +13,6 @@
             padding: 0;
         }
 
-        /* Example styles for the tags list */
         #tags-list {
             margin-top: 20px;
             padding: 10px;
@@ -49,13 +48,6 @@
             color: #43a047; /* Dark green on hover */
         }
 
-        /* Additional style for the group header */
-        .tag-group-header {
-            font-size: 18px;
-            color: #43a047; /* Dark green */
-            font-weight: bold;
-        }
-
         .back-button {
             background-color: #f44336; /* Red */
             color: white;
@@ -67,29 +59,23 @@
             margin-top: 10px;
         }
     </style>
-    <!-- Link any necessary external stylesheets and scripts here -->
 </head>
 <body>
 <div id="header">
     <h1>Quiz Website</h1>
-    <!-- Add any header content common to all pages here -->
 </div>
 <div id="container">
-    <div id="left-column">
-        <!-- Add any left column content common to all pages here -->
-    </div>
+    <div id="left-column"></div>
     <div id="right-column">
         <div id="tags-list">
             <button class="home-button" onclick="redirectTo('home_page.jsp')">Home</button>
             <%-- Get the tag name from the request parameter --%>
             <% String tagName = request.getParameter("tagName"); %>
 
-            <h2><%= tagName %></h2> <%-- Display the tag name --%>
+            <h2><%= tagName %></h2>
 
-            <%-- Get the list of quizzes for the specified tag --%>
             <% List<Integer> quizIds = TagsInformation.getQuizzesIdByTagName(tagName); %>
 
-            <%-- Display the quizzes for the specified tag --%>
             <ul>
                 <% for (int quizId : quizIds) { %>
                 <% com.freeuni.quizwebsite.model.db.Quiz quiz = QuizzesInformation.findQuizById(quizId); %>
@@ -97,12 +83,10 @@
                 <% } %>
             </ul>
 
-            <!-- Back button to go back to the previous page -->
             <button class="back-button" onclick="goBack()">Back</button>
         </div>
     </div>
 </div>
-<!-- Add any additional content and scripts common to all pages here -->
 <script>
     function redirectTo(url) {
         window.location.href = url;

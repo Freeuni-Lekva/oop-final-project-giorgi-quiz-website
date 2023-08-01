@@ -103,5 +103,12 @@ public class UsersManipulationTest {
         }
     }
 
+    @Test
+    public void getHashedPassword() {
+        String password = "1234";
+        String hashedPassword = UsersManipulation.hashPassword(password);
+        System.out.println(hashedPassword);
+    }
+
 
 }
