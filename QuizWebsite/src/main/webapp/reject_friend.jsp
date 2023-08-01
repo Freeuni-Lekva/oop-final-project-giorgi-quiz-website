@@ -4,5 +4,5 @@
     FriendRequestManipulation.deleteFriendRequestByIds(Integer.parseInt(request.getParameter("user_id")),
             (Integer) session.getAttribute("current_active"));
 
-    response.sendRedirect("home_page.jsp");
+    response.sendRedirect( request.getHeader("Referer") );
 %>

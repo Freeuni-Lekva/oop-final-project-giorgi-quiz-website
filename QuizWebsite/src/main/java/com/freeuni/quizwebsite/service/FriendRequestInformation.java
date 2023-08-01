@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class FriendRequestInformation {
 
@@ -17,9 +18,29 @@ public class FriendRequestInformation {
         return getRequests(userId, true, false);
     }
 
+    public static List<Integer> getSentFriendRequestsReceiverIds(int userId) throws SQLException {
+        String query = "SELECT * FROM FRIEND_REQUESTS WHERE user_one = " + userId + ";";
+        ResultSet rs = connection.prepareStatement(query).executeQuery();
+        List<Integer> receiverIds = new ArrayList<>();
+        while(rs.next()) {
+            receiverIds.add(rs.getInt("user_two"));
+        }
+        return receiverIds;
+    }
+
     //returns unordered friendRequests received by the user
     public static ArrayList<FriendRequest> getReceivedFriendRequests(int userId) throws SQLException {
         return getRequests(userId, false, false);
+    }
+
+    public static List<Integer> getReceivedFriendRequestsSenderIds(int userId) throws SQLException {
+        String query = "SELECT * FROM FRIEND_REQUESTS WHERE user_two = " + userId + ";";
+        ResultSet rs = connection.prepareStatement(query).executeQuery();
+        List<Integer> senderIds = new ArrayList<>();
+        while(rs.next()) {
+            senderIds.add(rs.getInt("user_one"));
+        }
+        return senderIds;
     }
 
     //returns latest friendRequests sent by the user
