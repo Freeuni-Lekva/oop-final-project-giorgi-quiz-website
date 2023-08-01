@@ -23,14 +23,6 @@ public class DeleteUserServlet extends HttpServlet {
                 throw new RuntimeException("VIGINDARAV!");
             }
             UsersManipulation.deleteUserById(profile_id);
-            FriendRequestManipulation.deleteAllRequestsById(profile_id);
-            FriendsManipulation.deleteAllFriendsById(profile_id);
-            QuizManipulation.deleteQuizByUserId(profile_id);
-            // QuestionManipulation.deleteAllQuestionsByUserId(profile_id);
-            ChallengesManipulation.deleteChallengeBySenderId(profile_id);
-            ChallengesManipulation.deleteChallengeByReceiverId(profile_id);
-            AnnouncementManipulation.deleteUsersAllAnnouncement(profile_id);
-            // should we delete note mails as well?
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

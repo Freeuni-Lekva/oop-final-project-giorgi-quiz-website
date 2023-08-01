@@ -42,38 +42,38 @@ public class FriendRequestManipulation {
     }
 
     public static void deleteAllSentRequests(User user) throws SQLException {
-        String update = "DELETE FROM FRIENDS " +
+        String update = "DELETE FROM FRIEND_REQUESTS " +
                         "WHERE user_one = " + user.getUserId() + ";";
         connection.prepareStatement(update).executeUpdate();
     }
 
     public static void deleteAllReceivedRequests(User user) throws SQLException {
-        String update = "DELETE FROM FRIENDS " +
+        String update = "DELETE FROM FRIEND_REQUESTS " +
                         "WHERE user_two = " + user.getUserId() + ";";
         connection.prepareStatement(update).executeUpdate();
     }
 
     public static void deleteAllRequests(User user) throws SQLException {
-        String update = "DELETE FROM FRIENDS " +
+        String update = "DELETE FROM FRIEND_REQUESTS " +
                         "WHERE user_one = " + user.getUserId() + " OR " +
                         "user_two = " + user.getUserId() + ";";
         connection.prepareStatement(update).executeUpdate();
     }
 
     public static void deleteAllSentRequestsById(int userId) throws SQLException {
-        String update = "DELETE FROM FRIENDS " +
+        String update = "DELETE FROM FRIEND_REQUESTS " +
                         "WHERE user_one = " + userId + ";";
         connection.prepareStatement(update).executeUpdate();
     }
 
     public static void deleteAllReceivedRequestsById(int userId) throws SQLException {
-        String update = "DELETE FROM FRIENDS " +
+        String update = "DELETE FROM FRIEND_REQUESTS " +
                         "WHERE user_two = " + userId + ";";
         connection.prepareStatement(update).executeUpdate();
     }
 
     public static void deleteAllRequestsById(int userId) throws SQLException {
-        String update = "DELETE FROM FRIENDS " +
+        String update = "DELETE FROM FRIEND_REQUESTS " +
                         "WHERE user_one = " + userId + " OR " +
                         "user_two = " + userId + ";";
         connection.prepareStatement(update).executeUpdate();

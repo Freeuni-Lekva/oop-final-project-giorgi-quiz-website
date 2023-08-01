@@ -335,7 +335,6 @@
 <div id="header">
     <h1>Quiz Website</h1>
     <button class="fun-button" style="margin-right: 10px;" onclick="redirectTo('top_Ten.jsp',<%=(Integer) session.getAttribute("current_active")%>)">TOP 10</button>
-    <button id="note_Mail-button" class="fun-button" style="margin-right: 10px;" onclick="redirectTo('note_Mail',<%=(Integer) session.getAttribute("current_active")%>)">Note Mail</button>
     <button class="fun-button" style="margin-right: 10px;" onclick="redirectTo('tags.jsp',<%=(Integer) session.getAttribute("current_active")%>)">TAGS</button>
     <button id="note_Mail-button" class="fun-button" style="margin-right: 10px;" onclick="redirectTo('note_Mail',<%=(Integer) session.getAttribute("current_active")%>)">Note Mail</button>
     <button id="challenges-button" class="fun-button" style="margin-right: 10px;" onclick="redirectTo('challenges',<%=(Integer) session.getAttribute("current_active")%>)">Challenges</button>
@@ -421,8 +420,7 @@
             </div>
             <% }
             } %>
-            <button class="fun-button" onclick="redirectTo('add-friends', <%=(Integer) session.getAttribute("current_active")%>)">
-                <!-- Replace 'add-friends' with your add friends URL -->
+            <button class="fun-button" onclick="redirectTo('add-friends')">
                 <i class="fun-icon fas fa-user-plus"></i> Add Friends
             </button>
         </div>

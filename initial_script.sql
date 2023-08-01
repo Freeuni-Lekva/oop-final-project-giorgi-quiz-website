@@ -117,7 +117,7 @@ CREATE TABLE FRIENDS
 (
     user_one            INT,
     user_two            INT,
-    relationship_status VARCHAR(100) DEFAULT 'FRIENDS',
+    relationship_status VARCHAR(100),
     add_date            TIMESTAMP DEFAULT NOW()
 );
 
@@ -203,21 +203,30 @@ CREATE TABLE POSSIBLE_ANSWERS
     question_id     INT,
     possible_answer varchar(256)
 );
+CREATE TABLE TAGS
+(
+    quiz_id int,
+    tag_name varchar(256)
+);
+INSERT INTO TAGS (quiz_id, tag_name) VALUES
+                                         (1, 'Science'),
+                                         (1, 'Biology'),
+                                         (1, 'History'),
+                                         (1, 'Ancient Civilizations'),
+                                         (1, 'Archaeology'),
+                                         (2, 'Mathematics'),
+                                         (2, 'Science'),
+                                         (2, 'Algebra');
 
-INSERT INTO POSSIBLE_ANSWERS (question_id, possible_answer)
-VALUES (2, 'deda'),
-       (2, 'dzma'),
-       (2, 'mama'),
-       (2, 'da');
 
--- password is 1234 testAdmin
-INSERT INTO quiz_db.`users`
-(user_id,
- first_name,
- last_name,
- username,
- bio,
- password)
+-- pasword is 1234 test user
+INSERT INTO `quiz_db`.`users`
+(`user_id`,
+ `first_name`,
+ `last_name`,
+ `username`,
+ `bio`,
+ `password`)
 VALUES
     (9999,
      'Eduard',
@@ -246,23 +255,21 @@ INSERT INTO QUIZES (quiz_id,user_id, name, description, sorted, one_or_multiple,
 VALUES (9999,9999, 'test car quizz', 'magari', 1, 0, 1, 1,'PUBLISHED',1),
        (9998,9999,'test history quizz','educational',1,0,1,1,'CREATED',2);
 
--- password is 1234 testAdmin
-INSERT INTO quiz_db.`users`
-(user_id,
- first_name,
- last_name,
- username,
- bio,
- password,
- is_admin)
+-- pasword is 1234 testAdmin
+INSERT INTO `quiz_db`.`users`
+(`user_id`,
+ `first_name`,
+ `last_name`,
+ `username`,
+ `bio`,
+ `password`)
 VALUES
     (10000,
      'Mikheil',
      'Saakashvili',
      'TestUserAdmin',
      'Test Bio 1233 !@#$ <>?',
-     '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4',
-     1);
+     '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4');
 INSERT INTO ACHIEVEMENTS (user_id, achievement)
 VALUES (10000, 'I_AM_THE_GRATEST'),
        (10000, 'AMATEUR_AUTHOR');

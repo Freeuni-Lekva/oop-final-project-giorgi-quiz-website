@@ -93,7 +93,7 @@
       if (i > 10) break;
   %>
   <div class="quiz-item">
-    <p class="rank-label <%= i <= 3 ? "green" : "blue" %>">Number <%= i %></p>
+    <p class="rank-label <%= i <= 3 ? "green" : "blue" %>">#<%=i%></p>
     <a href="quiz?id=<%=quiz.getQuizId()%>" style="color: <%= i <= 3 ? "#008000" : "#0000FF" %>;">
       <%=quiz.getName() %>
     </a>

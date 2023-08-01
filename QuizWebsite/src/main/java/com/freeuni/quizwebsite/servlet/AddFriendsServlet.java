@@ -18,9 +18,6 @@ public class AddFriendsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
-        if(Integer.parseInt(httpServletRequest.getParameter("user_id")) != ((Integer) httpServletRequest.getSession().getAttribute("current_active")).intValue()){
-            throw new RuntimeException();
-        }
         List<User> users;
         try {
             users = UsersInformation.findAllUsers();
