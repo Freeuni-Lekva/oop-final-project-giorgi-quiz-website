@@ -112,7 +112,7 @@ public class UsersInformation {
         return userlist;
     }
 
-    //returns all users exept admins
+    //returns all users except admins
     public static List<User> exceptAdmins() throws SQLException {
         ResultSet resultSet;
         resultSet = connection.prepareStatement("SELECT * FROM USERS u " +

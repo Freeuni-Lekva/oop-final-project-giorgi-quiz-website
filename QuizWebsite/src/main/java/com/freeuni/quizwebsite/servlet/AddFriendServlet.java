@@ -18,7 +18,7 @@ public class AddFriendServlet extends HttpServlet {
         // Get the current active user_id from the session
         Integer currentUserId = (Integer) httpServletRequest.getSession().getAttribute("current_active");
         if (currentUserId == null) {
-            httpServletResponse.sendRedirect("login"); // Replace 'login' with the actual login page URL
+            httpServletResponse.sendRedirect("login");
             return;
         }
 

@@ -14,7 +14,6 @@
 <html>
 <head>
     <title>Notes Mailbox</title>
-    <!-- Add any CSS styles you need for the notes mailbox page here -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -31,11 +30,7 @@
             padding: 20px;
         }
 
-        /* Style for each note item */
 
-             /* ... */
-
-             /* Style for each note item */
         .note-item {
              margin-bottom: 20px;
              padding: 20px;
@@ -46,10 +41,6 @@
              position: relative; /* To accommodate the animation */
              word-wrap: break-word; /* Breaks words to prevent overflow */
         }
-
-        /* ... */
-
-
     .note-item:hover {
             transform: translateY(-5px); /* Add a slight lift on hover */
             transition: transform 0.2s ease; /* Smooth animation */
@@ -114,7 +105,9 @@
             transition: .4s;
         }
         #toggleLabel {
-            color: black; /* initial color */
+
+            color: black;
+
         }
 
         .slider:before {
