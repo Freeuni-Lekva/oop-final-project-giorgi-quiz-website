@@ -317,6 +317,18 @@
         .friend-request-item:hover {
             background-color: #c5e1a5;
         }
+        #admin-controls input[type="submit"] {
+            background-color: dodgerblue;
+            border-radius: 4px; /* Add border-radius to make the button less square */
+            padding: 8px 20px; /* Adjust padding to make the button wider */
+            margin-left: 10px; /* Adjust the margin to move the button a bit to the right */
+        }
+
+        #admin-controls input[type="text"] {
+            font-size: 16px; /* Adjust the font size to make the text field bigger */
+            margin-right: 10px; /* Adjust the margin to move the text field a bit to the right */
+            margin-left: 10px; /* Adjust the margin to move the text field a bit to the right */
+        }
 
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -463,6 +475,21 @@
         window.location.href = fullURL;
     }
 </script>
+<form action="doAnnouncement" method="post">
+    <%
+        boolean isAdmin = UsersInformation.findUserById((Integer) session.getAttribute("current_active")).isAdmin();
+        if (isAdmin) {
+    %>
+    <div id="admin-controls">
+        <input type="text" id="announcement_text" placeholder="Enter announcement text" name="announcement-text" required>
+        <!-- Add a hidden input field for current_active -->
+        <input type="hidden" name="current_active" value="<%= session.getAttribute("current_active") %>">
+        <input type="submit" value="post announcement">
+    </div>
+    <%
+        }
+    %>
+</form>
 <div id="announcements">
     <h2>Announcements</h2>
     <% List<Announcement> announcements;
