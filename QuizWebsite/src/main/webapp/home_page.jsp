@@ -382,12 +382,14 @@
             <% }
             } %>
         </div>
-        <div id="search-bar">
-            <input type="text" placeholder="Search">
-            <button class="fun-button" onclick="redirectTo('search-results')">
-                <i class="fun-icon fas fa-search"></i> Search
-            </button>
-        </div>
+        <form action="search-results" method="get">
+            <div id="search-bar">
+                <input type="text" name="search-input" placeholder="Search">
+                <button type="submit" class="fun-button">
+                    <i class="fun-icon fas fa-search"></i> Search
+                </button>
+            </div>
+        </form>
         <div id="quizzes">
             <h2>Your Friends' Quizzes</h2>
             <% List<Quiz> quizzes;
