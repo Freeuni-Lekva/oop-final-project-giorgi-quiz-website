@@ -117,7 +117,7 @@ CREATE TABLE FRIENDS
 (
     user_one            INT,
     user_two            INT,
-    relationship_status VARCHAR(100),
+    relationship_status VARCHAR(100) DEFAULT 'FRIENDS',
     add_date            TIMESTAMP DEFAULT NOW()
 );
 
