@@ -1,3 +1,4 @@
+<%@ page import="com.freeuni.quizwebsite.service.UsersInformation" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -140,13 +141,13 @@
   <h1 style="text-align: center; margin-bottom: 30px;">Create Quiz</h1>
   <button class="home-button" onclick="redirectTo('home_page.jsp')">Home</button>
   <input class="form-input" type="text" name="quizName" placeholder="Quiz Name" required>
-  <div class="checkbox-group">
-    <label><input type="checkbox" name="randomQuestions"> Random Questions</label>
-    <label><input type="checkbox" name="onePage"> One page vs. Multiple Pages</label>
-    <label><input type="checkbox" name="immediateCorrection"> Immediate Correction</label>
-    <label><input type="checkbox" name="practiceMode"> Practice Mode</label>
-  </div>
-  <form id="quizForm" method="post" action="create_quiz_process.jsp">
+  <form id="quizForm" method="post" action="CreateQuiz">
+    <div class="checkbox-group">
+      <label><input type="checkbox" name="randomQuestions"> Random Questions</label>
+      <label><input type="checkbox" name="onePage"> One page vs. Multiple Pages</label>
+      <label><input type="checkbox" name="immediateCorrection"> Immediate Correction</label>
+      <label><input type="checkbox" name="practiceMode"> Practice Mode</label>
+    </div>
     <div id="questionSection">  <!-- Wrapper div -->
       <label for="btn-group" style="display: block; margin-top: 20px;">Next question type</label>
       <div class="btn-group" id="btn-group">
@@ -171,14 +172,17 @@
     questionField.setAttribute('type', 'text');
     questionField.setAttribute('name', questionType);
     questionField.setAttribute('placeholder', 'Enter your ' + questionType);
+    questionField.setAttribute('name', 'questions[]');
     questionField.classList.add('form-input');
     container.appendChild(questionField);
+
 
     if (questionType === 'pictureResponse') {
       var pictureUrlField = document.createElement('input');
       pictureUrlField.setAttribute('type', 'text');
       pictureUrlField.setAttribute('name', 'pictureUrl');
       pictureUrlField.setAttribute('placeholder', 'Enter picture URL');
+      pictureUrlField.setAttribute('name', 'pictureUrls[]');
       pictureUrlField.classList.add('form-input');
       container.appendChild(pictureUrlField);
     }
@@ -206,6 +210,7 @@
       answerField.setAttribute('type', 'text');
       answerField.setAttribute('name', 'answer');
       answerField.setAttribute('placeholder', 'Enter your answer');
+      answerField.setAttribute('name','answers[]');
       answerField.classList.add('form-input');
       answerField.style.flexGrow = '1';
       answerContainer.appendChild(answerField);
@@ -214,7 +219,7 @@
         var correctAnswerCheckbox = document.createElement('input');
         correctAnswerCheckbox.setAttribute('type', 'checkbox');
         correctAnswerCheckbox.setAttribute('name', 'correctAnswer');
-
+        correctAnswerCheckbox.setAttribute('name','answers[]');
         var label = document.createElement('label');
         label.textContent = ' Correct';
         label.style.backgroundColor = '#007bff';

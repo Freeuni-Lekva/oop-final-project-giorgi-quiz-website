@@ -1,6 +1,8 @@
 package com.freeuni.quizwebsite.service.manipulation;
 
 import com.freeuni.quizwebsite.db_connection.ConnectToDB;
+import com.freeuni.quizwebsite.service.QuestionInformation;
+import com.freeuni.quizwebsite.service.QuizzesInformation;
 import com.freeuni.quizwebsite.service.UsersInformation;
 
 import java.sql.Connection;
@@ -13,9 +15,11 @@ public class QuizManipulation {
 
     public static void deleteQuizByQuizId(int quizId) throws SQLException {
         connection.prepareStatement("DELETE FROM quizes WHERE quiz_id = " + quizId +";").executeUpdate();
+        QuestionsManipulation.deleteQuestionByQuizId(quizId);
     }
     public static void deleteQuizByName(String name) throws SQLException {
         connection.prepareStatement("DELETE FROM quizes WHERE name = \"" +name+"\";").executeUpdate();
+
     }
     public static void deleteQuizByUserIDAndName(int userId,String name) throws SQLException {
         connection.prepareStatement("DELETE FROM quizes WHERE name = \"" +name+"\" and user_id ="+userId+";").executeUpdate();
