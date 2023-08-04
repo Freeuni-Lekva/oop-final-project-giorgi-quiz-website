@@ -317,6 +317,18 @@
         .friend-request-item:hover {
             background-color: #c5e1a5;
         }
+        #admin-controls input[type="submit"] {
+            background-color: dodgerblue;
+            border-radius: 4px; /* Add border-radius to make the button less square */
+            padding: 8px 20px; /* Adjust padding to make the button wider */
+            margin-left: 10px; /* Adjust the margin to move the button a bit to the right */
+        }
+
+        #admin-controls input[type="text"] {
+            font-size: 16px; /* Adjust the font size to make the text field bigger */
+            margin-right: 10px; /* Adjust the margin to move the text field a bit to the right */
+            margin-left: 10px; /* Adjust the margin to move the text field a bit to the right */
+        }
 
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -334,6 +346,9 @@
 %>
 <div id="header">
     <h1>Quiz Website</h1>
+    <button class="fun-button" style="margin-right: 10px;" onclick="redirectTo('top_Ten.jsp',<%=(Integer) session.getAttribute("current_active")%>)">TOP 10</button>
+    <button class="fun-button" style="margin-right: 10px;" onclick="redirectTo('tags.jsp',<%=(Integer) session.getAttribute("current_active")%>)">TAGS</button>
+    <button id="note_Mail-button" class="fun-button" style="margin-right: 10px;" onclick="redirectTo('note_Mail',<%=(Integer) session.getAttribute("current_active")%>)">Note Mail</button>
     <button id="challenges-button" class="fun-button" style="margin-right: 10px;" onclick="redirectTo('challenges',<%=(Integer) session.getAttribute("current_active")%>)">Challenges</button>
     <button class="fun-button" style="margin-right: auto;" onclick="redirectTo('logout.jsp')">Log Out</button>
 </div>
@@ -419,8 +434,7 @@
             </div>
             <% }
             } %>
-            <button class="fun-button" onclick="redirectTo('add-friends', <%=(Integer) session.getAttribute("current_active")%>)">
-                <!-- Replace 'add-friends' with your add friends URL -->
+            <button class="fun-button" onclick="redirectTo('add-friends')">
                 <i class="fun-icon fas fa-user-plus"></i> Add Friends
             </button>
         </div>
@@ -463,6 +477,21 @@
         window.location.href = fullURL;
     }
 </script>
+<form action="doAnnouncement" method="post">
+    <%
+        boolean isAdmin = UsersInformation.findUserById((Integer) session.getAttribute("current_active")).isAdmin();
+        if (isAdmin) {
+    %>
+    <div id="admin-controls">
+        <input type="text" id="announcement_text" placeholder="Enter announcement text" name="announcement-text" required>
+        <!-- Add a hidden input field for current_active -->
+        <input type="hidden" name="current_active" value="<%= session.getAttribute("current_active") %>">
+        <input type="submit" value="post announcement">
+    </div>
+    <%
+        }
+    %>
+</form>
 <div id="announcements">
     <h2>Announcements</h2>
     <% List<Announcement> announcements;
@@ -517,13 +546,24 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         const challengesButton = document.getElementById('challenges-button');
+        const noteMailButton = document.getElementById('note_Mail-button');
         const previousChallengesCount = localStorage.getItem('challengesCount');
+        const previousNoteMailsCount = localStorage.getItem('noteMailsCount');
         const currentChallengesCount = <%= ChallengesInformation.getUserReceivedChallenges((Integer) session.getAttribute("current_active")).size() %>;
+        const currentNoteMailsCount = <%= NoteMailInformation.getUserReceivedNotes((Integer) session.getAttribute("current_active")).size() %>;
+
         if (previousChallengesCount && parseInt(previousChallengesCount) < currentChallengesCount) {
             challengesButton.style.backgroundColor = 'red';
         }
+
+        if (previousNoteMailsCount && parseInt(previousNoteMailsCount) < currentNoteMailsCount) {
+            noteMailButton.style.backgroundColor = 'red';
+        }
+
         localStorage.setItem('challengesCount', currentChallengesCount.toString());
+        localStorage.setItem('noteMailsCount', currentNoteMailsCount.toString());
     });
+
 </script>
 </body>
 </html>

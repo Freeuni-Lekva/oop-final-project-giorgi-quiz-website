@@ -1,7 +1,7 @@
 package com.freeuni.quizwebsite.servlet;
 
-import com.freeuni.quizwebsite.model.db.Challenge;
-import com.freeuni.quizwebsite.service.ChallengesInformation;
+import com.freeuni.quizwebsite.model.db.NoteMail;
+import com.freeuni.quizwebsite.service.NoteMailInformation;
 import jakarta.servlet.annotation.WebServlet;
 
 import jakarta.servlet.ServletException;
@@ -13,9 +13,11 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/challenges")
-public class ChallengesServlet extends HttpServlet {
+@WebServlet("/note_Mail")
+public class NoteMailServlet extends HttpServlet {
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
+
+
         if (httpServletRequest.getSession().getAttribute("current_active") == null) {
             throw new RuntimeException();
         }
@@ -23,13 +25,19 @@ public class ChallengesServlet extends HttpServlet {
             throw new RuntimeException();
         }
         int userId = Integer.parseInt(httpServletRequest.getParameter("user_id"));
-        List<Challenge> challenges;
+        List<NoteMail> recive;
+        List<NoteMail> sent;
+        // ...
         try {
-            challenges = ChallengesInformation.getUserReceivedChallenges(userId);
+            recive = NoteMailInformation.getUserReceivedNotes(userId);
+            sent = NoteMailInformation.getUserSentNotes(userId);
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        httpServletRequest.setAttribute("challenges", challenges);
-        httpServletRequest.getRequestDispatcher("challenges.jsp").forward(httpServletRequest, httpServletResponse);
+        httpServletRequest.setAttribute("received", recive);
+        httpServletRequest.setAttribute("sent",sent);
+        httpServletRequest.getRequestDispatcher("note_Mail.jsp").forward(httpServletRequest, httpServletResponse);
+// ...
     }
 }

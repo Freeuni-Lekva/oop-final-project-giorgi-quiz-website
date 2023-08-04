@@ -63,6 +63,15 @@ public class UsersManipulation {
         PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery);
         preparedStatement.setInt(1, userId);
         preparedStatement.executeUpdate();
+        FriendRequestManipulation.deleteAllRequestsById(userId);
+        FriendsManipulation.deleteAllFriendsById(userId);
+        QuizManipulation.deleteQuizByUserId(userId);
+        ChallengesManipulation.deleteChallengeBySenderId(userId);
+        ChallengesManipulation.deleteChallengeByReceiverId(userId);
+        AnnouncementManipulation.deleteUsersAllAnnouncement(userId);
+        AchievementsManipulation.deleteAchievementsByUserId(userId);
+        NoteMailManipulation.deleteAllMailByReceiverId(userId);
+        NoteMailManipulation.deleteAllMailBySenderId(userId);
     }
 
 
