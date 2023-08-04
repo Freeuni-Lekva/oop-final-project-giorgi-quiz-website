@@ -35,24 +35,22 @@ public class CreateQuizServlet extends HttpServlet {
             System.out.println(name);
             String description = httpServletRequest.getParameter("description");
             System.out.println(description);
-            boolean sorted = !Boolean.parseBoolean(httpServletRequest.getParameter("randomQuestions"));
-            System.out.println(sorted);
-            boolean oneOrMultiple = Boolean.parseBoolean(httpServletRequest.getParameter("onePage"));
+            String randomQuestionsParam = httpServletRequest.getParameter("randomQuestions");
+            boolean randomQuestions = "on".equals(randomQuestionsParam);
+            System.out.println(randomQuestions);
+            String oneOrMultiplestr = httpServletRequest.getParameter("onePage");
+            boolean oneOrMultiple = "on".equals(oneOrMultiplestr);
             System.out.println(oneOrMultiple);
             boolean instantFeedback = Boolean.parseBoolean(httpServletRequest.getParameter("immediateCorrection"));
             System.out.println(instantFeedback);
             boolean practiceMode = Boolean.parseBoolean(httpServletRequest.getParameter("practiceMode"));
             System.out.println(practiceMode);
-            String quizStates = httpServletRequest.getParameter("quizStates");
-            System.out.println(quizStates);
-            int viewCount = Integer.parseInt(httpServletRequest.getParameter("viewCount"));
-            System.out.println(viewCount);
-
+            System.out.println("1");
             // Call addQuiz method to add quiz to database
-            QuizManipulation.addQuiz(userId, name, description, sorted, oneOrMultiple, instantFeedback, practiceMode, quizStates, viewCount);
+            QuizManipulation.addQuiz(userId, name, description, randomQuestions, oneOrMultiple, instantFeedback, practiceMode, "CREATED", 0);
 
             // Assume questions, possible answers, and correct answers are passed as arrays
-            String[] questions = httpServletRequest.getParameterValues("questions");
+            String[] questions = httpServletRequest.getParameterValues("questions[]");
             String[] possibleAnswers = httpServletRequest.getParameterValues("possibleAnswers");
             String[] correctAnswers = httpServletRequest.getParameterValues("correctAnswers");
 
@@ -64,7 +62,7 @@ public class CreateQuizServlet extends HttpServlet {
             }
 
             // Redirect to a success page
-            response.sendRedirect("quizCreationSuccess.jsp");
+            response.sendRedirect("home_page.jsp");
 
         } catch (SQLException e) {
             e.printStackTrace();

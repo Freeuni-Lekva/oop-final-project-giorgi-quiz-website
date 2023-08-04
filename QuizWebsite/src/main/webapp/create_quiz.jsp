@@ -140,8 +140,8 @@
 <div class="form-container">
   <h1 style="text-align: center; margin-bottom: 30px;">Create Quiz</h1>
   <button class="home-button" onclick="redirectTo('home_page.jsp')">Home</button>
-  <input class="form-input" type="text" name="quizName" placeholder="Quiz Name" required>
   <form id="quizForm" method="post" action="CreateQuiz">
+    <input class="form-input" type="text" name="quizName" placeholder="Quiz Name" required>
     <div class="checkbox-group">
       <label><input type="checkbox" name="randomQuestions"> Random Questions</label>
       <label><input type="checkbox" name="onePage"> One page vs. Multiple Pages</label>
