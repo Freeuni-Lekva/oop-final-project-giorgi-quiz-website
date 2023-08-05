@@ -41,10 +41,31 @@ public class CreateQuizServlet extends HttpServlet {
             String[] questions = httpServletRequest.getParameterValues("questions[]");
             String[] questionsTypes = httpServletRequest.getParameterValues("questionTypes[]");
             String[] correctAnswers = httpServletRequest.getParameterValues("answers[]");
+            for (String question : questions) {
+                System.out.print(question + " ");
+            }
+            System.out.println();
+            for (String question : questionsTypes) {
+                System.out.print(question + " ");
+            }
+            System.out.println();
+            for (String question : correctAnswers) {
+                System.out.print(question + " ");
+            }
+            System.out.println();
 
-            // Call addQuestion, addPossibleAnswer and addCorrectAnswer for each question
+            String[] urls = httpServletRequest.getParameterValues("pictureUrls[]");
+            int j = 0;
+
             for (int i = 0; i < questions.length; i++) {
-                int questionId = QuestionsManipulation.addQuestion(QuizzesInformation.findQuizzesByName(name).get(0).getQuizId(), "", questionsTypes[i], questions[i], i); // Add question to DB and get questionId
+                if (questionsTypes[i].equals("pictureResponse")) {
+                    int questionId = QuestionsManipulation.addQuestion(QuizzesInformation.findQuizzesByName(name).get(0).getQuizId(),
+                            urls[j], questionsTypes[i], questions[i], i); // Add question to DB and get questionId
+                    j++;
+                } else {
+                    int questionId = QuestionsManipulation.addQuestion(QuizzesInformation.findQuizzesByName(name).get(0).getQuizId(),
+                            "", questionsTypes[i], questions[i], i); // Add question to DB and get questionId
+                }
             }
 
             // Redirect to a success page
