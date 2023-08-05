@@ -1,5 +1,4 @@
-<%@ page import="com.freeuni.quizwebsite.service.UsersInformation" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html>
 <head>
   <title>Create Quiz</title>
@@ -106,6 +105,7 @@
     .checkbox-group input {
       margin-right: 10px;
     }
+
     /* Style for the question container */
     .question-container {
       border: 1px solid #cccccc;
@@ -113,43 +113,77 @@
       padding: 15px;
       margin-bottom: 10px;
     }
-       /* Other styles remain unchanged */
 
-       /* Small button style */
-     .small-button {
-       flex: 1;
-       margin: 0 10px;
-       padding: 5px 0; /* smaller padding */
-       color: white;
-       background-color: #007bff;
-       border: none;
-       cursor: pointer;
-       border-radius: 4px;
-       text-align: center;
-       font-size: 14px; /* smaller font size */
-     }
+    /* Small button style */
+    .small-button {
+      flex: 1;
+      margin: 0 10px;
+      padding: 5px 0; /* smaller padding */
+      color: white;
+      background-color: #007bff;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+      text-align: center;
+      font-size: 14px; /* smaller font size */
+    }
 
     .small-button:hover {
       background-color: #0056b3;
     }
 
+    /* Additional styles for improved aesthetics */
+    .form-header {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 24px;
+    }
+
+    .form-section {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .form-submit-section {
+      text-align: center;
+    }
+
+    .form-error-message {
+      color: red;
+      font-size: 14px;
+    }
   </style>
 
 </head>
 <body>
 <div class="form-container">
-  <h1 style="text-align: center; margin-bottom: 30px;">Create Quiz</h1>
-  <button class="home-button" onclick="redirectTo('home_page.jsp')">Home</button>
-  <form id="quizForm" method="post" action="CreateQuiz">
-    <input class="form-input" type="text" name="quizName" placeholder="Quiz Name" required>
-    <div class="checkbox-group">
+  <div class="form-header">Create Quiz</div>
+  <button class="home-button" onclick="redirectTo('home_page.jsp')">Home</button><br>
+  <form id="quizForm" method="post" action="CreateQuiz" onsubmit="return validateForm()">
+    <div class="form-section">
+      <label class="form-label" for="quizName">Quiz Name:</label>
+      <input class="form-input" type="text" name="quizName" id="quizName" placeholder="Quiz Name" required>
+    </div>
+
+    <div class="form-section">
+      <label class="form-label" for="quizDescription">Quiz Description:</label>
+      <textarea class="form-input" name="quizDescription" id="quizDescription" placeholder="Quiz Description" required></textarea>
+    </div>
+
+    <div class="checkbox-group form-section">
       <label><input type="checkbox" name="randomQuestions"> Random Questions</label>
-      <label><input type="checkbox" name="onePage"> One page vs. Multiple Pages</label>
+      <label><input type="checkbox" name="onePage"> One Page </label>
       <label><input type="checkbox" name="immediateCorrection"> Immediate Correction</label>
       <label><input type="checkbox" name="practiceMode"> Practice Mode</label>
     </div>
-    <div id="questionSection">  <!-- Wrapper div -->
-      <label for="btn-group" style="display: block; margin-top: 20px;">Next question type</label>
+
+    <div class="question-section form-section" id="questionSection">
+      <label for="btn-group">Next question type:</label>
       <div class="btn-group" id="btn-group">
         <button type="button" onclick="addQuestion('questionResponse')">Question-Response</button>
         <button type="button" onclick="addQuestion('fillBlank')">Fill in the Blank</button>
@@ -157,10 +191,15 @@
         <button type="button" onclick="addQuestion('pictureResponse')">Picture-Response</button>
       </div>
     </div>
-    <input class="submit-button" type="submit" value="Submit Quiz">
+
+    <div class="form-submit-section">
+      <input class="submit-button" type="submit" value="Submit Quiz">
+    </div>
   </form>
 
-</div><script>
+</div>
+
+<script>
   function redirectTo(url) {
     window.location.href = url;
   }
@@ -168,11 +207,16 @@
     var container = document.createElement('div');
     container.classList.add('question-container');
 
+    var questionTypeField = document.createElement('input');
+    questionTypeField.setAttribute('type', 'hidden');
+    questionTypeField.setAttribute('name', 'questionTypes[]');
+    questionTypeField.setAttribute('value', questionType);
+    container.appendChild(questionTypeField);
+
     var questionField = document.createElement('input');
     questionField.setAttribute('type', 'text');
-    questionField.setAttribute('name', questionType);
-    questionField.setAttribute('placeholder', 'Enter your ' + questionType);
     questionField.setAttribute('name', 'questions[]');
+    questionField.setAttribute('placeholder', 'Enter your ' + questionType);
     questionField.classList.add('form-input');
     container.appendChild(questionField);
 
@@ -180,7 +224,6 @@
     if (questionType === 'pictureResponse') {
       var pictureUrlField = document.createElement('input');
       pictureUrlField.setAttribute('type', 'text');
-      pictureUrlField.setAttribute('name', 'pictureUrl');
       pictureUrlField.setAttribute('placeholder', 'Enter picture URL');
       pictureUrlField.setAttribute('name', 'pictureUrls[]');
       pictureUrlField.classList.add('form-input');
@@ -208,7 +251,6 @@
 
       var answerField = document.createElement('input');
       answerField.setAttribute('type', 'text');
-      answerField.setAttribute('name', 'answer');
       answerField.setAttribute('placeholder', 'Enter your answer');
       answerField.setAttribute('name','answers[]');
       answerField.classList.add('form-input');
@@ -248,6 +290,54 @@
     var questionSection = document.getElementById('questionSection');
     var btnGroup = document.getElementById('btn-group');
     questionSection.insertBefore(container, btnGroup);
+  }
+
+  function validateForm() {
+    var quizName = document.getElementById("quizName").value.trim();
+    var quizDescription = document.getElementById("quizDescription").value.trim();
+    var questionContainers = document.getElementsByClassName("question-container");
+
+    if (quizName === "") {
+      alert("Please enter a quiz name.");
+      return false;
+    }
+
+    if (quizDescription === "") {
+      alert("Please enter a quiz description.");
+      return false;
+    }
+
+    if (questionContainers.length === 0) {
+      alert("Please add at least one question to the quiz.");
+      return false;
+    }
+
+    for (var i = 0; i < questionContainers.length; i++) {
+      var questionField = questionContainers[i].querySelector('input[name^="question"]');
+      var answerFields = questionContainers[i].querySelectorAll('input[name^="answer"]');
+
+      var questionValue = questionField.value.trim();
+      if (questionValue === "") {
+        alert("Please fill in the question field in all questions.");
+        return false;
+      }
+
+      var allAnswersEmpty = true;
+      for (var j = 0; j < answerFields.length; j++) {
+        var answerValue = answerFields[j].value.trim();
+        if (answerValue !== "") {
+          allAnswersEmpty = false;
+          break;
+        }
+      }
+
+      if (allAnswersEmpty) {
+        alert("Please fill in at least one answer field in all questions.");
+        return false;
+      }
+    }
+
+    return true;
   }
 </script>
 </body>
