@@ -45,20 +45,20 @@ public class CreateQuizServlet extends HttpServlet {
             String[] questionsTypes = httpServletRequest.getParameterValues("questionTypes[]");
             ArrayList<ArrayList<Boolean>> correctMatrix = new ArrayList<>();
             String argument = httpServletRequest.getParameter("argument");
-            for (int i = 0;i< 2000; i++) {
+            for (int i = 0; i < 2000; i++) {
                 String[] curr;
                 try {
                     curr = httpServletRequest.getParameterValues("answers[" + i + "][]");
-                } catch (Exception e){
+                } catch (Exception e) {
                     break;
                 }
 
                 String[] correct = httpServletRequest.getParameterValues("correctAnswers[" + i + "][]");
-                if(curr==null){
+                if (curr == null) {
                     continue;
                 }
 
-                if(correct!=null) {
+                if (correct != null) {
                     ArrayList<Boolean> curCorrect = new ArrayList<>();
                     for (int j = 0; j < correct.length - 1; j++) {
                         if (correct[j + 1].equals("on") && correct[j].equals("off")) {
@@ -68,7 +68,7 @@ public class CreateQuizServlet extends HttpServlet {
                             curCorrect.add(false);
                         }
                     }
-                    if(correct[correct.length-1].equals("off")){
+                    if (correct[correct.length - 1].equals("off")) {
                         curCorrect.add(false);
                     }
                     correctMatrix.add(curCorrect);
@@ -89,22 +89,49 @@ public class CreateQuizServlet extends HttpServlet {
 
             String[] urls = httpServletRequest.getParameterValues("pictureUrls[]");
             int j = 0;
+            int k = 0;
+            int m = 0;
 
             for (int i = 0; i < questions.length; i++) {
+
                 if (questionsTypes[i].equals("pictureResponse")) {
                     int questionId = QuestionsManipulation.addQuestion(quizId,
                             urls[j], questionsTypes[i], questions[i], i); // Add question to DB and get questionId
                     j++;
-                    String[] curr = httpServletRequest.getParameterValues("answers[" + (i) + "][]");
+                    String[] curr;
+                    while(true){
+                        curr = httpServletRequest.getParameterValues("answers[" + (m) + "][]");
+                        m++;
+                        if(curr != null) break;
+                    }
+
                     for (String answer : curr) {
                         QuestionsManipulation.addCorrectAnswer(questionId, answer);
                     }
                 } else {
                     int questionId = QuestionsManipulation.addQuestion(quizId,
                             "", questionsTypes[i], questions[i], i); // Add question to DB and get questionId
-                    String[] curr = httpServletRequest.getParameterValues("answers[" + (i) + "][]");
-                    for (String answer : curr) {
-                        QuestionsManipulation.addCorrectAnswer(questionId, answer);
+                    String[] curr;
+                    while(true){
+                        curr = httpServletRequest.getParameterValues("answers[" + (m) + "][]");
+                        m++;
+                        if(curr != null) break;
+                    }
+                    if(questionsTypes[i].equals("multipleChoice")){
+                        for (String answer : curr) {
+                            QuestionsManipulation.addPossibleAnswer(questionId, answer);
+                        }
+                        ArrayList<Boolean> currAnswers = correctMatrix.get(k);
+                        for(int l = 0; l < curr.length; l++){
+                            if(currAnswers.get(l)){
+                                QuestionsManipulation.addCorrectAnswer(questionId, curr[l]);
+                            }
+                        }
+                        k++;
+                    }else {
+                        for (String answer : curr) {
+                            QuestionsManipulation.addCorrectAnswer(questionId, answer);
+                        }
                     }
                 }
             }

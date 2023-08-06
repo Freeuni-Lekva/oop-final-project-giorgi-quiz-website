@@ -211,25 +211,7 @@
 
     function freeAnswers() {
         let answers = [];
-
-            let xhr = new XMLHttpRequest();
-            let url = "/CreateQuiz";
-
-            xhr.open("POST", url, true);
-
-            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-            xhr.onreadystatechange = function() {
-                if(this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-                    console.log(this.responseText);
-                }
-            }
-            xhr.send("argument=" + Qid);
-
-
-
-        Qid = 0;
-
+        let Qid = 0;
     }
 
     function addQuestion(questionType) {
