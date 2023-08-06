@@ -5,10 +5,7 @@ import com.freeuni.quizwebsite.service.QuestionInformation;
 import com.freeuni.quizwebsite.service.QuizzesInformation;
 import com.freeuni.quizwebsite.service.UsersInformation;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 
 public class QuizManipulation {
     private static final Connection connection = ConnectToDB.getConnection();
@@ -53,7 +50,7 @@ public class QuizManipulation {
         }
 
         PreparedStatement ps =connection.prepareStatement("INSERT INTO quizes (user_id, name, description, sorted, one_or_multiple" +
-                ", instant_feedback, practice_mode,quiz_state,view_count) VALUES (?,?,?,?,?,?,?,?,?)");
+                ", instant_feedback, practice_mode,quiz_state,view_count) VALUES (?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
         ps.setInt(1, userId);
         ps.setString(2, name);
         ps.setString(3, description);
@@ -64,6 +61,11 @@ public class QuizManipulation {
         ps.setString(8, quizStates);
         ps.setInt(9, viewCount);
         ps.executeUpdate();
-        return 0;
+        ResultSet generatedKeys = ps.getGeneratedKeys();
+        if(generatedKeys.next()) {
+            return generatedKeys.getInt(1);
+        } else {
+            throw new SQLException("Failed to get the generated quiz_id."); //this is the line that is not covered in the tests
+        }
     }
 }

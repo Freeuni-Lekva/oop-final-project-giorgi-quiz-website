@@ -11,6 +11,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 @WebServlet("/CreateQuiz")
 public class CreateQuizServlet extends HttpServlet {
@@ -31,25 +33,27 @@ public class CreateQuizServlet extends HttpServlet {
             String randomQuestionsParam = httpServletRequest.getParameter("randomQuestions");
             boolean randomQuestions = "on".equals(randomQuestionsParam);
             String oneOrMultiplestr = httpServletRequest.getParameter("onePage");
-            boolean oneOrMultiple = "on".equals(oneOrMultiplestr);
-            boolean instantFeedback = Boolean.parseBoolean(httpServletRequest.getParameter("immediateCorrection"));
-            boolean practiceMode = Boolean.parseBoolean(httpServletRequest.getParameter("practiceMode"));
+            boolean oneOrMultiple = !("on".equals(oneOrMultiplestr));
+            String immediateCorrectionStr = httpServletRequest.getParameter("immediateCorrection");
+            boolean instantFeedback = "on".equals(immediateCorrectionStr);
+            String practiceModeStr = httpServletRequest.getParameter("practiceMode");
+            boolean practiceMode = "on".equals(practiceModeStr);
             // Call addQuiz method to add quiz to database
-            QuizManipulation.addQuiz(userId, name, description, randomQuestions, oneOrMultiple, instantFeedback, practiceMode, "CREATED", 0);
+            int quizId = QuizManipulation.addQuiz(userId, name, description, randomQuestions, oneOrMultiple, instantFeedback, practiceMode, "CREATED", 0);
 
-            // Assume questions, possible answers, and correct answers are passed as arrays
             String[] questions = httpServletRequest.getParameterValues("questions[]");
             String[] questionsTypes = httpServletRequest.getParameterValues("questionTypes[]");
-            String[] correctAnswers = httpServletRequest.getParameterValues("answers[]");
+            for (int i = 1; i < questions.length + 1; i++) {
+                String[] curr = httpServletRequest.getParameterValues("answers[" + i + "][]");
+                String[] correct = httpServletRequest.getParameterValues("correctAnswers[" + i + "][]");
+                System.out.println(Arrays.toString(curr));
+                System.out.println(Arrays.toString(correct));
+            }
             for (String question : questions) {
                 System.out.print(question + " ");
             }
             System.out.println();
             for (String question : questionsTypes) {
-                System.out.print(question + " ");
-            }
-            System.out.println();
-            for (String question : correctAnswers) {
                 System.out.print(question + " ");
             }
             System.out.println();
@@ -59,12 +63,20 @@ public class CreateQuizServlet extends HttpServlet {
 
             for (int i = 0; i < questions.length; i++) {
                 if (questionsTypes[i].equals("pictureResponse")) {
-                    int questionId = QuestionsManipulation.addQuestion(QuizzesInformation.findQuizzesByName(name).get(0).getQuizId(),
+                    int questionId = QuestionsManipulation.addQuestion(quizId,
                             urls[j], questionsTypes[i], questions[i], i); // Add question to DB and get questionId
                     j++;
+                    String[] curr = httpServletRequest.getParameterValues("answers[" + (i + 1) + "][]");
+                    for (String answer : curr) {
+                        QuestionsManipulation.addCorrectAnswer(questionId, answer);
+                    }
                 } else {
-                    int questionId = QuestionsManipulation.addQuestion(QuizzesInformation.findQuizzesByName(name).get(0).getQuizId(),
+                    int questionId = QuestionsManipulation.addQuestion(quizId,
                             "", questionsTypes[i], questions[i], i); // Add question to DB and get questionId
+                    String[] curr = httpServletRequest.getParameterValues("answers[" + (i + 1) + "][]");
+                    for (String answer : curr) {
+                        QuestionsManipulation.addCorrectAnswer(questionId, answer);
+                    }
                 }
             }
 
