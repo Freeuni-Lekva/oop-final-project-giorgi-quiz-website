@@ -13,16 +13,16 @@ public class QuizHistoryInformationTest {
     @Test
     public void getQuizzesHistoryByQuizId() throws SQLException {
         List<QuizHistory> quizHistoryList = QuizHistoryInformation.getQuizzesHistoryByQuizId(1);
-        assertTrue(quizHistoryList.stream().anyMatch(e->e.getUser_id()==1));
-        assertTrue(quizHistoryList.stream().noneMatch(e -> e.getUser_id() == -1));
+        assertTrue(quizHistoryList.stream().anyMatch(e->e.getUserId()==1));
+        assertTrue(quizHistoryList.stream().noneMatch(e -> e.getUserId() == -1));
     }
 
     @Test
     public void getQuizzesHistoryByUserId() throws SQLException {
         List<QuizHistory> quizHistoryList = QuizHistoryInformation.getQuizzesHistoryByUserId(1);
-        assertTrue(quizHistoryList.stream().anyMatch(e->e.getQuiz_id()==1));
-        assertTrue(quizHistoryList.stream().allMatch(e->e.getUser_id()==1));
-        assertTrue(quizHistoryList.stream().noneMatch(e -> e.getQuiz_id() == -1));
+        assertTrue(quizHistoryList.stream().anyMatch(e->e.getQuizId()==1));
+        assertTrue(quizHistoryList.stream().allMatch(e->e.getUserId()==1));
+        assertTrue(quizHistoryList.stream().noneMatch(e -> e.getQuizId() == -1));
     }
 
     @Test

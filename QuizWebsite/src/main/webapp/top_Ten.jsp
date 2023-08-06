@@ -94,7 +94,7 @@
   %>
   <div class="quiz-item">
     <p class="rank-label <%= i <= 3 ? "green" : "blue" %>">#<%=i%></p>
-    <a href="quiz?id=<%=quiz.getQuizId()%>" style="color: <%= i <= 3 ? "#008000" : "#0000FF" %>;">
+    <a href="quiz.jsp?id=<%=quiz.getQuizId()%>" style="color: <%= i <= 3 ? "#008000" : "#0000FF" %>;">
       <%=quiz.getName() %>
     </a>
     <p>Views: <%=quiz.getViewCount()%></p>

@@ -106,7 +106,7 @@
                 href="profile?user_id=<%= challenge.getSenderUserId() %>"><%= UsersInformation.findUserById(challenge.getSenderUserId()).getUsername() %>
         </a></p>
         <p><b>Quiz:</b> <a
-                href="quiz?id=<%= challenge.getQuizId() %>"><%= QuizzesInformation.findQuizById(challenge.getQuizId()).getName() %>
+                href="quiz.jsp?id=<%= challenge.getQuizId() %>"><%= QuizzesInformation.findQuizById(challenge.getQuizId()).getName() %>
         </a></p>
         <p><b>Description:</b> <%= challenge.getDescription() %>
         </p>
