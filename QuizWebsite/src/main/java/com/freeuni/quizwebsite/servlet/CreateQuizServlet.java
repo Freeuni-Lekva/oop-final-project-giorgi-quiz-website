@@ -43,11 +43,40 @@ public class CreateQuizServlet extends HttpServlet {
 
             String[] questions = httpServletRequest.getParameterValues("questions[]");
             String[] questionsTypes = httpServletRequest.getParameterValues("questionTypes[]");
-            for (int i = 1; i < questions.length + 1; i++) {
-                String[] curr = httpServletRequest.getParameterValues("answers[" + i + "][]");
+            ArrayList<ArrayList<Boolean>> correctMatrix = new ArrayList<>();
+            String argument = httpServletRequest.getParameter("argument");
+            for (int i = 0;i< 2000; i++) {
+                String[] curr;
+                try {
+                    curr = httpServletRequest.getParameterValues("answers[" + i + "][]");
+                } catch (Exception e){
+                    break;
+                }
+
                 String[] correct = httpServletRequest.getParameterValues("correctAnswers[" + i + "][]");
+                if(curr==null){
+                    continue;
+                }
+
+                if(correct!=null) {
+                    ArrayList<Boolean> curCorrect = new ArrayList<>();
+                    for (int j = 0; j < correct.length - 1; j++) {
+                        if (correct[j + 1].equals("on") && correct[j].equals("off")) {
+                            curCorrect.add(true);
+                            j++;
+                        } else {
+                            curCorrect.add(false);
+                        }
+                    }
+                    if(correct[correct.length-1].equals("off")){
+                        curCorrect.add(false);
+                    }
+                    correctMatrix.add(curCorrect);
+                    System.out.println(curCorrect.toString());
+                }
+
                 System.out.println(Arrays.toString(curr));
-                System.out.println(Arrays.toString(correct));
+
             }
             for (String question : questions) {
                 System.out.print(question + " ");
@@ -66,14 +95,14 @@ public class CreateQuizServlet extends HttpServlet {
                     int questionId = QuestionsManipulation.addQuestion(quizId,
                             urls[j], questionsTypes[i], questions[i], i); // Add question to DB and get questionId
                     j++;
-                    String[] curr = httpServletRequest.getParameterValues("answers[" + (i + 1) + "][]");
+                    String[] curr = httpServletRequest.getParameterValues("answers[" + (i) + "][]");
                     for (String answer : curr) {
                         QuestionsManipulation.addCorrectAnswer(questionId, answer);
                     }
                 } else {
                     int questionId = QuestionsManipulation.addQuestion(quizId,
                             "", questionsTypes[i], questions[i], i); // Add question to DB and get questionId
-                    String[] curr = httpServletRequest.getParameterValues("answers[" + (i + 1) + "][]");
+                    String[] curr = httpServletRequest.getParameterValues("answers[" + (i) + "][]");
                     for (String answer : curr) {
                         QuestionsManipulation.addCorrectAnswer(questionId, answer);
                     }

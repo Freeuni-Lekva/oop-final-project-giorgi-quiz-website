@@ -207,15 +207,36 @@
     }
 
     const answers = [];
+    let Qid = 0;
 
     function freeAnswers() {
         let answers = [];
+
+            let xhr = new XMLHttpRequest();
+            let url = "/CreateQuiz";
+
+            xhr.open("POST", url, true);
+
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+            xhr.onreadystatechange = function() {
+                if(this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+                    console.log(this.responseText);
+                }
+            }
+            xhr.send("argument=" + Qid);
+
+
+
+        Qid = 0;
+
     }
 
     function addQuestion(questionType) {
         var container = document.createElement('div');
         container.classList.add('question-container');
-
+        container.setAttribute('id', Qid);
+        Qid++;
         var questionTypeField = document.createElement('input');
         questionTypeField.setAttribute('type', 'hidden');
         questionTypeField.setAttribute('name', 'questionTypes[]');
@@ -261,7 +282,7 @@
             var answerField = document.createElement('input');
             answerField.setAttribute('type', 'text');
             answerField.setAttribute('placeholder', 'Enter your answer');
-            answerField.setAttribute('name', 'answers[' + answers.length + '][]');
+            answerField.setAttribute('name', 'answers[' + container.id + '][]');
             answerField.classList.add('form-input');
             answerField.style.flexGrow = '1';
             answerContainer.appendChild(answerField);
@@ -269,7 +290,14 @@
             if (questionType === 'multipleChoice') {
                 var correctAnswerCheckbox = document.createElement('input');
                 correctAnswerCheckbox.setAttribute('type', 'checkbox');
-                correctAnswerCheckbox.setAttribute('name', 'correctAnswers[' + answers.length + '][]');
+                correctAnswerCheckbox.setAttribute('name', 'correctAnswers[' + container.id + '][]');
+                correctAnswerCheckbox.setAttribute('value', 'on');
+
+                var correctAnswerHidden = document.createElement('input');
+                correctAnswerHidden.setAttribute('type', 'hidden');
+                correctAnswerHidden.setAttribute('name', 'correctAnswers[' + container.id + '][]');
+                correctAnswerHidden.setAttribute('value', 'off');
+// on->> off on
                 var label = document.createElement('label');
                 label.textContent = ' Correct';
                 label.style.backgroundColor = '#007bff';
@@ -278,8 +306,10 @@
                 label.style.borderRadius = '4px';
                 label.style.cursor = 'pointer';
                 label.insertBefore(correctAnswerCheckbox, label.firstChild);
+                answerContainer.appendChild(correctAnswerHidden);
                 answerContainer.appendChild(label);
             }
+
 
             var deleteAnswerBtn = document.createElement('button');
             deleteAnswerBtn.textContent = 'Delete Answer';
