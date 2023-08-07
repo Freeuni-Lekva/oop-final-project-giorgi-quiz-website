@@ -350,18 +350,16 @@
                 return false;
             }
 
-            var allAnswersEmpty = true;
-            for (var j = 0; j < answerFields.length; j++) {
-                var answerValue = answerFields[j].value.trim();
-                if (answerValue !== "") {
-                    allAnswersEmpty = false;
-                    break;
-                }
+            if (answerFields.length < 1) {
+                return false;
             }
 
-            if (allAnswersEmpty) {
-                alert("Please fill in at least one answer field in all questions.");
-                return false;
+            for (var j = 0; j < answerFields.length; j++) {
+                var answerValue = answerFields[j].value.trim();
+                if (answerValue === "") {
+                    alert("Please fill in all answer fields in all questions.");
+                    return false;
+                }
             }
         }
 
