@@ -248,6 +248,27 @@
             pictureUrlField.style.maxWidth = "100%";
             pictureUrlField.style.boxSizing = "border-box";
             container.appendChild(pictureUrlField);
+
+            // Create image container and append to the main container
+            var imageContainer = document.createElement('div');
+            imageContainer.style.maxWidth = "100%";
+            imageContainer.style.overflow = "hidden";
+            imageContainer.style.marginTop = "10px"; // some space between the input and the image
+
+            var picturePreview = document.createElement('img');
+            picturePreview.style.maxWidth = "100%"; // fit within its container
+            picturePreview.style.height = "auto";
+            imageContainer.appendChild(picturePreview);
+            container.appendChild(imageContainer);
+
+            // Listen to changes in the URL field to update the image preview
+            pictureUrlField.addEventListener('input', function() {
+                if (pictureUrlField.value) {
+                    picturePreview.src = pictureUrlField.value;
+                } else {
+                    picturePreview.removeAttribute('src');  // clear the image if the URL field is empty
+                }
+            });
         }
 
         var deleteQuestionBtn = document.createElement('button');
