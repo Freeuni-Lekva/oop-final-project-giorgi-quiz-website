@@ -186,7 +186,7 @@ CREATE TABLE QUESTIONS
 );
 
 INSERT INTO QUESTIONS (quiz_id, question_type, question)
-VALUES (1, 'QUESTION-RESPONSE', 'Ra hqvia Giorgis?');
+VALUES (1, 'QUESTION_RESPONSE', 'Ra hqvia Giorgis?');
 
 CREATE TABLE ANSWERS
 (
@@ -290,3 +290,10 @@ VALUES (10000, 1, 'rogor xar');
 INSERT INTO QUIZES (quiz_id,user_id, name, description, sorted, one_or_multiple, instant_feedback, practice_mode,quiz_state,view_count)
 VALUES (10000,10000, 'admin car quizz', 'magari', 1, 0, 1, 1,'PUBLISHED',1),
        (10001,10000,'admin history quizz','educational',1,0,1,1,'CREATED',2);
+
+DELETE FROM `quiz_db`.`questions` WHERE (`question_id` = '2');
+DELETE FROM `quiz_db`.`questions` WHERE (`question_id` = '3');
+DELETE FROM `quiz_db`.`questions` WHERE (`question_id` = '4');
+INSERT INTO `quiz_db`.`questions` (`question_id`, `quiz_id`, `question_type`, `question`, `sort_order`) VALUES ('2', '10000', 'QUESTION_RESPONSE', 'საქართველოს დედაქალაქი', '1');
+INSERT INTO `quiz_db`.`questions` (`question_id`, `quiz_id`, `question_type`, `question`, `sort_order`) VALUES ('3', '10000', 'QUESTION_RESPONSE', 'ყველაზე ცუდი ლექტორი', '2');
+INSERT INTO `quiz_db`.`questions` (`question_id`, `quiz_id`, `question_type`, `question`, `sort_order`) VALUES ('4', '10000', 'QUESTION_RESPONSE', 'რა ფერის არის ცა', '3');

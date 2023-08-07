@@ -13,7 +13,9 @@ public class Question {
 
     private String question;
 
-    private QuestionType questionType;
+    private String questionType;
 
     private int quizId;
+
+    private int sortOrder;
 }
