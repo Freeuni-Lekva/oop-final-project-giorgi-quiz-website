@@ -361,7 +361,7 @@
                 </a>
             </div>
         </div>
-        <button class="fun-button" onclick="redirectTo('create_quiz')">Create Quiz</button>
+        <button id="create_quiz-button" class="fun-button" style="margin-right: 10px;" onclick="redirectTo('create_quiz.jsp',<%=(Integer) session.getAttribute("current_active")%>)">Create Quiz</button>
         <div id="my-quizzes">
             <h2>My Quizzes</h2>
             <% List<Quiz> myQuizzes;

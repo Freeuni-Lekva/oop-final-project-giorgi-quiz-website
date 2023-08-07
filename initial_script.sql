@@ -77,7 +77,7 @@ CREATE TABLE QUIZES
 (
     quiz_id          INT AUTO_INCREMENT PRIMARY KEY,
     user_id          INT,
-    name             VARCHAR(100) UNIQUE,
+    name             VARCHAR(100),
     description      VARCHAR(300),
     sorted           TINYINT(1),
     one_or_multiple  TINYINT(1),
