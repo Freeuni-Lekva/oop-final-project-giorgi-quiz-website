@@ -167,5 +167,9 @@ public class UsersInformation {
         return userlist;
     }
 
+    public static boolean isUsernameValid(String username) throws SQLException {
+        return findUserByUserName(username)!=null;
+    }
+
 }
 

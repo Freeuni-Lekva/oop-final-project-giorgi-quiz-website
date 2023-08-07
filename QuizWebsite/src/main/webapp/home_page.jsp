@@ -375,7 +375,7 @@
             <% } else {
                 for (Quiz quiz : myQuizzes) { %>
             <div class="quiz-item">
-                <a href="quiz?id=<%=quiz.getQuizId()%>">
+                <a href="quiz.jsp?id=<%=quiz.getQuizId()%>">
                     <%=quiz.getName() %>
                 </a>
             </div>
@@ -403,7 +403,7 @@
             <% } else {
                 for (Quiz quiz : quizzes) { %>
             <div class="quiz-item">
-                <a href="quiz?id=<%=quiz.getQuizId()%>">
+                <a href="quiz.jsp?id=<%=quiz.getQuizId()%>">
                     <%=quiz.getName() %> by <%=UsersInformation.findUserById(quiz.getUserId()).getUsername() %>
                 </a>
             </div>

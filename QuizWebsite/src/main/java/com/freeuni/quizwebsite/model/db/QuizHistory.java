@@ -12,9 +12,9 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class QuizHistory {
 
-    private int user_id;
+    private int userId;
 
-    private int quiz_id;
+    private int quizId;
 
     private double score;
 

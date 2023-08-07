@@ -92,7 +92,7 @@
         window.location.href = url;
     }
     function redirectToQuiz(quizId) {
-        window.location.href = 'quiz?id=' + quizId;
+        window.location.href = 'quiz.jsp?id=' + quizId;
     }
     function goBack() {
         window.history.back();

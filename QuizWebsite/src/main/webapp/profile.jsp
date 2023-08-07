@@ -233,7 +233,7 @@
                 }
                 for (Quiz quiz : quizzes) { %>
                 <div class="quiz-item">
-                    <a href="quiz?id=<%=quiz.getQuizId()%>">
+                    <a href="quiz.jsp?id=<%=quiz.getQuizId()%>">
                         <%=quiz.getName() %>
                     </a>
                 </div>

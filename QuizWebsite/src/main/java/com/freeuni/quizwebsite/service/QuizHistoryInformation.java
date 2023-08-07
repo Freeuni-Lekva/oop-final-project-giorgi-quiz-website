@@ -38,6 +38,11 @@ public class QuizHistoryInformation {
                 " order by take_date";
         return findQuizzesHistory(script);
     }
+    public static List<QuizHistory> getOrderedByScoreQuizzesHistoryByQuizId(int id) throws SQLException {
+        String script = "SELECT * FROM QUIZ_HISTORY WHERE quiz_id = " + id + "" +
+                " order by score desc limit 5";
+        return findQuizzesHistory(script);
+    }
 
     public static List<QuizHistory> getQuizzesHistoryByUserId(int id) throws SQLException {
         String script = "SELECT * FROM QUIZ_HISTORY WHERE user_id = " + id + "" +
