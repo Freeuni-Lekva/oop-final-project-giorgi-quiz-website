@@ -218,11 +218,15 @@
         var container = document.createElement('div');
         container.classList.add('question-container');
         container.setAttribute('id', Qid);
+        container.style.width = "100%";
+        container.style.overflow = "hidden";
+        container.style.boxSizing = "border-box";
         Qid++;
         var questionTypeField = document.createElement('input');
         questionTypeField.setAttribute('type', 'hidden');
         questionTypeField.setAttribute('name', 'questionTypes[]');
         questionTypeField.setAttribute('value', questionType);
+
         container.appendChild(questionTypeField);
 
         var questionField = document.createElement('input');
@@ -230,6 +234,8 @@
         questionField.setAttribute('name', 'questions[]');
         questionField.setAttribute('placeholder', 'Enter your ' + questionType);
         questionField.classList.add('form-input');
+        questionField.style.maxWidth = "100%";
+        questionField.style.boxSizing = "border-box";
         container.appendChild(questionField);
 
 
@@ -239,6 +245,8 @@
             pictureUrlField.setAttribute('placeholder', 'Enter picture URL');
             pictureUrlField.setAttribute('name', 'pictureUrls[]');
             pictureUrlField.classList.add('form-input');
+            pictureUrlField.style.maxWidth = "100%";
+            pictureUrlField.style.boxSizing = "border-box";
             container.appendChild(pictureUrlField);
         }
 
