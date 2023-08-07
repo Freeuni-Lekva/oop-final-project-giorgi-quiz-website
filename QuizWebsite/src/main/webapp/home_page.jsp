@@ -7,7 +7,6 @@
 <%@ page import="com.freeuni.quizwebsite.service.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.sql.Timestamp" %>
 
 <html>
 <head>

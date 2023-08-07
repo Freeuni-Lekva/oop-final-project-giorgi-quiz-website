@@ -26,11 +26,6 @@
             margin: 10px;
         }
 
-        h1 {
-            color: #43a047; /* Dark green header text color */
-            margin: 10px 0;
-        }
-
         .search-container {
             display: flex;
             align-items: center;
@@ -83,8 +78,8 @@
         }
 
         .home-button {
-            background-color: #43a047; /* Dark green header color */
-            color: white;
+            background-color: white; /* Dark green header color */
+            color: #43a047;
             padding: 8px 16px;
             border: none;
             border-radius: 4px;
@@ -94,18 +89,16 @@
         }
 
         .home-button:hover {
-            background-color: #4caf50; /* Dark green on hover */
+            background-color: lightgrey; /* Dark green on hover */
         }
     </style>
 </head>
 <body>
 <div id="header">
-    <h1>Quiz Website - Add Friends</h1>
-</div>
-<div id="container">
     <h1>Add Friends</h1>
     <button class="home-button" onclick="redirectToHome()">Home</button>
-    <p></p>
+</div>
+<div id="container">
     <div class="search-container">
         <input type="text" id="search-input" class="search-bar" placeholder="Search...">
         <button class="search-button" onclick="searchUsers()">Search</button>
@@ -142,7 +135,6 @@
             <a href="profile?user_id=<%= user.getUserId() %>" class="user-profile-link"><%= user.getUsername() %>
             </a>
             <a href="add-friend?user_id=<%= user.getUserId() %>">Add</a>
-            <!-- Replace 'add-friend' with the URL for adding a friend -->
         </li>
         <% } %>
     </ul>

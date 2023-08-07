@@ -114,7 +114,7 @@
             List<User> users = (List<User>) request.getAttribute("Users");
             for (Quiz quiz : quizzes) { %>
         <li>
-            <a href="quiz.jsp?quiz_id=<%= quiz.getQuizId() %>" class="user-profile-link"> <%= quiz.getName() %>
+            <a href="quiz.jsp?id=<%= quiz.getQuizId() %>" class="user-profile-link"> <%= quiz.getName() %>
             </a>
             <a href="take-quiz?quiz_id=<%= quiz.getQuizId() %>">Take</a>
         </li>
