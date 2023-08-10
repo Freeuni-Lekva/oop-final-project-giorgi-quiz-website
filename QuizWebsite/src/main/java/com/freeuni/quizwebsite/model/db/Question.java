@@ -18,4 +18,6 @@ public class Question {
     private int quizId;
 
     private int sortOrder;
+
+    private String picURL;
 }

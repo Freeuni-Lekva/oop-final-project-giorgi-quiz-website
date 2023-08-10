@@ -125,7 +125,7 @@
     }
 
     function redirectToQuiz(quizId) {
-        window.location.href = 'quiz?id=' + quizId;
+        window.location.href = 'quiz.jsp?id=' + quizId;
     }
 </script>
 </body>

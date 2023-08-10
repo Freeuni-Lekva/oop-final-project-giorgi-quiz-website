@@ -21,8 +21,8 @@ public class QuizHistoryInformation {
 
         while (resultSet.next()) {
             QuizHistory quizHistory = new QuizHistory(
-                    resultSet.getInt("quiz_id"),
                     resultSet.getInt("user_id"),
+                    resultSet.getInt("quiz_id"),
                     resultSet.getDouble("score"),
                     resultSet.getTimestamp("take_date")
 

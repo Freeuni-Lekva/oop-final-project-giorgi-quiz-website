@@ -255,21 +255,23 @@ INSERT INTO QUIZES (quiz_id,user_id, name, description, sorted, one_or_multiple,
 VALUES (9999,9999, 'test car quizz', 'magari', 1, 0, 1, 1,'PUBLISHED',1),
        (9998,9999,'test history quizz','educational',1,0,1,1,'CREATED',2);
 
--- pasword is 1234 testAdmin
+-- password is 1234 testAdmin
 INSERT INTO `quiz_db`.`users`
 (`user_id`,
  `first_name`,
  `last_name`,
  `username`,
  `bio`,
- `password`)
+ `password`,
+ is_admin)
 VALUES
     (10000,
      'Mikheil',
      'Saakashvili',
      'TestUserAdmin',
      'Test Bio 1233 !@#$ <>?',
-     '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4');
+     '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4',
+     1);
 INSERT INTO ACHIEVEMENTS (user_id, achievement)
 VALUES (10000, 'I_AM_THE_GRATEST'),
        (10000, 'AMATEUR_AUTHOR');
@@ -294,6 +296,17 @@ VALUES (10000,10000, 'admin car quizz', 'magari', 1, 0, 1, 1,'PUBLISHED',1),
 DELETE FROM `quiz_db`.`questions` WHERE (`question_id` = '2');
 DELETE FROM `quiz_db`.`questions` WHERE (`question_id` = '3');
 DELETE FROM `quiz_db`.`questions` WHERE (`question_id` = '4');
-INSERT INTO `quiz_db`.`questions` (`question_id`, `quiz_id`, `question_type`, `question`, `sort_order`) VALUES ('2', '10000', 'QUESTION_RESPONSE', 'საქართველოს დედაქალაქი', '1');
-INSERT INTO `quiz_db`.`questions` (`question_id`, `quiz_id`, `question_type`, `question`, `sort_order`) VALUES ('3', '10000', 'QUESTION_RESPONSE', 'ყველაზე ცუდი ლექტორი', '2');
-INSERT INTO `quiz_db`.`questions` (`question_id`, `quiz_id`, `question_type`, `question`, `sort_order`) VALUES ('4', '10000', 'QUESTION_RESPONSE', 'რა ფერის არის ცა', '3');
+INSERT INTO `quiz_db`.`questions` (`question_id`, `quiz_id`, `question_type`, `question`, `sort_order`)
+VALUES ('2', '10000', 'QUESTION_RESPONSE', 'საქართველოს დედაქალაქი', '1'),
+       ('3', '10000', 'QUESTION_RESPONSE', 'ყველაზე ცუდი ლექტორი', '2'),
+       ('4', '10000', 'QUESTION_RESPONSE', 'რა ფერის არის ცა', '3'),
+       (5, 10000, 'MULTIPLE_CHOICE', 'ვინ შეჭამა ვენახი', 4);
+INSERT INTO QUESTIONS (question_id, quiz_id, picture_url, question_type, question, sort_order)
+VALUES (6, 10000, 'C:\\Users\\Sandro\\Desktop\\სხვ\\fantastika.jpg', 'PICTURE_RESPONSE', 'საიდან მაქვს ეს ფოტოსურათი?', 5);
+
+INSERT INTO POSSIBLE_ANSWERS (question_id, possible_answer)
+VALUES (5, 'გველმა'),
+       (5, 'ევამ'),
+       (5, 'თხამ'),
+       (5, 'დამ'),
+       (5, 'მგელმა');

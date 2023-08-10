@@ -26,7 +26,8 @@ public class QuestionInformation {
                     resultSet.getString("question"),
                     resultSet.getString("question_type"),
                     resultSet.getInt("quiz_id"),
-                    resultSet.getInt("sort_order")
+                    resultSet.getInt("sort_order"),
+                    resultSet.getString("picture_url")
             );
             questions.add(question);
         }

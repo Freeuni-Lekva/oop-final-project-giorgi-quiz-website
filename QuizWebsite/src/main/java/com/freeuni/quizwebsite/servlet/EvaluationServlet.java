@@ -11,7 +11,7 @@ import java.io.IOException;
 @WebServlet("/evaluation")
 public class EvaluationServlet extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         // Get the number of questions
         int numQuestions = Integer.parseInt(httpServletRequest.getParameter("numQuestions"));
 
