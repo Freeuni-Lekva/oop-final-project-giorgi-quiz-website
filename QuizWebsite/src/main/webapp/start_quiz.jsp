@@ -1,7 +1,6 @@
 <%@ page import="com.freeuni.quizwebsite.model.db.Question" %>
 <%@ page import="com.freeuni.quizwebsite.service.QuestionInformation" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.freeuni.quizwebsite.service.QuizzesInformation" %>
 <%@ page import="com.freeuni.quizwebsite.model.QuestionType" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -12,6 +11,19 @@
 %>
 <head>
     <title>Quiz Questions</title>
+    <style>
+    </style>
+
+    <script>
+        function addTextField(guessIdx) {
+            const container = document.getElementById("question"+guessIdx);
+            const newTextField = document.createElement("input");
+            newTextField.type = "text";
+            newTextField.name = "guess"+guessIdx;
+            container.appendChild(document.createElement("br"));
+            container.appendChild(newTextField);
+        }
+    </script>
 </head>
 <body>
 
@@ -26,10 +38,16 @@
     %>
     <h2> Question <%= i + 1 %> </h2>
     <input type="hidden" name="questionId<%= i %>" value="<%= question.getQuestionId() %>"/>
-    <% if (question.getQuestionType().equals(QuestionType.QUESTION_RESPONSE.name())) { %>
-    <div>
+    <% if (question.getQuestionType().equals(QuestionType.QUESTION_RESPONSE.name())
+            || question.getQuestionType().equals(QuestionType.QUESTION_RESPONSE_MULTIPLE_ANSWER_UNORDERED.name())
+            || question.getQuestionType().equals(QuestionType.QUESTION_RESPONSE_MULTIPLE_ANSWER_ORDERED.name())) { %>
+    <div id="question<%= i %>">
         <p> <%= questionText %> </p>
         <input type="text" name="guess<%= i %>"/>
+        <% if (question.getQuestionType().equals(QuestionType.QUESTION_RESPONSE_MULTIPLE_ANSWER_UNORDERED.name())
+                || question.getQuestionType().equals(QuestionType.QUESTION_RESPONSE_MULTIPLE_ANSWER_ORDERED.name())) { %>
+        <button type="button" onclick="addTextField(<%= i %>)">Add New Text Field</button>
+        <% } %>
     </div>
     <% } else if (question.getQuestionType().equals(QuestionType.PICTURE_RESPONSE.name())) { %>
     <div>
@@ -50,12 +68,25 @@
         <p> possible answers: </p>
         <%
             List<String> possibleAnswers = QuestionInformation.getPossibleAnswers(question.getQuestionId());
-            for (int j = 0; j < possibleAnswers.size(); j++) { %>
-        <input type="radio" id="ans_<%= i %>_<%= j %>" name="question<%= i %>" value="<%= possibleAnswers.get(j) %>">
+            for (int j = 0; j < possibleAnswers.size(); j++) {
+        %>
+        <input type="radio" id="ans_<%= i %>_<%= j %>" name="guess<%= i %>" value="<%= possibleAnswers.get(j) %>">
         <label for="ans_<%= i %>_<%= j %>"> <%= possibleAnswers.get(j) %> </label>
         <br>
-            <% }
+         <% } %>
+    </div>
+    <% } else if (question.getQuestionType().equals(QuestionType.MULTIPLE_CHOICE_MULTIPLE_ANSWER.name())) { %>
+    <div>
+        <p> <%= questionText %> </p>
+        <p> possible answers: </p>
+        <%
+            List<String> possibleAnswers = QuestionInformation.getPossibleAnswers(question.getQuestionId());
+            for (int j = 0; j < possibleAnswers.size(); j++) {
         %>
+        <input type="checkbox" id="ans_<%= i %>_<%= j %>" name="guess<%= i %>" value="<%= possibleAnswers.get(j) %>">
+        <label for="ans_<%= i %>_<%= j %>"> <%= possibleAnswers.get(j) %> </label>
+        <br>
+        <% } %>
     </div>
     <% }
     }

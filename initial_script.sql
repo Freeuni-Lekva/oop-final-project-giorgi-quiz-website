@@ -300,7 +300,35 @@ INSERT INTO `quiz_db`.`questions` (`question_id`, `quiz_id`, `question_type`, `q
 VALUES ('2', '10000', 'QUESTION_RESPONSE', 'საქართველოს დედაქალაქი', '1'),
        ('3', '10000', 'QUESTION_RESPONSE', 'ყველაზე ცუდი ლექტორი', '2'),
        ('4', '10000', 'QUESTION_RESPONSE', 'რა ფერის არის ცა', '3'),
-       (5, 10000, 'MULTIPLE_CHOICE', 'ვინ შეჭამა ვენახი', 4);
+       (5, 10000, 'MULTIPLE_CHOICE', 'ვინ შეჭამა ვენახი', 4),
+       (7, 10000, 'MULTIPLE_CHOICE_MULTIPLE_ANSWER', 'ჩემოთვლილთაგან რომელი შედის დნმ-ის შემადგენლობაში?', 5),
+       (8, 10000, 'QUESTION_RESPONSE_MULTIPLE_ANSWER_UNORDERED', 'თბილისის მდინარეები', 6),
+       (9, 10000, 'QUESTION_RESPONSE_MULTIPLE_ANSWER_ORDERED', 'ტოპ 5 პრეზიდენტი (საუკეთესოდან უარესისკენ)', 7);
+
+INSERT INTO ANSWERS(question_id, answer)
+VALUES (2, 'Tbilisi'),
+       (2, 'თბილისი'),
+       (3, 'jandieri'),
+       (3, 'JANDIERI'),
+       (3, 'vaxtang jandieri'),
+       (3, 'dedamotynuli vaxuna'),
+       (3, 'jondo'),
+       (4, 'cisferi'),
+       (4, 'ცისფერი'),
+       (5, 'თხამ'),
+       (6, 'xuevoznaet'),
+       (6, 'ხუევოზნაეტ'),
+       (7, 'თიმინი'),
+       (7, 'გუანინი'),
+       (8, 'მტკვარი'),
+       (8, 'ვერე'),
+       (8, 'არაგვი'),
+       (9, 'მიხეილ სააკაშვილი'),
+       (9, 'მიხეილ სააკაშვილი (პირველი ვადა)'),
+       (9, 'მამა ნიკოლოზი'),
+       (9, 'ედუარდ შევარდნაძე'),
+       (9, 'ტრამპი');
+
 INSERT INTO QUESTIONS (question_id, quiz_id, picture_url, question_type, question, sort_order)
 VALUES (6, 10000, 'C:\\Users\\Sandro\\Desktop\\სხვ\\fantastika.jpg', 'PICTURE_RESPONSE', 'საიდან მაქვს ეს ფოტოსურათი?', 5);
 
@@ -309,4 +337,8 @@ VALUES (5, 'გველმა'),
        (5, 'ევამ'),
        (5, 'თხამ'),
        (5, 'დამ'),
-       (5, 'მგელმა');
+       (5, 'მგელმა'),
+       (7, 'თიმინი'),
+       (7, 'ურაცილი'),
+       (7, 'გუანინი'),
+       (7, 'წყალი');
