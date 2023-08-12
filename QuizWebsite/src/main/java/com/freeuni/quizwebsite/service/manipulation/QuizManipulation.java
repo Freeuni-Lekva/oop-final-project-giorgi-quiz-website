@@ -1,11 +1,13 @@
 package com.freeuni.quizwebsite.service.manipulation;
 
 import com.freeuni.quizwebsite.db_connection.ConnectToDB;
+import com.freeuni.quizwebsite.model.db.Quiz;
 import com.freeuni.quizwebsite.service.QuestionInformation;
 import com.freeuni.quizwebsite.service.QuizzesInformation;
 import com.freeuni.quizwebsite.service.UsersInformation;
 
 import java.sql.*;
+import java.util.List;
 
 public class QuizManipulation {
     private static final Connection connection = ConnectToDB.getConnection();
@@ -15,35 +17,62 @@ public class QuizManipulation {
         QuestionsManipulation.deleteQuestionByQuizId(quizId);
     }
     public static void deleteQuizByName(String name) throws SQLException {
+        List<Quiz> ql=QuizzesInformation.findQuizzesByName(name);
+        for (Quiz q:ql) {
+            QuestionsManipulation.deleteQuestionByQuizId(q.getQuizId());
+
+        }
         connection.prepareStatement("DELETE FROM quizes WHERE name = \"" +name+"\";").executeUpdate();
 
     }
     public static void deleteQuizByUserIDAndName(int userId,String name) throws SQLException {
+        List<Quiz> ql=QuizzesInformation.findQuizzesByName(name);
+        for (Quiz q:ql) {
+            if(q.getUserId()==userId){
+                QuestionsManipulation.deleteQuestionByQuizId(q.getQuizId());
+            }
+
+
+        }
+
         connection.prepareStatement("DELETE FROM quizes WHERE name = \"" +name+"\" and user_id ="+userId+";").executeUpdate();
     }
 
 
     public static void deleteQuizByUserId(int userId) throws SQLException {
+        List<Quiz> ql=QuizzesInformation.findQuizzesByUserId(userId);
+        for (Quiz q:ql) {
+            QuestionsManipulation.deleteQuestionByQuizId(q.getQuizId());
+        }
         connection.prepareStatement("DELETE FROM quizes WHERE user_id = " + userId +";").executeUpdate();
     }
 
-    public static void deleteQuizesBeforeT(Timestamp T) throws SQLException {
-        connection.prepareStatement("DELETE FROM quizes WHERE creation_date < \""+T+"\";").executeUpdate();
-    }
     public static void deleteUserIDsQuizesBeforeT(int userId,Timestamp T) throws SQLException {
+        List<Quiz> ql=QuizzesInformation.findQuizzesByUserId(userId);
+        for (Quiz q:ql) {
+            if(T.compareTo(q.getCreationDate())<0){
+                QuestionsManipulation.deleteQuestionByQuizId(q.getQuizId());
+            }
+
+        }
+
         connection.prepareStatement("DELETE FROM quizes WHERE creation_date < \"" +T+"\" and user_id ="+userId+";").executeUpdate();
     }
 
-    public static void deleteQuizesAfterT(Timestamp T) throws SQLException {
-        connection.prepareStatement("DELETE FROM quizes WHERE creation_date >= \""+T+"\"").executeUpdate();
-    }
     public static void deleteUserIDsQuizesAfterT(int userId,Timestamp T) throws SQLException {
+        List<Quiz> ql=QuizzesInformation.findQuizzesByUserId(userId);
+        for (Quiz q:ql) {
+            if(T.compareTo(q.getCreationDate())>=0){
+                QuestionsManipulation.deleteQuestionByQuizId(q.getQuizId());
+            }
+
+        }
         connection.prepareStatement("DELETE FROM quizes WHERE creation_date >= \"" +T+"\" and user_id ="+userId+";").executeUpdate();
     }
 
     public static int addQuiz(int userId,String name, String description,boolean sorted,boolean oneOrMultiple
-                               ,boolean instantFeedback, boolean practiceMode, String quizStates,int viewCount
-                                ) throws SQLException {
+            ,boolean instantFeedback, boolean practiceMode, String quizStates,int viewCount
+    ) throws SQLException {
 
         if(UsersInformation.findUserById(userId)==null){
             return -1;

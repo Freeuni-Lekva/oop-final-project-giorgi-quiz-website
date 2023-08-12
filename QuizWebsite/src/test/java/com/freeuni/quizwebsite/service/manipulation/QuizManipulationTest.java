@@ -26,12 +26,7 @@ public class QuizManipulationTest {
 
 
 
-    @Test
-    public void deleteQuizesBeforeT() throws SQLException {
 
-        Timestamp T = new Timestamp(120, 6, 11, 10, 30, 0, 0);
-        QuizManipulation.deleteQuizesBeforeT(T);
-    }
 
     @Test
     public void deleteUserIDsQuizesBeforeT() throws SQLException {
@@ -39,11 +34,7 @@ public class QuizManipulationTest {
         QuizManipulation.deleteUserIDsQuizesBeforeT(1,T);
     }
 
-    @Test
-    public void deleteQuizesAfterT() throws SQLException {
-        Timestamp T = new Timestamp(120, 6, 11, 10, 30, 0, 0);
-        QuizManipulation.deleteQuizesAfterT(T);
-    }
+
 
     @Test
     public void deleteUserIDsQuizesAfterT() throws SQLException {
