@@ -24,8 +24,10 @@ public class QuestionInformation {
             Question question = new Question(
                     resultSet.getInt("question_id"),
                     resultSet.getString("question"),
-                    QuestionType.valueOf(resultSet.getString("question_type")),
-                    resultSet.getInt("quiz_id")
+                    resultSet.getString("question_type"),
+                    resultSet.getInt("quiz_id"),
+                    resultSet.getInt("sort_order"),
+                    resultSet.getString("picture_url")
             );
             questions.add(question);
         }
@@ -34,7 +36,7 @@ public class QuestionInformation {
     }
 
     public static Question getQuestion(int id) throws SQLException {
-        String query = "SELECT * FROM " + QUESTIONS_TABLE + " WHERE question_id = " + id + ";";
+        String query = "SELECT * FROM " + QUESTIONS_TABLE + " WHERE question_id = " + id + " order by sort_order"+";";
         List<Question> question = getQuestions(query);
 
         if(question.isEmpty()) return null;
