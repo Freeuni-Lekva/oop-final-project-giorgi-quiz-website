@@ -67,7 +67,8 @@ public class EvaluationServlet extends HttpServlet {
                     } else {
                         System.out.println("WRONG!");
                     }
-                } else if (questionType.equals(QuestionType.QUESTION_RESPONSE_MULTIPLE_ANSWER_ORDERED.name())) {
+                } else if (questionType.equals(QuestionType.QUESTION_RESPONSE_MULTIPLE_ANSWER_ORDERED.name())
+                        || questionType.equals(QuestionType.FILL_IN_BLANK.name())) {
                     if(answered.equals(correctAnswers)) {
                         System.out.println("CORRECT!");
                         result++;
