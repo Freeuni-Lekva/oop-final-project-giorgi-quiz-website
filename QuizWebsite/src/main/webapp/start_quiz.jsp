@@ -2,6 +2,7 @@
 <%@ page import="com.freeuni.quizwebsite.service.QuestionInformation" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.freeuni.quizwebsite.model.QuestionType" %>
+<%@ page import="java.util.StringTokenizer" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -56,11 +57,17 @@
         <br>
         <input type="text" name="guess<%= i %>"/>
     </div>
-    <% } else if (question.getQuestionType().equals(QuestionType.FILL_IN_BLANK.name())) { %>
+    <% } else if (question.getQuestionType().equals(QuestionType.FILL_IN_BLANK.name())) {
+            StringTokenizer questionTokens = new StringTokenizer(questionText, "_");
+    %>
     <div>
-        <p> Fill in the blanks: </p>
-        <p> <%= questionText %> </p>
-        <input type="text" name="guess<%= i %>"/>
+        <p> Fill in the blanks: </p><br>
+        <p><%=questionTokens.nextToken()%></p>
+        <p>
+        <%while (questionTokens.hasMoreTokens()) { %>
+        <input type="text" name="guess<%= i %>"/><%=questionTokens.nextToken()%>
+        <% } %>
+        </p>
     </div>
     <% } else if (question.getQuestionType().equals(QuestionType.MULTIPLE_CHOICE.name())) { %>
     <div>

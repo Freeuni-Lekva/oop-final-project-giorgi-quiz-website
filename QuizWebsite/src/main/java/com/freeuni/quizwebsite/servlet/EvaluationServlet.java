@@ -33,7 +33,8 @@ public class EvaluationServlet extends HttpServlet {
             String questionType = question.getQuestionType();
             if (questionType.equals(QuestionType.MULTIPLE_CHOICE_MULTIPLE_ANSWER.name())
                 || questionType.equals(QuestionType.QUESTION_RESPONSE_MULTIPLE_ANSWER_UNORDERED.name())
-                    || questionType.equals(QuestionType.QUESTION_RESPONSE_MULTIPLE_ANSWER_ORDERED.name())) {
+                    || questionType.equals(QuestionType.QUESTION_RESPONSE_MULTIPLE_ANSWER_ORDERED.name())
+                        || questionType.equals(QuestionType.FILL_IN_BLANK.name())) {
                 String[] checked = httpServletRequest.getParameterValues("guess"+i);
                 if(checked == null) {
                     continue;
