@@ -386,6 +386,20 @@
                     alert("For Fill in the Blank question, the question should contain at least one underscore '_'.");
                     return false;
                 }
+
+                var underscoreCount = questionValue.split('_').length - 1;
+                if (underscoreCount !== answerFields.length) {
+                    alert("For Fill in the Blank question, the number of answers should match the number of underscores.");
+                    return false;
+                }
+
+                for (var k = 0; k < answerFields.length; k++) {
+                    var answerValue = answerFields[k].value.trim();
+                    if (answerValue === "") {
+                        alert("Please fill in all answer fields in all questions.");
+                        return false;
+                    }
+                }
             }
 
             if (answerFields.length < 1) {
