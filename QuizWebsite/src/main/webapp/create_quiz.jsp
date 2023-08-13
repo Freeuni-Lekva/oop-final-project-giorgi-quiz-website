@@ -187,10 +187,13 @@
         <div class="question-section form-section" id="questionSection">
             <label for="btn-group">Next question type:</label>
             <div class="btn-group" id="btn-group">
-                <button type="button" onclick="addQuestion('questionResponse')">Question-Response</button>
-                <button type="button" onclick="addQuestion('fillBlank')">Fill in the Blank</button>
-                <button type="button" onclick="addQuestion('multipleChoice')">Multiple Choice</button>
-                <button type="button" onclick="addQuestion('pictureResponse')">Picture-Response</button>
+                <button type="button" onclick="addQuestion('QUESTION_RESPONSE')">Question-Response</button>
+                <button type="button" onclick="addQuestion('FILL_IN_BLANK')">Fill in the Blank</button>
+                <button type="button" onclick="addQuestion('MULTIPLE_CHOICE_MULTIPLE_ANSWER')">Multiple Choice Multiple
+                    Answers
+                </button>
+                <button type="button" onclick="addQuestion('MULTIPLE_CHOICE')">Multiple Choice Single Answer</button>
+                <button type="button" onclick="addQuestion('PICTURE_RESPONSE')">Picture-Response</button>
             </div>
         </div>
 
@@ -222,6 +225,14 @@
         container.style.overflow = "hidden";
         container.style.boxSizing = "border-box";
         Qid++;
+
+        if (questionType === 'FILL_IN_BLANK') {
+            var blankNote = document.createElement('div');
+            blankNote.textContent = "Use underscores '_' for blank parts.";
+            blankNote.style.color = "#999";
+            container.appendChild(blankNote);
+        }
+
         var questionTypeField = document.createElement('input');
         questionTypeField.setAttribute('type', 'hidden');
         questionTypeField.setAttribute('name', 'questionTypes[]');
@@ -260,7 +271,7 @@
             imageContainer.appendChild(picturePreview);
             container.appendChild(imageContainer);
 
-            pictureUrlField.addEventListener('input', function() {
+            pictureUrlField.addEventListener('input', function () {
                 if (pictureUrlField.value) {
                     picturePreview.src = pictureUrlField.value;
                 } else {
@@ -296,7 +307,7 @@
             answerField.style.flexGrow = '1';
             answerContainer.appendChild(answerField);
 
-            if (questionType === 'multipleChoice') {
+            if (questionType === 'MULTIPLE_CHOICE_MULTIPLE_ANSWER' || questionType === 'MULTIPLE_CHOICE') {
                 var correctAnswerCheckbox = document.createElement('input');
                 correctAnswerCheckbox.setAttribute('type', 'checkbox');
                 correctAnswerCheckbox.setAttribute('name', 'correctAnswers[' + container.id + '][]');
@@ -359,13 +370,22 @@
         }
 
         for (var i = 0; i < questionContainers.length; i++) {
-            var questionField = questionContainers[i].querySelector('input[name^="question"]');
-            var answerFields = questionContainers[i].querySelectorAll('input[name^="answer"]');
+            var questionField = questionContainers[i].querySelector('input[name^="questions"]');
+            var answerFields = questionContainers[i].querySelectorAll('input[name^="answers"]');
+            var questionTypeField = questionContainers[i].querySelector('input[name^="questionTypes"]');
+            var questionType = questionTypeField.value;
 
             var questionValue = questionField.value.trim();
             if (questionValue === "") {
                 alert("Please fill in the question field in all questions.");
                 return false;
+            }
+
+            if (questionType === 'FILL_IN_BLANK') {
+                if (questionValue.indexOf('_') === -1) {
+                    alert("For Fill in the Blank question, the question should contain at least one underscore '_'.");
+                    return false;
+                }
             }
 
             if (answerFields.length < 1) {
@@ -377,6 +397,50 @@
                 var answerValue = answerFields[j].value.trim();
                 if (answerValue === "") {
                     alert("Please fill in all answer fields in all questions.");
+                    return false;
+                }
+            }
+
+            if (questionType === 'MULTIPLE_CHOICE') {
+                var correctAnswerCount = 0;
+                for (var m = 0; m < answerFields.length; m++) {
+                    var ansVal = answerFields[m].value.trim();
+                    var isCorrectAnswer = answerFields[m].parentNode.querySelector('input[type="checkbox"]').checked;
+
+                    if (ansVal === "") {
+                        alert("Please fill in all answer fields in all questions.");
+                        return false;
+                    }
+
+                    if (isCorrectAnswer) {
+                        correctAnswerCount++;
+                    }
+                }
+
+                if (correctAnswerCount !== 1) {
+                    alert("For Multiple Choice questions, exactly one correct answer should be selected.");
+                    return false;
+                }
+            }
+
+            if (questionType === 'MULTIPLE_CHOICE_MULTIPLE_ANSWER') {
+                var correctAnswerCount = 0;
+                for (var m = 0; m < answerFields.length; m++) {
+                    var ansVal = answerFields[m].value.trim();
+                    var isCorrectAnswer = answerFields[m].parentNode.querySelector('input[type="checkbox"]').checked;
+
+                    if (ansVal === "") {
+                        alert("Please fill in all answer fields in all questions.");
+                        return false;
+                    }
+
+                    if (isCorrectAnswer) {
+                        correctAnswerCount++;
+                    }
+                }
+
+                if (correctAnswerCount < 1) {
+                    alert("For Multiple Choice Multiple Answer questions, at least one correct answer should be selected.");
                     return false;
                 }
             }

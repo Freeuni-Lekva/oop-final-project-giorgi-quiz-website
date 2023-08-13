@@ -1,5 +1,6 @@
 package com.freeuni.quizwebsite.servlet;
 
+import com.freeuni.quizwebsite.model.QuestionType;
 import com.freeuni.quizwebsite.service.QuizzesInformation;
 import com.freeuni.quizwebsite.service.manipulation.QuestionsManipulation;
 import com.freeuni.quizwebsite.service.manipulation.QuizManipulation;
@@ -94,7 +95,7 @@ public class CreateQuizServlet extends HttpServlet {
 
             for (int i = 0; i < questions.length; i++) {
 
-                if (questionsTypes[i].equals("pictureResponse")) {
+                if (questionsTypes[i].equals(QuestionType.PICTURE_RESPONSE.name())) {
                     int questionId = QuestionsManipulation.addQuestion(quizId,
                             urls[j], questionsTypes[i], questions[i], i); // Add question to DB and get questionId
                     j++;
@@ -117,7 +118,7 @@ public class CreateQuizServlet extends HttpServlet {
                         m++;
                         if(curr != null) break;
                     }
-                    if(questionsTypes[i].equals("multipleChoice")){
+                    if(questionsTypes[i].equals(QuestionType.MULTIPLE_CHOICE_MULTIPLE_ANSWER.name())){
                         for (String answer : curr) {
                             QuestionsManipulation.addPossibleAnswer(questionId, answer);
                         }
