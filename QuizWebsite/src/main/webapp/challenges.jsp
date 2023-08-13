@@ -112,7 +112,8 @@
         </p>
         <p><b>Send Time:</b> <span class="send-time"><%= challenge.getSendTime().toString().substring(0, 16) %></span>
         </p>
-        <button class="complete-button" onclick="redirectToQuiz('<%= challenge.getQuizId() %>')">Complete</button>
+        <button class="complete-button" onclick="completeChallenge('<%= challenge.getChallengeId() %>', '<%= challenge.getQuizId() %>')">Complete</button>
+
     </div>
     <%
             }
@@ -126,6 +127,20 @@
 
     function redirectToQuiz(quizId) {
         window.location.href = 'quiz.jsp?id=' + quizId;
+    }
+
+    function completeChallenge(challengeId, quizId) {
+        // Send a request to delete the challenge
+        fetch('deleteChallenge?challengeId=' + challengeId, {
+            method: 'POST'
+        }).then(response => {
+            // Redirect to quiz after deleting challenge
+            if (response.ok) {
+                redirectToQuiz(quizId);
+            } else {
+                console.error('Failed to delete challenge.');
+            }
+        });
     }
 </script>
 </body>
