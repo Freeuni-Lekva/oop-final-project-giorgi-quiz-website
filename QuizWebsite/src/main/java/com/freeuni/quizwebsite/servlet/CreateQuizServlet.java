@@ -1,7 +1,6 @@
 package com.freeuni.quizwebsite.servlet;
 
 import com.freeuni.quizwebsite.model.QuestionType;
-import com.freeuni.quizwebsite.service.QuizzesInformation;
 import com.freeuni.quizwebsite.service.manipulation.QuestionsManipulation;
 import com.freeuni.quizwebsite.service.manipulation.QuizManipulation;
 import jakarta.servlet.ServletException;
@@ -88,6 +87,12 @@ public class CreateQuizServlet extends HttpServlet {
                 System.out.print(question + " ");
             }
             System.out.println();
+
+            String tags = httpServletRequest.getParameter("quizTags");
+            List<String> tagsList = Arrays.asList(tags.split("\\s*,\\s*"));
+            for (String tag : tagsList) {
+                QuizManipulation.addTagsToQuiz(quizId, tag);
+            }
 
             String[] urls = httpServletRequest.getParameterValues("pictureUrls[]");
             int j = 0;
