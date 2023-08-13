@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @WebServlet("/CreateQuiz")
 public class CreateQuizServlet extends HttpServlet {
@@ -88,6 +89,12 @@ public class CreateQuizServlet extends HttpServlet {
             }
             System.out.println();
 
+            String tags = httpServletRequest.getParameter("quizTags");
+            List<String> tagsList = Arrays.asList(tags.split("\\s*,\\s*"));
+            for (String tag : tagsList) {
+                QuizManipulation.addTagsToQuiz(quizId, tag);
+            }
+
             String[] urls = httpServletRequest.getParameterValues("pictureUrls[]");
             int j = 0;
             int k = 0;
@@ -100,10 +107,10 @@ public class CreateQuizServlet extends HttpServlet {
                             urls[j], questionsTypes[i], questions[i], i); // Add question to DB and get questionId
                     j++;
                     String[] curr;
-                    while(true){
+                    while (true) {
                         curr = httpServletRequest.getParameterValues("answers[" + (m) + "][]");
                         m++;
-                        if(curr != null) break;
+                        if (curr != null) break;
                     }
 
                     for (String answer : curr) {
@@ -113,23 +120,23 @@ public class CreateQuizServlet extends HttpServlet {
                     int questionId = QuestionsManipulation.addQuestion(quizId,
                             "", questionsTypes[i], questions[i], i); // Add question to DB and get questionId
                     String[] curr;
-                    while(true){
+                    while (true) {
                         curr = httpServletRequest.getParameterValues("answers[" + (m) + "][]");
                         m++;
-                        if(curr != null) break;
+                        if (curr != null) break;
                     }
-                    if(questionsTypes[i].equals(QuestionType.MULTIPLE_CHOICE_MULTIPLE_ANSWER.name())){
+                    if (questionsTypes[i].equals(QuestionType.MULTIPLE_CHOICE_MULTIPLE_ANSWER.name())) {
                         for (String answer : curr) {
                             QuestionsManipulation.addPossibleAnswer(questionId, answer);
                         }
                         ArrayList<Boolean> currAnswers = correctMatrix.get(k);
-                        for(int l = 0; l < curr.length; l++){
-                            if(currAnswers.get(l)){
+                        for (int l = 0; l < curr.length; l++) {
+                            if (currAnswers.get(l)) {
                                 QuestionsManipulation.addCorrectAnswer(questionId, curr[l]);
                             }
                         }
                         k++;
-                    }else {
+                    } else {
                         for (String answer : curr) {
                             QuestionsManipulation.addCorrectAnswer(questionId, answer);
                         }

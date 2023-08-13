@@ -177,6 +177,11 @@
                       required></textarea>
         </div>
 
+        <div class="form-section">
+            <label class="form-label" for="quizTags">Quiz Tags:</label>
+            <input class="form-input" type="text" name="quizTags" id="quizTags" placeholder="Enter comma-separated tags">
+        </div>
+
         <div class="checkbox-group form-section">
             <label><input type="checkbox" name="randomQuestions"> Random Questions</label>
             <label><input type="checkbox" name="onePage"> One Page </label>
