@@ -177,6 +177,11 @@
                       required></textarea>
         </div>
 
+        <div class="form-section">
+            <label class="form-label" for="quizTags">Quiz Tags:</label>
+            <input class="form-input" type="text" name="quizTags" id="quizTags" placeholder="Enter comma-separated tags">
+        </div>
+
         <div class="checkbox-group form-section">
             <label><input type="checkbox" name="randomQuestions"> Random Questions</label>
             <label><input type="checkbox" name="onePage"> One Page </label>
@@ -387,6 +392,20 @@
                 if (questionValue.indexOf('_') === -1) {
                     alert("For Fill in the Blank question, the question should contain at least one underscore '_'.");
                     return false;
+                }
+
+                var underscoreCount = questionValue.split('_').length - 1;
+                if (underscoreCount !== answerFields.length) {
+                    alert("For Fill in the Blank question, the number of answers should match the number of underscores.");
+                    return false;
+                }
+
+                for (var k = 0; k < answerFields.length; k++) {
+                    var answerValue = answerFields[k].value.trim();
+                    if (answerValue === "") {
+                        alert("Please fill in all answer fields in all questions.");
+                        return false;
+                    }
                 }
             }
 
