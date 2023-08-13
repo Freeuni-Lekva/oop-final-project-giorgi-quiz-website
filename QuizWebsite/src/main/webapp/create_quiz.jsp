@@ -188,6 +188,8 @@
             <label for="btn-group">Next question type:</label>
             <div class="btn-group" id="btn-group">
                 <button type="button" onclick="addQuestion('QUESTION_RESPONSE')">Question-Response</button>
+                <button type="button" onclick="addQuestion('QUESTION_RESPONSE_MULTIPLE_ANSWER_UNORDERED')">Question-Response Unordered Mutiple Answer </button>
+                <button type="button" onclick="addQuestion('QUESTION_RESPONSE_MULTIPLE_ANSWER_ORDERED')">Question-Response Ordered Mutiple Answer</button>
                 <button type="button" onclick="addQuestion('FILL_IN_BLANK')">Fill in the Blank</button>
                 <button type="button" onclick="addQuestion('MULTIPLE_CHOICE_MULTIPLE_ANSWER')">Multiple Choice Multiple
                     Answers
@@ -309,7 +311,7 @@
 
             if (questionType === 'MULTIPLE_CHOICE_MULTIPLE_ANSWER' || questionType === 'MULTIPLE_CHOICE') {
                 var correctAnswerCheckbox = document.createElement('input');
-                correctAnswerCheckbox.setAttribute('type', 'checkbox');
+                correctAnswerCheckbox.setAttribute('type', questionType === 'MULTIPLE_CHOICE_MULTIPLE_ANSWER' ? 'checkbox' : 'radio');
                 correctAnswerCheckbox.setAttribute('name', 'correctAnswers[' + container.id + '][]');
                 correctAnswerCheckbox.setAttribute('value', 'on');
 
