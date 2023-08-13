@@ -125,7 +125,7 @@ public class CreateQuizServlet extends HttpServlet {
                         if(curr != null) break;
                     }
                     if(questionsTypes[i].equals(QuestionType.MULTIPLE_CHOICE_MULTIPLE_ANSWER.name())
-                            ||questionsTypes[i].equals(QuestionType.MULTIPLE_CHOICE)){
+                            ||questionsTypes[i].equals(QuestionType.MULTIPLE_CHOICE.name())){
                         for (String answer : curr) {
                             QuestionsManipulation.addPossibleAnswer(questionId, answer);
                         }

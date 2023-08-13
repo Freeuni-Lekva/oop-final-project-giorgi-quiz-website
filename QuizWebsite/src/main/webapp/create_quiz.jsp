@@ -431,7 +431,7 @@
                 var correctAnswerCount = 0;
                 for (var m = 0; m < answerFields.length; m++) {
                     var ansVal = answerFields[m].value.trim();
-                    var isCorrectAnswer = answerFields[m].parentNode.querySelector('input[type="checkbox"]').checked;
+                    var isCorrectAnswer = answerFields[m].parentNode.querySelector('input[type="radio"]').checked;
 
                     if (ansVal === "") {
                         alert("Please fill in all answer fields in all questions.");
