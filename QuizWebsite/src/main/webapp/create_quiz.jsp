@@ -262,7 +262,7 @@
         container.appendChild(questionField);
 
 
-        if (questionType === 'pictureResponse') {
+        if (questionType === 'PICTURE_RESPONSE') {
             var pictureUrlField = document.createElement('input');
             pictureUrlField.setAttribute('type', 'text');
             pictureUrlField.setAttribute('placeholder', 'Enter picture URL');
