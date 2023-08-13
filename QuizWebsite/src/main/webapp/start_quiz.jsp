@@ -100,6 +100,11 @@
     </script>
 </head>
 <body>
+<%
+    if(session.getAttribute("current_active") == null){
+        throw new RuntimeException();
+    }
+%>
 
 <h1> <%= QuizzesInformation.findQuizById(quizId).getName() %> </h1>
 <div class="quiz-container">

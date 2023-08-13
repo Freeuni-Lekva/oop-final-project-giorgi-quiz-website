@@ -94,6 +94,11 @@
     </style>
 </head>
 <body>
+<%
+    if(session.getAttribute("current_active") == null){
+        throw new RuntimeException();
+    }
+%>
 <div id="header">
     <h1>Add Friends</h1>
     <button class="home-button" onclick="redirectToHome()">Home</button>
