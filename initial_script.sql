@@ -179,7 +179,7 @@ CREATE TABLE QUESTIONS
 (
     question_id   INT AUTO_INCREMENT PRIMARY KEY,
     quiz_id       INT,
-    picture_url   VARCHAR(2050) DEFAULT '',
+    picture_url   VARCHAR(10000) DEFAULT '',
     question_type VARCHAR(50),
     question      TEXT,
     sort_order    INT(11) NOT NULL DEFAULT '0'
