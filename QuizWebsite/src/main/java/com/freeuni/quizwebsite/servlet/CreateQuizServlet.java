@@ -1,6 +1,6 @@
 package com.freeuni.quizwebsite.servlet;
 
-import com.freeuni.quizwebsite.service.QuizzesInformation;
+import com.freeuni.quizwebsite.model.QuestionType;
 import com.freeuni.quizwebsite.service.manipulation.QuestionsManipulation;
 import com.freeuni.quizwebsite.service.manipulation.QuizManipulation;
 import jakarta.servlet.ServletException;
@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @WebServlet("/CreateQuiz")
 public class CreateQuizServlet extends HttpServlet {
@@ -87,6 +88,12 @@ public class CreateQuizServlet extends HttpServlet {
             }
             System.out.println();
 
+            String tags = httpServletRequest.getParameter("quizTags");
+            List<String> tagsList = Arrays.asList(tags.split("\\s*,\\s*"));
+            for (String tag : tagsList) {
+                QuizManipulation.addTagsToQuiz(quizId, tag);
+            }
+
             String[] urls = httpServletRequest.getParameterValues("pictureUrls[]");
             int j = 0;
             int k = 0;
@@ -94,7 +101,7 @@ public class CreateQuizServlet extends HttpServlet {
 
             for (int i = 0; i < questions.length; i++) {
 
-                if (questionsTypes[i].equals("pictureResponse")) {
+                if (questionsTypes[i].equals(QuestionType.PICTURE_RESPONSE.name())) {
                     int questionId = QuestionsManipulation.addQuestion(quizId,
                             urls[j], questionsTypes[i], questions[i], i); // Add question to DB and get questionId
                     j++;
@@ -117,7 +124,8 @@ public class CreateQuizServlet extends HttpServlet {
                         m++;
                         if(curr != null) break;
                     }
-                    if(questionsTypes[i].equals("multipleChoice")){
+                    if(questionsTypes[i].equals(QuestionType.MULTIPLE_CHOICE_MULTIPLE_ANSWER.name())
+                            ||questionsTypes[i].equals(QuestionType.MULTIPLE_CHOICE.name())){
                         for (String answer : curr) {
                             QuestionsManipulation.addPossibleAnswer(questionId, answer);
                         }

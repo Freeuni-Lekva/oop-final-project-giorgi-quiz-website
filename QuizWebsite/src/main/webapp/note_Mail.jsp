@@ -159,6 +159,11 @@
     </style>
 </head>
 <body>
+<%
+    if(session.getAttribute("current_active") == null){
+        throw new RuntimeException();
+    }
+%>
 <div class="notes-container">
     <h1 style="text-align: center; margin-bottom: 30px;">Notes Mailbox</h1>
     <div style="display: flex; justify-content: space-between; align-items: center;">

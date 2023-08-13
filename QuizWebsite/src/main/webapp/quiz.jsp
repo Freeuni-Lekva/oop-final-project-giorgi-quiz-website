@@ -238,6 +238,10 @@
 </head>
 <body>
 <%
+    if(session.getAttribute("current_active") == null){
+        throw new RuntimeException();
+    }
+
     int quizId = Integer.parseInt(request.getParameter("id"));
 
 
