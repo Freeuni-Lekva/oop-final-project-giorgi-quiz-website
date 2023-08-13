@@ -161,6 +161,11 @@
 
 </head>
 <body>
+<%
+    if(session.getAttribute("current_active") == null){
+        throw new RuntimeException();
+    }
+%>
 <div class="form-container">
     <div class="form-header">Create Quiz</div>
     <button class="home-button" onclick="redirectTo('home_page.jsp')">Home</button>

@@ -88,6 +88,11 @@
     </style>
 </head>
 <body>
+<%
+    if(session.getAttribute("current_active") == null){
+        throw new RuntimeException();
+    }
+%>
 <div class="challenges-container">
     <h1 style="text-align: center; margin-bottom: 30px;">Challenges</h1>
     <button class="home-button" onclick="redirectTo('home_page.jsp')">Home</button>
