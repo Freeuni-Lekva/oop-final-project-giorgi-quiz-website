@@ -2,6 +2,7 @@ package com.freeuni.quizwebsite.servlet;
 
 import com.freeuni.quizwebsite.service.UsersInformation;
 import com.freeuni.quizwebsite.service.manipulation.*;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,7 +15,11 @@ import java.sql.SQLException;
 public class DeleteUserServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        if(request.getParameter("current_active") == null) {
+            request.setAttribute("not-logged", new Object());
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        }
         Integer current_id =  (Integer) request.getSession().getAttribute("current_active");
         int profile_id = Integer.parseInt(request.getParameter("profile_id"));
         try {
@@ -28,6 +33,7 @@ public class DeleteUserServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
         if(current_id == profile_id) {
+            request.getSession().setAttribute("current_active", null);
             response.sendRedirect("index.jsp");
         } else {
             response.sendRedirect("home_page.jsp");

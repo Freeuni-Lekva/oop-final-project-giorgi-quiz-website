@@ -21,7 +21,8 @@ public class CreateQuizServlet extends HttpServlet {
         try {
             // Collect quiz information from the form
             if (httpServletRequest.getSession().getAttribute("current_active") == null) {
-                throw new RuntimeException();
+                httpServletRequest.setAttribute("not-logged", new Object());
+                httpServletRequest.getRequestDispatcher("index.jsp").forward(httpServletRequest, response);
             }
             String userIdStr = httpServletRequest.getSession().getAttribute("current_active").toString();
             if (userIdStr == null || userIdStr.isEmpty()) {

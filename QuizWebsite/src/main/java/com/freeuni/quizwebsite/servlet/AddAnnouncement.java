@@ -18,6 +18,10 @@ public class AddAnnouncement extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         String announcementText = httpServletRequest.getParameter("announcement-text");
+        if(httpServletRequest.getParameter("current_active") == null) {
+            httpServletRequest.setAttribute("not-logged", new Object());
+            httpServletRequest.getRequestDispatcher("index.jsp").forward(httpServletRequest, httpServletResponse);
+        }
         int currentActive = Integer.parseInt(httpServletRequest.getParameter("current_active"));
 
         try {

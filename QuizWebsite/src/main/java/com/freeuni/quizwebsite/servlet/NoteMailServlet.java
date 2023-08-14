@@ -20,11 +20,11 @@ public class NoteMailServlet extends HttpServlet {
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
 
 
-        if (httpServletRequest.getSession().getAttribute("current_active") == null) {
-            throw new RuntimeException();
-        }
-        if(Integer.parseInt(httpServletRequest.getParameter("user_id")) != ((Integer) httpServletRequest.getSession().getAttribute("current_active")).intValue()){
-            throw new RuntimeException();
+        if (httpServletRequest.getSession().getAttribute("current_active") == null
+                || (Integer.parseInt(httpServletRequest.getParameter("user_id"))
+                    != (Integer) httpServletRequest.getSession().getAttribute("current_active"))) {
+            httpServletRequest.setAttribute("not-logged", new Object());
+            httpServletRequest.getRequestDispatcher("index.jsp").forward(httpServletRequest, httpServletResponse);
         }
         int userId = Integer.parseInt(httpServletRequest.getParameter("user_id"));
         List<NoteMail> recive;

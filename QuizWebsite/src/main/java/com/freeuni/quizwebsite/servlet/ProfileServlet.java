@@ -17,6 +17,10 @@ public class ProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         int profileId = Integer.parseInt(request.getParameter("user_id"));
+        if(request.getSession().getAttribute("current_active") == null) {
+            request.setAttribute("not-logged", new Object());
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        }
         Integer currentId = (Integer) request.getSession().getAttribute("current_active");
         try {
             User currentUser = UsersInformation.findUserById(currentId);

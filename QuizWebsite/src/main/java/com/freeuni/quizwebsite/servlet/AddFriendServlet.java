@@ -16,11 +16,11 @@ public class AddFriendServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         // Get the current active user_id from the session
-        Integer currentUserId = (Integer) httpServletRequest.getSession().getAttribute("current_active");
-        if (currentUserId == null) {
-            httpServletResponse.sendRedirect("login");
-            return;
+        if(httpServletRequest.getSession().getAttribute("current_active") == null) {
+            httpServletRequest.setAttribute("not-logged", new Object());
+            httpServletRequest.getRequestDispatcher("index.jsp").forward(httpServletRequest, httpServletResponse);
         }
+        Integer currentUserId = (Integer) httpServletRequest.getSession().getAttribute("current_active");
 
         String friendIdString = httpServletRequest.getParameter("user_id");
         if (friendIdString == null || friendIdString.isEmpty()) {

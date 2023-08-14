@@ -89,8 +89,9 @@
 </head>
 <body>
 <%
-    if(session.getAttribute("current_active") == null){
-        throw new RuntimeException();
+    if(session.getAttribute("current_active") == null) {
+        request.setAttribute("not-logged", new Object());
+        response.sendRedirect("index.jsp");
     }
 %>
 <div class="challenges-container">

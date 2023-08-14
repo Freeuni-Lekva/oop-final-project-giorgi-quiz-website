@@ -98,6 +98,10 @@
     </style>
 </head>
 <body>
+<% if (session.getAttribute("current_active") == null) {
+    request.setAttribute("not-logged", new Object());
+    request.getRequestDispatcher("index.jsp").forward(request, response);
+} %>
 <div id="container">
     <h1>Search Results</h1>
     <button class="home-button" onclick="redirectToHome()">Home</button>
@@ -116,7 +120,6 @@
         <li>
             <a href="quiz.jsp?id=<%= quiz.getQuizId() %>" class="user-profile-link"> <%= quiz.getName() %>
             </a>
-            <a href="take-quiz?quiz_id=<%= quiz.getQuizId() %>">Take</a>
         </li>
         <% } %>
         <h1>User Results</h1>

@@ -239,7 +239,8 @@
 <body>
 <%
     if(session.getAttribute("current_active") == null){
-        throw new RuntimeException();
+        request.setAttribute("not-logged", new Object());
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
     int quizId = Integer.parseInt(request.getParameter("id"));

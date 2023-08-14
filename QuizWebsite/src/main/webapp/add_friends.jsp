@@ -95,8 +95,9 @@
 </head>
 <body>
 <%
-    if(session.getAttribute("current_active") == null){
-        throw new RuntimeException();
+    if(session.getAttribute("current_active") == null) {
+        request.setAttribute("not-logged", new Object());
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 %>
 <div id="header">
