@@ -102,4 +102,13 @@ public class QuizManipulation {
         connection.prepareStatement("INSERT INTO TAGS  (quiz_id, tag_name) " +
                 "VALUES (" + quizId + ", '" + tag + "')").executeUpdate();
     }
+
+    public static void increaseQuizViewCount(int quizId) throws SQLException {
+        PreparedStatement ps = connection.prepareStatement(
+                "UPDATE quizes SET view_count = view_count + 1 WHERE quiz_id = ?"
+        );
+        ps.setInt(1, quizId);
+        ps.executeUpdate();
+    }
+
 }
