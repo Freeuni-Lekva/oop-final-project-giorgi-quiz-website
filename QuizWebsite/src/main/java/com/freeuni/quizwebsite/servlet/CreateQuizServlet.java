@@ -1,6 +1,8 @@
 package com.freeuni.quizwebsite.servlet;
 
 import com.freeuni.quizwebsite.model.QuestionType;
+import com.freeuni.quizwebsite.service.QuizzesInformation;
+import com.freeuni.quizwebsite.service.manipulation.AchievementsManipulation;
 import com.freeuni.quizwebsite.service.manipulation.QuestionsManipulation;
 import com.freeuni.quizwebsite.service.manipulation.QuizManipulation;
 import jakarta.servlet.ServletException;
@@ -145,8 +147,23 @@ public class CreateQuizServlet extends HttpServlet {
                 }
             }
 
+            switch (QuizzesInformation.findQuizzesByUserId(userId).size()){
+                case 1:
+                    AchievementsManipulation.addAchievement(userId,"AMATEUR_AUTHOR");
+                    break;
+                case 5:
+                    AchievementsManipulation.addAchievement(userId,"PROLIFIC_AUTHOR");
+                    break;
+                case 10:
+                    AchievementsManipulation.addAchievement(userId,"PRODIGIOUS_AUTHOR");
+                    break;
+
+            }
+
             // Redirect to a success page
             response.sendRedirect("home_page.jsp");
+
+
 
         } catch (SQLException e) {
             e.printStackTrace();

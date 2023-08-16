@@ -13,6 +13,7 @@
 <%@ page import="com.freeuni.quizwebsite.model.db.Achievement" %>
 <%@ page import="com.freeuni.quizwebsite.service.*" %>
 <%@ page import="com.freeuni.quizwebsite.model.db.Announcement" %>
+<%@ page import="java.util.Set" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -129,10 +130,14 @@
         }
 
         .achievement-item {
+            display: inline-block;
+            background-color: aqua;
+            text-align: center;
             margin-bottom: 10px;
+            margin-right: 20px;
             padding: 10px;
             border: 1px solid #cccccc;
-            background-color: #f9f9f9;
+            //background-color: #f9f9f9;
         }
 
         .friend-name:hover {
@@ -224,6 +229,13 @@
             font-size: 10px; /* Adjust the font size to make the text smaller */
             color: #888888;
         }
+        .achievement-item img {
+            display: block;
+            max-width: 125px; /* or any desired value */
+            height: auto;
+        }
+
+
 
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -351,16 +363,16 @@
         </div>
         <div id="achievements">
             <h2><%= profileInfo.getUsername() %>'s Achievements</h2>
-            <% List<Achievement> achievements;
+            <% Set<Achievement> achievements;
                 try {
-                    achievements = AchievementsInformation.findAchievementsByUserId(currentUser.getUserId());
+                    achievements = AchievementsInformation.findAchievementsByUserId(profileInfo.getUserId());
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
                 for (Achievement achievement : achievements) { %>
             <div class="achievement-item">
-                <p><%= achievement.getAchivementName()%>
-                </p>
+                <p><%= achievement.getAchivementName()%></p>
+                <img src="data:image/png;base64,<%= Image.GetImage(achievement.getAchivementName()) %>" alt="Amateur Author Achievement" />
             </div>
             <% } %>
             <% if (achievements.isEmpty()) { %>

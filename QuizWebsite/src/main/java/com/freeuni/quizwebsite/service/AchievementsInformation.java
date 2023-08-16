@@ -8,7 +8,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class AchievementsInformation {
 
@@ -27,17 +29,23 @@ public class AchievementsInformation {
     }
 
     //this method finds all Achievements of user id
-    public static List<Achievement> findAchievementsByUserId(int id) throws SQLException {
+    public static Set<Achievement> findAchievementsByUserId(int id) throws SQLException {
         ResultSet resultSet;
         resultSet = connection.prepareStatement("SELECT * FROM ACHIEVEMENTS WHERE user_id = " + id).executeQuery();
-        List<Achievement> achievementList = new ArrayList<>();
+        Set<Achievement> achievementList = new HashSet<>();
+        Set<String> achievementListString = new HashSet<>();
         while (resultSet.next()) {
             Achievement achievement = new Achievement(
                     resultSet.getInt("achievement_id"),
                     resultSet.getInt("user_id"),
                     resultSet.getString("achievement")
             );
-            achievementList.add(achievement);
+            if(!achievementListString.contains(achievement.getAchivementName())){
+                achievementList.add(achievement);
+                achievementListString.add(achievement.getAchivementName());
+
+            }
+
         }
         return achievementList;
     }

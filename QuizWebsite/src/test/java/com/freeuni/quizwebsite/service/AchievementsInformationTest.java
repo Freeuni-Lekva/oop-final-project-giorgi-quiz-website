@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,12 +15,12 @@ class AchievementsInformationTest {
     @Test
     void findAchivementsByUserId() throws SQLException {
         //test 0
-        List<Achievement>  achlist = AchievementsInformation.findAchievementsByUserId(1);
+        Set<Achievement> achlist = AchievementsInformation.findAchievementsByUserId(1);
         //System.out.println(achlist.size());
         assertTrue(achlist.stream().anyMatch(e->e.getUserId()==1&& e.getAchivementName().equals(Achievements.AMATEUR_AUTHOR.name())));
 
         //test 1
-        List<Achievement>  achlist1 = AchievementsInformation.findAchievementsByUserId(100);
+        Set<Achievement>  achlist1 = AchievementsInformation.findAchievementsByUserId(100);
         assertEquals(0,achlist1.size());
 
     }
