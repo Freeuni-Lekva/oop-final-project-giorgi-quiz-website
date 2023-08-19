@@ -4,6 +4,7 @@
 <%@ page import="com.freeuni.quizwebsite.model.QuestionType" %>
 <%@ page import="java.util.StringTokenizer" %>
 <%@ page import="com.freeuni.quizwebsite.service.QuizzesInformation" %>
+<%@ page import="java.util.Collections" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -112,6 +113,9 @@
     <form action="evaluation" method="post">
         <%
             List<Question> questions = QuestionInformation.getQuestionsInQuiz(quizId);
+            if(! QuizzesInformation.findQuizById(quizId).isSorted()) {
+                Collections.shuffle(questions);
+            }
             for (int i = 0; i < questions.size(); i++) {
                 Question question = questions.get(i);
                 String questionText = question.getQuestion();

@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 @WebServlet("/displayQuiz")
@@ -29,6 +30,9 @@ public class QuizDisplayServlet extends HttpServlet {
         else {
             try {
                 ArrayList<Question> questions = (ArrayList<Question>) QuestionInformation.getQuestionsInQuiz(quizId);
+                if(! QuizzesInformation.findQuizById(quizId).isSorted()) {
+                    Collections.shuffle(questions);
+                }
                 HashMap<Integer, ArrayList<String> > answers = new HashMap<>();
                 int cnt = 0;
                 req.getSession().setAttribute("queue", cnt);
