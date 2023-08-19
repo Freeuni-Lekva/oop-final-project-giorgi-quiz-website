@@ -51,7 +51,13 @@ class AchievementsInformationTest {
     @Test
     void findAchievementsById() throws SQLException {
         Achievement a = AchievementsInformation.findAchievementsById(6);
-        assertEquals(a.getUserId(), 1);
-        assertEquals(a.getAchivementName(), "QUIZ_MACHINE");
+        assertEquals(a.getUserId(), 10001);
+        assertEquals(a.getAchivementName(), "PROLIFIC_AUTHOR");
+    }
+
+    @Test
+    void findAchievementsNull() throws SQLException {
+        Achievement a = AchievementsInformation.findAchievementsById(6900990);
+        assertNull(a);
     }
 }

@@ -106,7 +106,7 @@ CREATE TABLE QUIZES
 
 INSERT INTO QUIZES (user_id, name, description, sorted, one_or_multiple, instant_feedback, practice_mode,quiz_state,view_count)
 VALUES (1, 'Cars quiz', 'magari', 1, 0, 1, 1,'PUBLISHED',1),
-       (1,'History quiz','educational',1,0,1,1,'CREATED',2),
+       (1,'History quiz','educational',1,0,1,1,'PUBLISHED',2),
        (1,'Math quiz','educational',1,0,1,1,'DELETED',0),
        (1,'signal processing quiz','university',1,0,1,1,'PUBLISHED',3);
 
@@ -287,7 +287,7 @@ INSERT INTO NOTE_MAIL (sender_user, receiver_user, note)
 VALUES (9999, 1, 'rogor xar');
 INSERT INTO QUIZES (quiz_id,user_id, name, description, sorted, one_or_multiple, instant_feedback, practice_mode,quiz_state,view_count)
 VALUES (9999,9999, 'test car quizz', 'magari', 1, 0, 1, 1,'PUBLISHED',1),
-       (9998,9999,'test history quizz','educational',1,0,1,1,'CREATED',2);
+       (9998,9999,'test history quizz','educational',1,0,1,1,'PUBLISHED',2);
 
 -- password is 1234 testAdmin
 INSERT INTO `quiz_db`.`users`
@@ -325,7 +325,7 @@ INSERT INTO NOTE_MAIL (sender_user, receiver_user, note)
 VALUES (10000, 1, 'rogor xar');
 INSERT INTO QUIZES (quiz_id,user_id, name, description, sorted, one_or_multiple, instant_feedback, practice_mode,quiz_state,view_count)
 VALUES (10000,10000, 'admin car quizz', 'magari', 1, 0, 1, 1,'PUBLISHED',1),
-       (10001,10000,'admin history quizz','educational',1,0,1,1,'CREATED',2);
+       (10001,10000,'admin history quizz','educational',1,0,1,1,'PUBLISHED',2);
 
 DELETE FROM `quiz_db`.`questions` WHERE (`question_id` = '2');
 DELETE FROM `quiz_db`.`questions` WHERE (`question_id` = '3');
@@ -338,7 +338,7 @@ VALUES ('2', '10000', 'QUESTION_RESPONSE', 'საქართველოს �
        (7, 10000, 'MULTIPLE_CHOICE_MULTIPLE_ANSWER', 'ჩემოთვლილთაგან რომელი შედის დნმ-ის შემადგენლობაში?', 5),
        (8, 10000, 'QUESTION_RESPONSE_MULTIPLE_ANSWER_UNORDERED', 'თბილისის მდინარეები', 6),
        (9, 10000, 'QUESTION_RESPONSE_MULTIPLE_ANSWER_ORDERED', 'ტოპ 5 პრეზიდენტი (საუკეთესოდან უარესისკენ)', 7),
-       (10, 10000, 'FILL_IN_BLANK', 'sheni _, rqagrxili, chemsa verdzsa, _, ras erchoda, ras ebrdzoda, ras erqagrexileboda?!',8);
+       (10, 10000, 'FILL_IN_BLANK', 'sheni _, rqagrxili, chemsa verdzsa, _, ras erchoda, ras ebrdzoda, ras erqagrexileboda?!', 8);
 
 INSERT INTO ANSWERS(question_id, answer)
 VALUES (2, 'Tbilisi'),

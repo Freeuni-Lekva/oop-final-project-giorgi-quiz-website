@@ -1,6 +1,7 @@
-package com.freeuni.quizwebsite.service.manipulation;
+package manipulation;
 
 import com.freeuni.quizwebsite.service.NoteMailInformation;
+import com.freeuni.quizwebsite.service.manipulation.NoteMailManipulation;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;

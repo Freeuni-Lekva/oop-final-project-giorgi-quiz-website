@@ -10,29 +10,29 @@ class AdminInformationTest {
 
     @Test
     void userAmount() throws SQLException {
-        System.out.println(AdminInformation.userAmount());
+        assertEquals(AdminInformation.userAmount(), 6);
     }
 
     @Test
     void quizAmount() throws SQLException {
-        System.out.println(AdminInformation.quizAmount());
+        assertEquals(AdminInformation.quizAmount(), 8);
     }
 
     @Test
     void totalViews() throws SQLException {
-        System.out.println(AdminInformation.totalViews());
+        assertEquals(AdminInformation.totalViews(), 12);
     }
 
     @Test
     void totalChallenges() throws SQLException {
-        System.out.println(AdminInformation.totalChallenges());
+        assertEquals(AdminInformation.totalChallenges(), 5);
     }
 
 
 
     @Test
     void usersAddedToday() throws SQLException {
-        System.out.println(AdminInformation.usersAddedToday());
+        assertEquals(AdminInformation.usersAddedToday(), 6);
     }
 
     @Test
@@ -47,11 +47,16 @@ class AdminInformationTest {
 
     @Test
     void totalQuizTake() throws SQLException {
-        System.out.println(AdminInformation.totalQuizTake());
+        assertEquals(AdminInformation.totalQuizTake(), 4);
     }
 
     @Test
     void quizHistoriesTakenLastSevenDays() throws SQLException {
         System.out.println(AdminInformation.quizHistoriesTakenLastSevenDays());
+    }
+
+    @Test
+    void quizTotalMailsTest() throws SQLException {
+        assertEquals(AdminInformation.totalMails(), 5);
     }
 }

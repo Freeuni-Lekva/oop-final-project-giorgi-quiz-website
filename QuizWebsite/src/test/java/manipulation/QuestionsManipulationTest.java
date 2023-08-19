@@ -1,8 +1,9 @@
-package com.freeuni.quizwebsite.service.manipulation;
+package manipulation;
 
 import com.freeuni.quizwebsite.model.QuestionType;
 import com.freeuni.quizwebsite.service.QuestionInformation;
 import com.freeuni.quizwebsite.service.QuizzesInformation;
+import com.freeuni.quizwebsite.service.manipulation.QuestionsManipulation;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

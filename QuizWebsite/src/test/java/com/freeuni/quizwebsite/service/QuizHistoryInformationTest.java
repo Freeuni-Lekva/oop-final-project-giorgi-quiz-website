@@ -30,4 +30,10 @@ public class QuizHistoryInformationTest {
         List<QuizHistory> quizHistoryList = QuizHistoryInformation.getMaxResultedHistoryOfQuiz(1);
         assertEquals(95.75,quizHistoryList.get(0).getScore(),0.01);
     }
+
+    @Test
+    public void getOrderedByScoreQuizzesHistoryByQuizIdTest() throws SQLException {
+        List<QuizHistory> quizHistoryList = QuizHistoryInformation.getOrderedByScoreQuizzesHistoryByQuizId(1);
+        assertEquals(4, quizHistoryList.size());
+    }
 }
