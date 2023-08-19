@@ -268,7 +268,7 @@
     <p>Quiz Creation Date: <%= formatDate(creationDate) %></p>
 </div>
 <div>
-    <form method="get" action="start_quiz.jsp">
+    <form method="get" action="displayQuiz">
         <input type="hidden" name="id" value="<%=quizId%>">
         <button class="start-quiz-button" type="submit">Start Quiz</button>
     </form>
