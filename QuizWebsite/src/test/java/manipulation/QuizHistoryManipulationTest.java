@@ -1,5 +1,6 @@
-package com.freeuni.quizwebsite.service.manipulation;
+package manipulation;
 
+import com.freeuni.quizwebsite.service.manipulation.QuizHistoryManipulation;
 import org.junit.Test;
 
 import java.sql.SQLException;

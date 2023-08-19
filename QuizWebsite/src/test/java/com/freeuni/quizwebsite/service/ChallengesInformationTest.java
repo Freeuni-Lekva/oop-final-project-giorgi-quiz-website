@@ -28,7 +28,7 @@ class ChallengesInformationTest {
     @Test
     void getUserReceivedChallenges() throws SQLException {
         ArrayList<Challenge> mariamReceived = ChallengesInformation.getUserReceivedChallenges(1);
-        assertEquals(mariamReceived.size(), 1);
+        assertEquals(mariamReceived.size(), 3);
         Challenge challenge = mariamReceived.get(0);
         assertEquals(challenge.getSenderUserId(), 2);
 

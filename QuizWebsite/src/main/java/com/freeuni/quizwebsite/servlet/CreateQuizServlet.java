@@ -43,7 +43,7 @@ public class CreateQuizServlet extends HttpServlet {
             String practiceModeStr = httpServletRequest.getParameter("practiceMode");
             boolean practiceMode = "on".equals(practiceModeStr);
             // Call addQuiz method to add quiz to database
-            int quizId = QuizManipulation.addQuiz(userId, name, description, randomQuestions, oneOrMultiple, instantFeedback, practiceMode, "CREATED", 0);
+            int quizId = QuizManipulation.addQuiz(userId, name, description, randomQuestions, oneOrMultiple, instantFeedback, practiceMode, "PUBLISHED", 0);
 
             String[] questions = httpServletRequest.getParameterValues("questions[]");
             String[] questionsTypes = httpServletRequest.getParameterValues("questionTypes[]");
