@@ -77,18 +77,52 @@
             background-color: #0056b3;
         }
 
+        .check-button {
+            background-color: #00008B;
+            color: lightcyan;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 19px;
+            margin: 0;
+            margin-top: 3%;
+            margin-right: 50px;
+        }
+
+        .check-button:hover {
+            background-color: #0056b3;
+        }
+
         label {
             color: darkslateblue;
         }
+
+        .center {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
     </style>
     <title>Question <%=(int)request.getSession().getAttribute("queue") +1%></title>
 </head>
 <body>
     <H1>Quiz: <%=QuizzesInformation.findQuizById((int)request.getSession().getAttribute("quizId")).getName()%></H1>
     <form method="post" action="transition">
-        <% int cnt = (int) request.getSession().getAttribute("queue"); %>
         <div id="question-info">
-            <h1>Question <%=cnt+1%></h1>
+            <div class="center">
+                <% int cnt = (int) request.getSession().getAttribute("queue"); %>
+                <h1>Question <%=cnt+1%></h1>
+                <h1 id="ifChecked" name="ifChecked"></h1>
+                <%
+                    if(QuizzesInformation.findQuizById((int)request.getSession().getAttribute("quizId")).isInstantFeedback()) {
+                %>
+                <input type="button" class="check-button" onclick="checkAnswer()" value="Check"/>
+                <%
+                    }
+                %>
+            </div>
             <% ArrayList<Question> questions = (ArrayList<Question>) request.getSession().getAttribute("questions");
               String question = questions.get(cnt).getQuestion();
             %>
@@ -105,6 +139,15 @@
                     cnt++;
                     request.getSession().setAttribute("queue", cnt);
                  %>
+                <div class="hidden-container">
+                    <%
+                        ArrayList<String> correctAns = (ArrayList<String>) QuestionInformation.getCorrectAnswers(questions.get(cnt-1).getQuestionId());
+                        for (int i = 0; i < correctAns.size(); i++) {
+                    %>
+                    <p style="display: none" class="hidden-correct-answer"> <%= correctAns.get(i)%>
+                    </p>
+                    <% } %>
+                </div>
             </div>
         </div>
         <input class="next-button" type="submit" id="next" value="Next" onclick="getGuessed()"/>
@@ -114,5 +157,34 @@
 <script>
     function getGuessed() {
         document.getElementById('checkedRadio').value = document.querySelector('input[name="multiple-choice"]:checked').value;
+    }
+    function checkAnswer() {
+        const cnt = <%= cnt-1 %>;
+        const radioOptions = document.querySelectorAll('input[name="multiple-choice"]');
+        radioOptions.forEach(radioButton => {
+            radioButton.disabled = true;
+        });
+        const userGuess = document.querySelector('input[name="multiple-choice"]:checked').value;
+        document.getElementById('ifChecked').textContent = "Wrong!";
+        const correctos = document.querySelectorAll(".hidden-correct-answer");
+        var correct = false;
+        if (correctos != null) {
+            correctos.forEach(correctAns => {
+                console.log(correctAns.textContent);
+                if (correctAns != null) {
+                    const correctValue = correctAns.textContent.trim();
+                    if (correctValue != null) {
+                        if (correctValue == userGuess) {
+                            correct = true;
+                        }
+                    }
+                }
+            });
+            if (correct) {
+                document.getElementById('ifChecked').textContent = "Correct!";
+            } else {
+                document.getElementById('ifChecked').textContent = "Wrong!";
+            }
+        }
     }
 </script>
