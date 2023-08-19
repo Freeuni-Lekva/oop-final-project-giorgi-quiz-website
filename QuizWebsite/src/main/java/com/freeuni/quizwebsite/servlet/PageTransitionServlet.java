@@ -37,10 +37,12 @@ public class PageTransitionServlet extends HttpServlet {
         } else if(lastOnesType.equals("FILL_IN_BLANK")) {
 
             String[] checked = req.getParameterValues("guess"+(cnt-1));
-            ArrayList<String> asList = (ArrayList<String>) Arrays.stream(checked).filter(e->!e.isEmpty()).collect(Collectors.toList());
+            if(checked!=null) {
+                ArrayList<String> asList = (ArrayList<String>) Arrays.stream(checked).filter(e->!e.isEmpty()).collect(Collectors.toList());
+                if(asList.size()!=0) answers.put(questions.get(cnt-1).getQuestionId(), asList);
+                else answers.put(questions.get(cnt-1).getQuestionId(), null);
+            } else answers.put(questions.get(cnt-1).getQuestionId(), null);
 
-            if(asList.size()!=0) answers.put(questions.get(cnt-1).getQuestionId(), asList);
-            else answers.put(questions.get(cnt-1).getQuestionId(), null);
 
         } else if(lastOnesType.equals("QUESTION_RESPONSE_MULTIPLE_ANSWER_UNORDERED") || lastOnesType.equals("QUESTION_RESPONSE_MULTIPLE_ANSWER_ORDERED") || lastOnesType.equals("MULTIPLE_CHOICE_MULTIPLE_ANSWER")){
             String[] checked = req.getParameterValues("guess"+(cnt-1));
