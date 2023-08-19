@@ -70,7 +70,7 @@ public class PageTransitionServlet extends HttpServlet {
                     if (questionType.equals(QuestionType.MULTIPLE_CHOICE_MULTIPLE_ANSWER.name())
                             || questionType.equals(QuestionType.QUESTION_RESPONSE_MULTIPLE_ANSWER_UNORDERED.name())) {
 
-                        if (answered!=null && answered.size() == correctAnswers.size() && correctAnswers.containsAll(answered)) result++;
+                        if (answered!=null && answered.containsAll(correctAnswers) && correctAnswers.containsAll(answered)) result++;
 
                     } else if (questionType.equals(QuestionType.QUESTION_RESPONSE_MULTIPLE_ANSWER_ORDERED.name())
                             || questionType.equals(QuestionType.FILL_IN_BLANK.name())) {
@@ -92,10 +92,12 @@ public class PageTransitionServlet extends HttpServlet {
                     throw new RuntimeException(e);
                 }
             }
-            try {
-                QuizHistoryManipulation.addQuizHistory((int)req.getSession().getAttribute("current_active"), questions.get(0).getQuizId(), result);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+            if(req.getSession().getAttribute("is-practice") == null) {
+                try {
+                    QuizHistoryManipulation.addQuizHistory((int) req.getSession().getAttribute("current_active"), questions.get(0).getQuizId(), result);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
             req.getSession().setAttribute("result", result);
             req.getSession().setAttribute("resultAns", resultPerQuestion);

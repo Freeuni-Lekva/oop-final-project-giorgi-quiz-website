@@ -60,34 +60,23 @@ public class EvaluationServlet extends HttpServlet {
                 List<String> answered = questionAndAnswersMap.get(questionId);
                 List<String> correctAnswers = QuestionInformation.getCorrectAnswers(questionId);
                 String questionType = question.getQuestionType();
-                System.out.println("correct: " + correctAnswers);
-                System.out.println("your guess: " + answered);
                 if(questionType.equals(QuestionType.MULTIPLE_CHOICE_MULTIPLE_ANSWER.name())
                         || questionType.equals(QuestionType.QUESTION_RESPONSE_MULTIPLE_ANSWER_UNORDERED.name())) {
-                    System.out.println(correctAnswers.size());
-                    if(answered!= null && answered.size() == correctAnswers.size() && correctAnswers.containsAll(answered)) {
-                        System.out.println("CORRECT!");
+                    if(answered != null && answered.containsAll(correctAnswers)
+                            && correctAnswers.containsAll(answered)) {
                         result++;
-                    } else {
-                        System.out.println("WRONG!");
                     }
                 } else if (questionType.equals(QuestionType.QUESTION_RESPONSE_MULTIPLE_ANSWER_ORDERED.name())
                         || questionType.equals(QuestionType.FILL_IN_BLANK.name())) {
                     if(answered!= null && answered.equals(correctAnswers)) {
-                        System.out.println("CORRECT!");
                         result++;
-                    } else {
-                        System.out.println("WRONG!");
                     }
                 } else {
                     String currentAnswer = answered.get(0);
                     if (correctAnswers.contains(currentAnswer)) {
                         System.out.println("CORRECT!");
                         result++;
-                    } else {
-                        System.out.println("WRONG!");
                     }
-
                 }
                 String ans = "Wrong!";
                 if(result-before==0) resultPerQuestion.put(questionId, ans);
@@ -106,10 +95,12 @@ public class EvaluationServlet extends HttpServlet {
                 }
             }
         }
-        try {
-            QuizHistoryManipulation.addQuizHistory((int)httpServletRequest.getSession().getAttribute("current_active"), quizId, result);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        if (httpServletRequest.getSession().getAttribute("is-practice") == null) {
+            try {
+                QuizHistoryManipulation.addQuizHistory((int)httpServletRequest.getSession().getAttribute("current_active"), quizId, result);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         httpServletRequest.getSession().setAttribute("quizId", quizId);

@@ -316,6 +316,14 @@
         <input type="hidden" name="id" value="<%=quizId%>">
         <button id="start-quiz-button" class="start-quiz-button" type="submit">Start Quiz</button>
     </form>
+    <%
+    if (QuizzesInformation.findQuizById(quizId).isPracticeMode()) { %>
+    <form method="get" action="displayQuiz">
+        <input type="hidden" name="id" value="<%=quizId%>">
+        <input type="hidden" name="is-practice" value="<%=quizId%>">
+        <button id="start-practice-button" class="start-quiz-button" style="background-color: darkslategrey" type="submit">Start Practice</button>
+    </form>
+    <% } %>
 
     <%
         if (currUser == creatorId || UsersInformation.findUserById(currUser).isAdmin()) {
