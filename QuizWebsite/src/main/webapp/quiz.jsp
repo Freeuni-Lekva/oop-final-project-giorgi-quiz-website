@@ -306,12 +306,13 @@
     <p>Quiz Creation Date: <%= formatDate(creationDate) %></p>
     <p>Views: <%= QuizzesInformation.findQuizById(quizId).getViewCount() %></p>
 </div>
+
 <%
     // Call the function to increase quiz views
     QuizManipulation.increaseQuizViewCount(quizId);
 %>
 <div id="buttons-container">
-    <form method="get" action="start_quiz.jsp">
+    <form method="get" action="displayQuiz">
         <input type="hidden" name="id" value="<%=quizId%>">
         <button id="start-quiz-button" class="start-quiz-button" type="submit">Start Quiz</button>
     </form>
