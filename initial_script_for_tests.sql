@@ -46,7 +46,7 @@ CREATE TABLE ACHIEVEMENTS
 );
 
 INSERT INTO ACHIEVEMENTS (user_id, achievement)
-VALUES (1, 'I_AM_THE_GRATEST'),
+VALUES (1, 'I_AM_THE_greatest'),
        (1, 'AMATEUR_AUTHOR'),
        (2, 'AMATEUR_AUTHOR'),
        (2, 'QUIZ_MACHINE');
@@ -269,7 +269,7 @@ VALUES
      'Test Bio 1233 !@#$ <>?',
      '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4');
 INSERT INTO ACHIEVEMENTS (user_id, achievement)
-VALUES (9999, 'I_AM_THE_GRATEST'),
+VALUES (9999, 'I_AM_THE_greatest'),
        (9999, 'AMATEUR_AUTHOR');
 INSERT INTO CHALLENGES (sender_user, receiver_user, quiz_id, description)
 VALUES (1,9999, 1, 'midi qeni ra');
@@ -307,7 +307,7 @@ VALUES
      '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4',
      1);
 INSERT INTO ACHIEVEMENTS (user_id, achievement)
-VALUES (10000, 'I_AM_THE_GRATEST'),
+VALUES (10000, 'I_AM_THE_greatest'),
        (10000, 'AMATEUR_AUTHOR');
 INSERT INTO CHALLENGES (sender_user, receiver_user, quiz_id, description)
 VALUES (1,10000, 1, 'midi qeni ra');

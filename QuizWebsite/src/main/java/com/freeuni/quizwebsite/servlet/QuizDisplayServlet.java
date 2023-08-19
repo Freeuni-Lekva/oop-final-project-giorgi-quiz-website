@@ -8,6 +8,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -19,10 +20,14 @@ import java.util.HashMap;
 public class QuizDisplayServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Boolean singlePage = false;
+        clearSessionAttributes(req.getSession());
+        boolean singlePage;
         int quizId = Integer.parseInt(req.getParameter("id"));
         try {
             singlePage = QuizzesInformation.findQuizById(quizId).isOneOrMultiple();
+            if (req.getParameter("is-practice") != null) {
+                req.getSession().setAttribute("is-practice", new Object());
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -52,5 +57,13 @@ public class QuizDisplayServlet extends HttpServlet {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    private void clearSessionAttributes(HttpSession session) {
+        session.setAttribute("is-practice", null);
+        session.setAttribute("queue", null);
+        session.setAttribute("questions", null);
+        session.setAttribute("answers", null);
+        session.setAttribute("quizId", null);
     }
 }
