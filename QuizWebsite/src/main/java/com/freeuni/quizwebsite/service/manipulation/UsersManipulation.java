@@ -73,7 +73,4 @@ public class UsersManipulation {
         NoteMailManipulation.deleteAllMailByReceiverId(userId);
         NoteMailManipulation.deleteAllMailBySenderId(userId);
     }
-
-
-
 }
