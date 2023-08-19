@@ -88,6 +88,12 @@
     </style>
 </head>
 <body>
+<%
+    if(session.getAttribute("current_active") == null) {
+        request.setAttribute("not-logged", new Object());
+        response.sendRedirect("index.jsp");
+    }
+%>
 <div class="challenges-container">
     <h1 style="text-align: center; margin-bottom: 30px;">Challenges</h1>
     <button class="home-button" onclick="redirectTo('home_page.jsp')">Home</button>
@@ -112,7 +118,8 @@
         </p>
         <p><b>Send Time:</b> <span class="send-time"><%= challenge.getSendTime().toString().substring(0, 16) %></span>
         </p>
-        <button class="complete-button" onclick="redirectToQuiz('<%= challenge.getQuizId() %>')">Complete</button>
+        <button class="complete-button" onclick="completeChallenge('<%= challenge.getChallengeId() %>', '<%= challenge.getQuizId() %>')">Complete</button>
+
     </div>
     <%
             }
@@ -126,6 +133,20 @@
 
     function redirectToQuiz(quizId) {
         window.location.href = 'quiz.jsp?id=' + quizId;
+    }
+
+    function completeChallenge(challengeId, quizId) {
+        // Send a request to delete the challenge
+        fetch('deleteChallenge?challengeId=' + challengeId, {
+            method: 'POST'
+        }).then(response => {
+            // Redirect to quiz after deleting challenge
+            if (response.ok) {
+                redirectToQuiz(quizId);
+            } else {
+                console.error('Failed to delete challenge.');
+            }
+        });
     }
 </script>
 </body>

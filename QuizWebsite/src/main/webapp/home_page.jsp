@@ -340,11 +340,15 @@
 <body>
 <%
     if(session.getAttribute("current_active") == null){
-        throw new RuntimeException();
+        request.setAttribute("not-logged", new Object());
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 %>
 <div id="header">
     <h1>Quiz Website</h1>
+    <% if (UsersInformation.findUserById((Integer) session.getAttribute("current_active")).isAdmin()) { %>
+    <button class="fun-button" style="margin-right: 10px;" onclick="redirectTo('statistic.jsp')">STATISTIC</button>
+    <% } %>
     <button class="fun-button" style="margin-right: 10px;" onclick="redirectTo('top_Ten.jsp',<%=(Integer) session.getAttribute("current_active")%>)">TOP 10</button>
     <button class="fun-button" style="margin-right: 10px;" onclick="redirectTo('tags.jsp',<%=(Integer) session.getAttribute("current_active")%>)">TAGS</button>
     <button id="note_Mail-button" class="fun-button" style="margin-right: 10px;" onclick="redirectTo('note_Mail',<%=(Integer) session.getAttribute("current_active")%>)">Note Mail</button>

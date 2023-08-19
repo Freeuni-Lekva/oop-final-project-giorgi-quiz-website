@@ -53,8 +53,10 @@
     </style>
 </head>
 <body>
-<% if (Integer.parseInt(request.getParameter("user_id")) != ((Integer) session.getAttribute("current_active")).intValue()) {
-        throw new RuntimeException();
+<% if ( session.getAttribute("current_active") == null
+        || Integer.parseInt(request.getParameter("user_id")) != (Integer) session.getAttribute("current_active")) {
+        request.setAttribute("not-logged", new Object());
+        request.getRequestDispatcher("index.jsp").forward(request, response);
  } %>
 <div id="header">
     <h1>Quiz Website</h1>

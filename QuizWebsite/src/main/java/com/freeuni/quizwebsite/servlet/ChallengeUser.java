@@ -23,6 +23,10 @@ public class ChallengeUser extends HttpServlet {
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         String messageTxt = httpServletRequest.getParameter("message");
         String receiverUsername = httpServletRequest.getParameter("username");
+        if(httpServletRequest.getParameter("current_active") == null) {
+            httpServletRequest.setAttribute("not-logged", new Object());
+            httpServletRequest.getRequestDispatcher("index.jsp").forward(httpServletRequest, httpServletResponse);
+        }
         int currentActive = Integer.parseInt(httpServletRequest.getParameter("current_active"));
         int quizId = Integer.parseInt(httpServletRequest.getParameter("current_quiz"));
         try {

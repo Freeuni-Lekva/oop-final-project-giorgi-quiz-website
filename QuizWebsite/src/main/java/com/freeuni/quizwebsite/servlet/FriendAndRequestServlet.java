@@ -2,6 +2,7 @@ package com.freeuni.quizwebsite.servlet;
 
 import com.freeuni.quizwebsite.service.manipulation.FriendRequestManipulation;
 import com.freeuni.quizwebsite.service.manipulation.FriendsManipulation;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,7 +14,11 @@ import java.io.IOException;
 public class FriendAndRequestServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        if(request.getSession().getAttribute("current_active") == null) {
+            request.setAttribute("not-logged", new Object());
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        }
         int profile_id = Integer.parseInt(request.getParameter("profile_id"));
         Integer current_id = (Integer) request.getSession().getAttribute("current_active");
         if(current_id == null) throw new RuntimeException("current_id in null!");

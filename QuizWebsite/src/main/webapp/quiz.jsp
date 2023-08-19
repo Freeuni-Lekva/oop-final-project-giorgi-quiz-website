@@ -7,6 +7,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.freeuni.quizwebsite.service.QuizHistoryInformation" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="com.freeuni.quizwebsite.service.manipulation.QuizManipulation" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -234,16 +235,53 @@
             top: 30px;
             right: 30px;
         }
+        #buttons-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .start-quiz-button, #del-quiz-button, #clear-quiz-history {
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+
+        #start-quiz-button {
+            background-color: #1976D2;
+            color: white;
+        }
+
+        #del-quiz-button {
+            background-color: #E53935;
+            color: white;
+        }
+
+        #clear-quiz-history {
+            background-color: #FFA726;
+            color: white;
+        }
     </style>
 </head>
 <body>
 <%
+    if(session.getAttribute("current_active") == null){
+        request.setAttribute("not-logged", new Object());
+        request.getRequestDispatcher("index.jsp").forward(request, response);
+    }
+
     int quizId = Integer.parseInt(request.getParameter("id"));
+
 
 
     Quiz quiz = QuizzesInformation.findQuizById(quizId);
 
     int creatorId = quiz.getUserId();
+    Integer currUser = (Integer) session.getAttribute("current_active");
 
     User creator = UsersInformation.findUserById(creatorId);
 
@@ -266,13 +304,35 @@
         <%= creator.getUsername() %>
     </a></p>
     <p>Quiz Creation Date: <%= formatDate(creationDate) %></p>
+    <p>Views: <%= QuizzesInformation.findQuizById(quizId).getViewCount() %></p>
 </div>
-<div>
+
+<%
+    // Call the function to increase quiz views
+    QuizManipulation.increaseQuizViewCount(quizId);
+%>
+<div id="buttons-container">
     <form method="get" action="displayQuiz">
         <input type="hidden" name="id" value="<%=quizId%>">
-        <button class="start-quiz-button" type="submit">Start Quiz</button>
+        <button id="start-quiz-button" class="start-quiz-button" type="submit">Start Quiz</button>
     </form>
+
+    <%
+        if (currUser == creatorId || UsersInformation.findUserById(currUser).isAdmin()) {
+    %>
+    <form method="post" action="delete-quiz">
+        <input type="hidden" name="quiz_id" value="<%= quizId %>">
+        <button id="del-quiz-button" type="submit">Delete Quiz</button>
+    </form>
+    <form method="post" action="clear-history">
+        <input type="hidden" name="quiz_id" value="<%= quizId %>">
+        <button id="clear-quiz-history" type="submit">Clear History</button>
+    </form>
+    <%
+        }
+    %>
 </div>
+
 
 <div id="top-players">
     <h2>List of Top Scores:</h2>
@@ -280,8 +340,7 @@
         <% for (QuizHistory history : topRatedPlayers) { %>
         <li><a href="profile?user_id=<%=history.getUserId()%>">
             <%= UsersInformation.findUserById(history.getUserId()).getUsername() %>:</a>
-
-                <%= history.getScore() %></li>
+            <%= history.getScore() %></li>
         <% } %>
     </ul>
 </div>
@@ -332,6 +391,11 @@
     function goBack() {
         window.history.back();
     }
+
+    function deleteQuiz() {
+        window.location.href = "delete-quiz?quiz_id=" +<%=quizId%>;
+    }
+
 </script>
 </body>
 </html>

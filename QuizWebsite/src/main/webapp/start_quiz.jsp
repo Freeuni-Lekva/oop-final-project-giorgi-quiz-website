@@ -100,6 +100,12 @@
     </script>
 </head>
 <body>
+<%
+    if(session.getAttribute("current_active") == null) {
+        request.setAttribute("not-logged", new Object());
+        request.getRequestDispatcher("index.jsp").forward(request, response);
+    }
+%>
 
 <h1> <%= QuizzesInformation.findQuizById(quizId).getName() %> </h1>
 <div class="quiz-container">
@@ -137,10 +143,17 @@
         %>
         <div class="question-container">
             <p> Fill in the blanks: </p>
-            <p><%=questionTokens.nextToken()%>
-            <%while (questionTokens.hasMoreTokens()) { %>
-            <input type="text" name="guess<%= i %>"/><%=questionTokens.nextToken()%>
-            <% } %>
+            <p>
+                <% if (questionText.startsWith("_")) { %>
+                <input type="text" name="guess<%= i %>"/>
+                <% } %>
+                <%=questionTokens.nextToken()%>
+                <%while (questionTokens.hasMoreTokens()) { %>
+                <input type="text" name="guess<%= i %>"/><%=questionTokens.nextToken()%>
+                <% }
+                if (questionText.endsWith("_")) { %>
+                <input type="text" name="guess<%= i %>"/>
+                <% } %>
             </p>
         </div>
         <% } else if (question.getQuestionType().equals(QuestionType.MULTIPLE_CHOICE.name())) { %>

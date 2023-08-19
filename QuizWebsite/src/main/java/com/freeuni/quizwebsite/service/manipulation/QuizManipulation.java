@@ -97,4 +97,18 @@ public class QuizManipulation {
             throw new SQLException("Failed to get the generated quiz_id."); //this is the line that is not covered in the tests
         }
     }
+
+    public static void addTagsToQuiz(int quizId, String tag) throws SQLException {
+        connection.prepareStatement("INSERT INTO TAGS  (quiz_id, tag_name) " +
+                "VALUES (" + quizId + ", '" + tag + "')").executeUpdate();
+    }
+
+    public static void increaseQuizViewCount(int quizId) throws SQLException {
+        PreparedStatement ps = connection.prepareStatement(
+                "UPDATE quizes SET view_count = view_count + 1 WHERE quiz_id = ?"
+        );
+        ps.setInt(1, quizId);
+        ps.executeUpdate();
+    }
+
 }

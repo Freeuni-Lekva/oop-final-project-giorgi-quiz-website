@@ -159,6 +159,12 @@
     </style>
 </head>
 <body>
+<%
+    if(session.getAttribute("current_active") == null){
+        request.setAttribute("not-logged", new Object());
+        request.getRequestDispatcher("index.jsp").forward(request, response);
+    }
+%>
 <div class="notes-container">
     <h1 style="text-align: center; margin-bottom: 30px;">Notes Mailbox</h1>
     <div style="display: flex; justify-content: space-between; align-items: center;">

@@ -327,7 +327,7 @@
         <div id="quizzes">
             <h2><%= profileInfo.getUsername() %>'s Quizzes</h2>
             <% if (currentUser.getUserId() == profileInfo.getUserId()) { %>
-            <button class="fun-button" onclick="redirectTo('create_quiz')">Create Quiz</button>
+            <button class="fun-button" onclick="redirectTo('create_quiz.jsp')">Create Quiz</button>
             <br>
             <br>
             <% } %>
