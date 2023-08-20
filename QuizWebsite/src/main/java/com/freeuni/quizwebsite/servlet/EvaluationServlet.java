@@ -1,8 +1,13 @@
 package com.freeuni.quizwebsite.servlet;
 
+import com.freeuni.quizwebsite.model.Achievements;
 import com.freeuni.quizwebsite.model.QuestionType;
 import com.freeuni.quizwebsite.model.db.Question;
+import com.freeuni.quizwebsite.service.AchievementsInformation;
 import com.freeuni.quizwebsite.service.QuestionInformation;
+import com.freeuni.quizwebsite.service.QuizHistoryInformation;
+import com.freeuni.quizwebsite.service.QuizzesInformation;
+import com.freeuni.quizwebsite.service.manipulation.AchievementsManipulation;
 import com.freeuni.quizwebsite.service.manipulation.QuizHistoryManipulation;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -53,6 +58,7 @@ public class EvaluationServlet extends HttpServlet {
         HashMap<Integer, String> resultPerQuestion = new HashMap<>();
         int result = 0;
         int quizId = 0;
+
         for (Integer questionId : questionAndAnswersMap.keySet()) {
             try {
                 int before = result;
@@ -106,8 +112,23 @@ public class EvaluationServlet extends HttpServlet {
                 }
             }
         }
+
         try {
             QuizHistoryManipulation.addQuizHistory((int)httpServletRequest.getSession().getAttribute("current_active"), quizId, result);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("res "+questionAndAnswersMap.size()+" rr"+result);
+        try {
+            String userIdStr = httpServletRequest.getSession().getAttribute("current_active").toString();
+            int userId = Integer.parseInt(userIdStr);
+
+            if(QuizHistoryInformation.getQuizzesHistoryByUserId(userId).size()==10) {
+                AchievementsManipulation.addAchievement(userId,"QUIZ_MACHINE");
+            }
+
+
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
