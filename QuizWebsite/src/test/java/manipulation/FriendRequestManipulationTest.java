@@ -1,8 +1,9 @@
-package com.freeuni.quizwebsite.service.manipulation;
+package manipulation;
 
 import com.freeuni.quizwebsite.db_connection.ConnectToDB;
 import com.freeuni.quizwebsite.model.db.FriendRequest;
 import com.freeuni.quizwebsite.service.FriendRequestInformation;
+import com.freeuni.quizwebsite.service.manipulation.FriendRequestManipulation;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

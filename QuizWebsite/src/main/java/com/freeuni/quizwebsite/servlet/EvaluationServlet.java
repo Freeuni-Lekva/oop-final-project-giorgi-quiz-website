@@ -1,13 +1,8 @@
 package com.freeuni.quizwebsite.servlet;
 
-import com.freeuni.quizwebsite.model.Achievements;
 import com.freeuni.quizwebsite.model.QuestionType;
 import com.freeuni.quizwebsite.model.db.Question;
-import com.freeuni.quizwebsite.service.AchievementsInformation;
 import com.freeuni.quizwebsite.service.QuestionInformation;
-import com.freeuni.quizwebsite.service.QuizHistoryInformation;
-import com.freeuni.quizwebsite.service.QuizzesInformation;
-import com.freeuni.quizwebsite.service.manipulation.AchievementsManipulation;
 import com.freeuni.quizwebsite.service.manipulation.QuizHistoryManipulation;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -58,7 +53,6 @@ public class EvaluationServlet extends HttpServlet {
         HashMap<Integer, String> resultPerQuestion = new HashMap<>();
         int result = 0;
         int quizId = 0;
-
         for (Integer questionId : questionAndAnswersMap.keySet()) {
             try {
                 int before = result;
@@ -66,34 +60,23 @@ public class EvaluationServlet extends HttpServlet {
                 List<String> answered = questionAndAnswersMap.get(questionId);
                 List<String> correctAnswers = QuestionInformation.getCorrectAnswers(questionId);
                 String questionType = question.getQuestionType();
-                System.out.println("correct: " + correctAnswers);
-                System.out.println("your guess: " + answered);
                 if(questionType.equals(QuestionType.MULTIPLE_CHOICE_MULTIPLE_ANSWER.name())
                         || questionType.equals(QuestionType.QUESTION_RESPONSE_MULTIPLE_ANSWER_UNORDERED.name())) {
-                    System.out.println(correctAnswers.size());
-                    if(answered!= null && answered.size() == correctAnswers.size() && correctAnswers.containsAll(answered)) {
-                        System.out.println("CORRECT!");
+                    if(answered != null && answered.containsAll(correctAnswers)
+                            && correctAnswers.containsAll(answered)) {
                         result++;
-                    } else {
-                        System.out.println("WRONG!");
                     }
                 } else if (questionType.equals(QuestionType.QUESTION_RESPONSE_MULTIPLE_ANSWER_ORDERED.name())
                         || questionType.equals(QuestionType.FILL_IN_BLANK.name())) {
                     if(answered!= null && answered.equals(correctAnswers)) {
-                        System.out.println("CORRECT!");
                         result++;
-                    } else {
-                        System.out.println("WRONG!");
                     }
                 } else {
                     String currentAnswer = answered.get(0);
                     if (correctAnswers.contains(currentAnswer)) {
                         System.out.println("CORRECT!");
                         result++;
-                    } else {
-                        System.out.println("WRONG!");
                     }
-
                 }
                 String ans = "Wrong!";
                 if(result-before==0) resultPerQuestion.put(questionId, ans);
@@ -112,25 +95,12 @@ public class EvaluationServlet extends HttpServlet {
                 }
             }
         }
-
-        try {
-            QuizHistoryManipulation.addQuizHistory((int)httpServletRequest.getSession().getAttribute("current_active"), quizId, result);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println("res "+questionAndAnswersMap.size()+" rr"+result);
-        try {
-            String userIdStr = httpServletRequest.getSession().getAttribute("current_active").toString();
-            int userId = Integer.parseInt(userIdStr);
-
-            if(QuizHistoryInformation.getQuizzesHistoryByUserId(userId).size()==10) {
-                AchievementsManipulation.addAchievement(userId,"QUIZ_MACHINE");
+        if (httpServletRequest.getSession().getAttribute("is-practice") == null) {
+            try {
+                QuizHistoryManipulation.addQuizHistory((int)httpServletRequest.getSession().getAttribute("current_active"), quizId, result);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
-
-
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
 
         httpServletRequest.getSession().setAttribute("quizId", quizId);

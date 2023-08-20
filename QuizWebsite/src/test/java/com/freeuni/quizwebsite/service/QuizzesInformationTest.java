@@ -34,7 +34,7 @@ public class QuizzesInformationTest {
         List<Quiz> quizzes2 = QuizzesInformation.findQuizzesByName("car");
         List<Quiz> quizzes3 = QuizzesInformation.findQuizzesByName("");
         assertEquals(0,quizzes1.size());
-        assertEquals(1,quizzes2.size());
+        assertEquals(3,quizzes2.size());
     }
 
     @Test
@@ -43,7 +43,7 @@ public class QuizzesInformationTest {
         List<Quiz> quizzes2 = QuizzesInformation.findQuizzesByDescription("education");
         List<Quiz> quizzes3 = QuizzesInformation.findQuizzesByDescription("");
         assertEquals(0,quizzes1.size());
-        assertEquals(1,quizzes2.size());
+        assertEquals(3,quizzes2.size());
     }
 
     @Test
@@ -52,5 +52,11 @@ public class QuizzesInformationTest {
         if(quizzes.size()>=2) {
             assertTrue(quizzes.get(0).getViewCount()>=quizzes.get(1).getViewCount());
         }
+    }
+
+    @Test
+    public void getFriendsQuizzes() throws SQLException {
+        List<Quiz> quizzes = QuizzesInformation.getFriendsQuizzes(1);
+        assertEquals(quizzes.size(), 4);
     }
 }

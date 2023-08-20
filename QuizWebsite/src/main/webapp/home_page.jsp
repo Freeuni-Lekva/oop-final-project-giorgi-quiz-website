@@ -158,6 +158,7 @@
             display: flex;
             gap: 10px;
         }
+
         /* Announcement styles */
         #announcements {
             margin-top: 20px;
@@ -187,6 +188,7 @@
             padding: 10px 20px; /* Optional: Add padding for better appearance */
             border: none; /* Optional: Remove border for a cleaner look */
         }
+
         .small-text {
             font-size: 10px; /* Adjust the font size to make the text smaller */
             color: #888888;
@@ -284,6 +286,25 @@
             background-color: #c5e1a5;
         }
 
+        .post-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, color 0.3s, transform 0.2s, box-shadow 0.3s;
+            background-image: linear-gradient(to bottom, #007bff, #0056b3);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
         /* Style for the "Friend Requests" section */
         #friend-requests {
             margin-bottom: 20px;
@@ -316,6 +337,7 @@
         .friend-request-item:hover {
             background-color: #c5e1a5;
         }
+
         #admin-controls input[type="submit"] {
             background-color: dodgerblue;
             border-radius: 4px; /* Add border-radius to make the button less square */
@@ -339,7 +361,7 @@
 </head>
 <body>
 <%
-    if(session.getAttribute("current_active") == null){
+    if (session.getAttribute("current_active") == null) {
         request.setAttribute("not-logged", new Object());
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }
@@ -349,10 +371,18 @@
     <% if (UsersInformation.findUserById((Integer) session.getAttribute("current_active")).isAdmin()) { %>
     <button class="fun-button" style="margin-right: 10px;" onclick="redirectTo('statistic.jsp')">STATISTIC</button>
     <% } %>
-    <button class="fun-button" style="margin-right: 10px;" onclick="redirectTo('top_Ten.jsp',<%=(Integer) session.getAttribute("current_active")%>)">TOP 10</button>
-    <button class="fun-button" style="margin-right: 10px;" onclick="redirectTo('tags.jsp',<%=(Integer) session.getAttribute("current_active")%>)">TAGS</button>
-    <button id="note_Mail-button" class="fun-button" style="margin-right: 10px;" onclick="redirectTo('note_Mail',<%=(Integer) session.getAttribute("current_active")%>)">Note Mail</button>
-    <button id="challenges-button" class="fun-button" style="margin-right: 10px;" onclick="redirectTo('challenges',<%=(Integer) session.getAttribute("current_active")%>)">Challenges</button>
+    <button class="fun-button" style="margin-right: 10px;"
+            onclick="redirectTo('top_Ten.jsp',<%=(Integer) session.getAttribute("current_active")%>)">TOP 10
+    </button>
+    <button class="fun-button" style="margin-right: 10px;"
+            onclick="redirectTo('tags.jsp',<%=(Integer) session.getAttribute("current_active")%>)">TAGS
+    </button>
+    <button id="note_Mail-button" class="fun-button" style="margin-right: 10px;"
+            onclick="redirectTo('note_Mail',<%=(Integer) session.getAttribute("current_active")%>)">Note Mail
+    </button>
+    <button id="challenges-button" class="fun-button" style="margin-right: 10px;"
+            onclick="redirectTo('challenges',<%=(Integer) session.getAttribute("current_active")%>)">Challenges
+    </button>
     <button class="fun-button" style="margin-right: auto;" onclick="redirectTo('logout.jsp')">Log Out</button>
 </div>
 <div id="container">
@@ -364,7 +394,10 @@
                 </a>
             </div>
         </div>
-        <button id="create_quiz-button" class="fun-button" style="margin-right: 10px;" onclick="redirectTo('create_quiz.jsp',<%=(Integer) session.getAttribute("current_active")%>)">Create Quiz</button>
+        <button id="create_quiz-button" class="fun-button" style="margin-right: 10px;"
+                onclick="redirectTo('create_quiz.jsp',<%=(Integer) session.getAttribute("current_active")%>)">Create
+            Quiz
+        </button>
         <div id="my-quizzes">
             <h2>My Quizzes</h2>
             <% List<Quiz> myQuizzes;
@@ -461,10 +494,12 @@
                     </a>
                 </div>
                 <div>
-                    <button class="fun-button" onclick="redirectTo('accept_friend.jsp', <%=friendRequest.getUserOneId()%>)">
+                    <button class="fun-button"
+                            onclick="redirectTo('accept_friend.jsp', <%=friendRequest.getUserOneId()%>)">
                         <i class="fun-icon fas fa-check"></i> Accept
                     </button>
-                    <button class="fun-button" onclick="redirectTo('reject_friend.jsp', <%=friendRequest.getUserOneId()%>)">
+                    <button class="fun-button"
+                            onclick="redirectTo('reject_friend.jsp', <%=friendRequest.getUserOneId()%>)">
                         <i class="fun-icon fas fa-times"></i> Reject
                     </button>
                 </div>
@@ -486,10 +521,10 @@
         if (isAdmin) {
     %>
     <div id="admin-controls">
-        <input type="text" id="announcement_text" placeholder="Enter announcement text" name="announcement-text" required>
-        <!-- Add a hidden input field for current_active -->
+        <textarea id="announcement_text" placeholder="Enter announcement text" name="announcement-text" required
+              style="width: 100%; resize: none;" rows="5"></textarea>
         <input type="hidden" name="current_active" value="<%= session.getAttribute("current_active") %>">
-        <input type="submit" value="post announcement">
+        <input type="submit" value="Post Announcement" class="post-button">
     </div>
     <%
         }
@@ -512,12 +547,15 @@
             </a>
         </div>
 
-        <div class="announcement-content" id="announcement-content-<%= announcement.getAnnouncementId() %>">
-            <p><%= announcement.getAnnouncement() %></p>
+        <div class="announcement-content" id="announcement-content-<%= announcement.getAnnouncementId() %>"
+             style="word-wrap: break-word;">
+            <p><%= announcement.getAnnouncement() %>
+            </p>
         </div>
-        <%-- Check if the announcement content exceeds a maximum height --%>
         <% if (announcement.getAnnouncement().length() > 150) { %>
-        <button class="expand-button" id="expand-button-<%= announcement.getAnnouncementId() %>" onclick="toggleExpand(<%= announcement.getAnnouncementId() %>)">Expand</button>
+        <button class="expand-button" id="expand-button-<%= announcement.getAnnouncementId() %>"
+                onclick="toggleExpand(<%= announcement.getAnnouncementId() %>)">Expand
+        </button>
         <% } %>
         <%!
             private String formatDate(java.util.Date date) {
@@ -525,8 +563,8 @@
                 return sdf.format(date);
             }
         %>
-        <%-- Add small text below the announcement content --%>
-        <p class="small-text">Posted on <%= formatDate(announcement.getCreationDate()) %></p>
+        <p class="small-text">Posted on <%= formatDate(announcement.getCreationDate()) %>
+        </p>
 
     </div>
 
@@ -547,7 +585,7 @@
         }
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const challengesButton = document.getElementById('challenges-button');
         const noteMailButton = document.getElementById('note_Mail-button');
         const previousChallengesCount = localStorage.getItem('challengesCount');

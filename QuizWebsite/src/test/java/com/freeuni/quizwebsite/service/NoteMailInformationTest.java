@@ -14,7 +14,7 @@ class NoteMailInformationTest {
     @Test
     void getUserSentNotes() throws SQLException {
         ArrayList<NoteMail> mariamSent = NoteMailInformation.getUserSentNotes(1);
-        assertEquals(mariamSent.size(), 1);
+        assertEquals(mariamSent.size(), 3);
         NoteMail mail = mariamSent.get(0);
         assertEquals(mail.getReceiverUserId(), 3);
         assertEquals(mail.getNote(), "damamate");

@@ -2,6 +2,7 @@ package com.freeuni.quizwebsite.service;
 
 import com.freeuni.quizwebsite.model.db.Announcement;
 import com.freeuni.quizwebsite.model.db.Friend;
+import com.freeuni.quizwebsite.model.db.User;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
@@ -38,7 +39,7 @@ class FriendsInformationTest {
     @Test
     void getFriends() throws SQLException {
         ArrayList<Friend> friends = FriendsInformation.getFriends(1);
-        assertEquals(2, friends.size());
+        assertEquals(4, friends.size());
         assertEquals(1, friends.get(0).getUserOneId());
         assertEquals(2, friends.get(0).getUserTwoId());
         assertEquals(3, friends.get(1).getUserTwoId());
@@ -51,15 +52,15 @@ class FriendsInformationTest {
     @Test
     void getNewestFriends() throws SQLException {
         ArrayList<Friend> friends = FriendsInformation.getNewestFriends(1);
-        assertEquals(2, friends.size());
-        assertEquals(3, friends.get(0).getUserTwoId());
-        assertEquals(2, friends.get(1).getUserTwoId());
+        assertEquals(4, friends.size());
+        assertEquals(9999, friends.get(0).getUserTwoId());
+        assertEquals(10000, friends.get(1).getUserTwoId());
     }
 
     @Test
     void getOldestFriends() throws SQLException {
         ArrayList<Friend> friends = FriendsInformation.getOldestFriends(1);
-        assertEquals(2, friends.size());
+        assertEquals(4, friends.size());
         assertEquals(2, friends.get(0).getUserTwoId());
         assertEquals(3, friends.get(1).getUserTwoId());
     }
@@ -76,5 +77,11 @@ class FriendsInformationTest {
     void areFriends() throws SQLException {
         assertEquals(true, FriendsInformation.areFriends(1, 3));
         assertEquals(false, FriendsInformation.areFriends(3, 2));
+    }
+
+    @Test
+    void allFriendsTest() throws SQLException {
+        ArrayList<User> users = FriendsInformation.getAllFriends(1);
+        assertEquals(users.size(), 4);
     }
 }

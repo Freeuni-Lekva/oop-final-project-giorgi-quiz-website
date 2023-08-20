@@ -1,4 +1,4 @@
-package com.freeuni.quizwebsite.service.manipulation;
+package manipulation;
 
 import org.junit.jupiter.api.Test;
 
