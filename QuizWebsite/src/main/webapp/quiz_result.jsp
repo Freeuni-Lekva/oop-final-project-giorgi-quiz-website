@@ -116,6 +116,27 @@
             background-color: #0056b3;
         }
 
+        #tabs {
+            display: flex;
+            margin-left: 15px;
+            margin-top: 7px;
+            margin-bottom: 7px;
+        }
+
+        .fun-button {
+            background-color: #00008B;
+            color: lightcyan;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .fun-button:hover {
+            background-color: #0056b3;
+        }
+
         /*input[type="checkbox"][aria-disabled="true"] {*/
         /*    background-color: #B0C4DE;*/
         /*    pointer-events: none;*/
@@ -158,26 +179,42 @@
                     <h2> Question <%= i + 1 %> </h2><h3> <%=resultStatus%></h3>
                 </div>
                 <p class="question-text"> <%= questionText %> </p>
-                <%
-                    if(multipleResponse!=null) {
-                        for (int j = 0; j < multipleResponse.size(); j++) {
-                            if(multipleResponse.get(j)!=null) ans = multipleResponse.get(j);
-                %>
-                                <div class="answer-container" id="text-field_question<%= i %>">
-                                    <input class="answer-input" type="text" name="guess<%= i %>" value="<%=ans%>" readonly />
-                                </div>
+                <div class="tabs">
+                    <button id="<%=i%>0" onclick="chooseTab(0, <%=i%>)" class="fun-button">your answers</button>
+                    <button id="<%=i%>1" onclick="chooseTab(1, <%=i%>)" class="fun-button">correct answers</button>
+                </div>
+                <div id="userAnswers<%=i%>">
+                    <%
+                        if(multipleResponse!=null) {
+                            for (int j = 0; j < multipleResponse.size(); j++) {
+                                if(multipleResponse.get(j)!=null) ans = multipleResponse.get(j);
+                    %>
+                    <div class="answer-container" id="text-field_question<%= i %>">
+                        <input class="answer-input" type="text" name="guess<%= i %>" value="<%=ans%>" disabled />
+                    </div>
                     <%  }
                         if(multipleResponse.size()==0) {
                     %>
-                            <div class="answer-container" id="text-field_question<%= i %>">
-                                <input class="answer-input" type="text" name="guess<%= i %>" value="" readonly />
-                            </div>
+                    <div class="answer-container" id="text-field_question<%= i %>">
+                        <input class="answer-input" type="text" name="guess<%= i %>" value="" disabled />
+                    </div>
                     <%  }
                     } else { %>
-                        <div class="answer-container" id="text-field_question<%= i %>">
-                            <input class="answer-input" type="text" name="guess<%= i %>" value="" readonly />
+                    <div class="answer-container" id="text-field_question<%= i %>">
+                        <input class="answer-input" type="text" name="guess<%= i %>" value="" disabled />
+                    </div>
+                    <% } %>
+                </div>
+                <div id="correctAnswers<%=i%>" style="display: none">
+                    <%
+                        ArrayList<String> correctAns = (ArrayList<String>) QuestionInformation.getCorrectAnswers(question.getQuestionId());
+                        for (int j = 0; j < correctAns.size(); j++) {
+                    %>
+                        <div class="answer-container">
+                            <input class="answer-input" type="text" value="<%= correctAns.get(j)%>" disabled />
                         </div>
                     <% } %>
+                </div>
             </div>
             <% } else if (question.getQuestionType().equals(QuestionType.PICTURE_RESPONSE.name())) { %>
             <div class="<%=container%>">
@@ -185,13 +222,31 @@
                     <h2> Question <%= i + 1 %> </h2> <h3> <%=resultStatus%></h3>
                 </div>
                 <p> <%= questionText %> </p>
-                <img src="<%=question.getPicURL()%>" alt="pic for question <%= i + 1 %>" width="500" height="600">
-                <br>
-                <%
-                    String picAns = "";
-                    if(answers.get(question.getQuestionId())!=null) picAns = answers.get(question.getQuestionId()).get(0);
-                %>
-                <input class="answer-input" type="text" name="guess<%= i %>" value="<%=picAns%>" readonly />
+                <div class="tabs">
+                    <button id="<%=i%>0" onclick="chooseTab(0, <%=i%>)" class="fun-button">your answers</button>
+                    <button id="<%=i%>1" onclick="chooseTab(1, <%=i%>)" class="fun-button">correct answers</button>
+                </div>
+                <div id="userAnswers<%=i%>">
+                    <br>
+                    <img src="<%=question.getPicURL()%>" alt="pic for question <%= i + 1 %>" width="500" height="600">
+                    <br>
+                    <%
+                        String picAns = "";
+                        if(answers.get(question.getQuestionId())!=null) picAns = answers.get(question.getQuestionId()).get(0);
+                    %>
+                    <br>
+                    <input class="answer-input" type="text" name="guess<%= i %>" value="<%=picAns%>" disabled />
+                </div>
+                <div id="correctAnswers<%=i%>" style="display: none">
+                    <%
+                        ArrayList<String> correctAns = (ArrayList<String>) QuestionInformation.getCorrectAnswers(question.getQuestionId());
+                        for (int j = 0; j < correctAns.size(); j++) {
+                    %>
+                    <div class="answer-container">
+                        <input class="answer-input" type="text" value="<%= correctAns.get(j)%>" disabled />
+                    </div>
+                    <% } %>
+                </div>
             </div>
             <% } else if (question.getQuestionType().equals(QuestionType.FILL_IN_BLANK.name())) {
                 StringTokenizer questionTokens = new StringTokenizer(questionText, "_");
@@ -201,17 +256,35 @@
                     <h2> Question <%= i + 1 %> </h2> <h3> <%=resultStatus%></h3>
                 </div>
                 <p> Fill in the blanks: </p>
-                <p><%=questionTokens.nextToken()%>
-                    <%
-                        ArrayList<String> fillInAnswers = answers.get(question.getQuestionId());
-                        int iterCount = 0;
-                        String currentFill = " ";
-                        while (questionTokens.hasMoreTokens()) {
-                            if(fillInAnswers!=null) currentFill = fillInAnswers.get(iterCount);
-                    %>          <input type="text" name="guess<%= i %>" value="<%=currentFill%>" readonly /><%=questionTokens.nextToken()%>
-                    <%      iterCount++;
+                <div class="tabs">
+                    <button id="<%=i%>0" onclick="chooseTab(0, <%= i %>)" class="fun-button">your answers</button>
+                    <button id="<%=i%>1" onclick="chooseTab(1, <%= i %>)" class="fun-button">correct answers</button>
+                </div>
+                <div id="userAnswers<%=i%>">
+                    <p><%=questionTokens.nextToken()%>
+                        <%
+                            ArrayList<String> fillInAnswers = answers.get(question.getQuestionId());
+                            int iterCount = 0;
+                            String currentFill = " ";
+                            while (questionTokens.hasMoreTokens()) {
+                                if(fillInAnswers!=null) currentFill = fillInAnswers.get(iterCount);
+                        %>          <input type="text"  value="<%=currentFill%>" disabled /><%=questionTokens.nextToken()%>
+                        <%      iterCount++;
+                            } %>
+                    </p>
+                </div>
+                <div id="correctAnswers<%=i%>" style="display: none">
+                    <%StringTokenizer questionTokensForCorrect = new StringTokenizer(questionText, "_");%>
+                    <p><%=questionTokensForCorrect.nextToken()%>
+                        <%
+                            ArrayList<String> correctAnsFill = (ArrayList<String>) QuestionInformation.getCorrectAnswers(question.getQuestionId());
+                            int innerCount = 0;
+                            while (questionTokensForCorrect.hasMoreTokens()) {
+                        %>          <input type="text" value="<%=correctAnsFill.get(innerCount)%>" disabled /><%=questionTokensForCorrect.nextToken()%>
+                        <%      innerCount++;
                         } %>
-                </p>
+                    </p>
+                </div>
             </div>
             <% } else if (question.getQuestionType().equals(QuestionType.MULTIPLE_CHOICE.name())) { %>
             <div class="<%=container%>">
@@ -220,17 +293,34 @@
                 </div>
                 <p> <%= questionText %> </p>
                 <p> possible answers: </p>
-                <%
-                    List<String> possibleAnswers = QuestionInformation.getPossibleAnswers(question.getQuestionId());
-                    ArrayList<String> radioAns = answers.get(question.getQuestionId());
-                    for (int j = 0; j < possibleAnswers.size(); j++) {
-                        String state = "";
-                        if(radioAns!=null && possibleAnswers.get(j).equals(radioAns.get(0))) state = "checked=\"checked\"";
-                %>
-                <input type="radio" id="ans_<%= i %>_<%= j %>" name="guess<%= i %>" value="<%= possibleAnswers.get(j) %>" disabled <%=state%> >
-                <label class="answer-label" for="ans_<%= i %>_<%= j %>"> <%= possibleAnswers.get(j) %> </label>
-                <br>
-                <% } %>
+                <div class="tabs">
+                    <button id="<%=i%>0" onclick="chooseTab(0, <%=i%>)" class="fun-button">your answers</button>
+                    <button id="<%=i%>1" onclick="chooseTab(1, <%=i%>)" class="fun-button">correct answers</button>
+                </div>
+                <div id="userAnswers<%=i%>">
+                    <br>
+                    <%
+                        List<String> possibleAnswers = QuestionInformation.getPossibleAnswers(question.getQuestionId());
+                        ArrayList<String> radioAns = answers.get(question.getQuestionId());
+                        for (int j = 0; j < possibleAnswers.size(); j++) {
+                            String state = "";
+                            if(radioAns!=null && possibleAnswers.get(j).equals(radioAns.get(0))) state = "checked=\"checked\"";
+                    %>
+                    <input type="radio" id="ans_<%= i %>_<%= j %>" name="guess<%= i %>" value="<%= possibleAnswers.get(j) %>" disabled <%=state%> >
+                    <label class="answer-label" for="ans_<%= i %>_<%= j %>"> <%= possibleAnswers.get(j) %> </label>
+                    <br>
+                    <% } %>
+                </div>
+                <div id="correctAnswers<%=i%>" style="display: none">
+                    <%
+                        ArrayList<String> correctAns = (ArrayList<String>) QuestionInformation.getCorrectAnswers(question.getQuestionId());
+                        for (int j = 0; j < correctAns.size(); j++) {
+                    %>
+                    <div class="answer-container">
+                        <input class="answer-input" type="text" value="<%= correctAns.get(j)%>" disabled />
+                    </div>
+                    <% } %>
+                </div>
             </div>
             <% } else if (question.getQuestionType().equals(QuestionType.MULTIPLE_CHOICE_MULTIPLE_ANSWER.name())) { %>
             <div class="<%=container%>">
@@ -239,17 +329,33 @@
                 </div>
                 <p> <%= questionText %> </p>
                 <p> possible answers: </p>
-                <%
-                    List<String> possibleAnswers = QuestionInformation.getPossibleAnswers(question.getQuestionId());
-                    ArrayList<String> multipleAns = answers.get(question.getQuestionId());
-                    for (int j = 0; j < possibleAnswers.size(); j++) {
-                        String state = "";
-                        if(multipleAns!=null && multipleAns.contains(possibleAnswers.get(j))) state = "checked=\"checked\"";
-                %>
-                <input type="checkbox" id="ans_<%= i %>_<%= j %>" name="guess<%= i %>" value="<%= possibleAnswers.get(j) %>" disabled <%=state%>>
-                <label class="answer-label" for="ans_<%= i %>_<%= j %>"> <%= possibleAnswers.get(j) %> </label>
+                <div class="tabs">
+                    <button id="<%=i%>0" onclick="chooseTab(0, <%=i%>)" class="fun-button">your answers</button>
+                    <button id="<%=i%>1" onclick="chooseTab(1, <%=i%>)" class="fun-button">correct answers</button>
+                </div>
                 <br>
-                <% } %>
+                <div id="userAnswers<%=i%>">
+                    <%
+                        List<String> possibleAnswers = QuestionInformation.getPossibleAnswers(question.getQuestionId());
+                        ArrayList<String> multipleAns = answers.get(question.getQuestionId());
+                        for (int j = 0; j < possibleAnswers.size(); j++) {
+                            String state = "";
+                            if(multipleAns!=null && multipleAns.contains(possibleAnswers.get(j))) state = "checked=\"checked\"";
+                    %>
+                    <input type="checkbox" id="ans_<%= i %>_<%= j %>" name="guess<%= i %>" value="<%= possibleAnswers.get(j) %>" disabled <%=state%>>
+                    <label class="answer-label" for="ans_<%= i %>_<%= j %>"> <%= possibleAnswers.get(j) %> </label>
+                    <br>
+                    <% } %>
+                </div>
+                <div id="correctAnswers<%=i%>" style="display: none">
+                    <%
+                        ArrayList<String> correctAns = (ArrayList<String>) QuestionInformation.getCorrectAnswers(question.getQuestionId());
+                        for (int j = 0; j < correctAns.size(); j++) {
+                    %>
+                    <input type="checkbox" name="ans_<%= i %>_<%= j %>_<%= j %>" value="<%= correctAns.get(j) %>" disabled checked>
+                    <label class="answer-label" for="ans_<%= i %>_<%= j %>_<%= j %>"> <%= correctAns.get(j) %> </label>
+                    <% } %>
+                </div>
             </div>
             <% }
             }
@@ -259,6 +365,30 @@
 <script>
     function redirectToHome() {
         window.location.href = "home_page.jsp";
+    }
+
+    function chooseTab(tabIdx, i) {
+        const userAns = document.getElementById('userAnswers' + i);
+        const correctAns = document.getElementById('correctAnswers' + i);
+        const userButton = document.getElementById(i +''+ 0);
+        const correctButton = document.getElementById(i +''+ 1);
+
+        userAns.style.display = 'none';
+        correctAns.style.display = 'none';
+
+        switch (tabIdx) {
+            case 0:
+                userAns.style.display = 'block';
+                userButton.style.background = "#0056b3";
+                correctButton.style.background = "#00008B";
+                break;
+            case 1:
+                correctAns.style.display = 'block';
+                userButton.style.background = "#00008B";
+                correctButton.style.background = "#0056b3";
+                break;
+        }
+
     }
 </script>
 </body>
