@@ -137,7 +137,7 @@
             margin-right: 20px;
             padding: 10px;
             border: 1px solid #cccccc;
-            //background-color: #f9f9f9;
+        / / background-color: #f9f9f9;
         }
 
         .friend-name:hover {
@@ -164,6 +164,15 @@
             padding: 8px 16px;
             background-color: darkred;
             color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #admin-button {
+            padding: 8px 16px;
+            background-color: goldenrod;
+            color: green;
             border: none;
             border-radius: 4px;
             cursor: pointer;
@@ -229,12 +238,12 @@
             font-size: 10px; /* Adjust the font size to make the text smaller */
             color: #888888;
         }
+
         .achievement-item img {
             display: block;
             max-width: 125px; /* or any desired value */
             height: auto;
         }
-
 
 
     </style>
@@ -302,7 +311,8 @@
 </head>
 <body>
 <div id="header">
-    <h1><%=profileInfo.getUsername()%></h1>
+    <h1><%=profileInfo.getUsername()%>
+    </h1>
     <button class="home-button" onclick="redirectToHome()">Home</button>
 </div>
 <div id="container">
@@ -311,6 +321,10 @@
             <h2>
                 <%= profileInfo.getUsername() %>'s Basic Info:
             </h2>
+            <% if (profileInfo.isAdmin()) { %>
+            <i class="fas fa-star" style="color: gold;"></i>
+            <span style="font-size: 12px; color: green;">Admin</span>
+            <% } %>
             <h3>
                 First Name: <%= profileInfo.getFirstName()%><br>
                 Last Name:  <%= profileInfo.getLastName()%><br>
@@ -328,6 +342,13 @@
         <% if ((currentUser.getUserId() == profileInfo.getUserId())
                 || (currentUser.isAdmin()) && !profileInfo.isAdmin()) { %>
         <button id="del-button" onclick="deleteUser()">Delete Account</button>
+        <% } %>
+
+        <% if ((currentUser.getUserId() != profileInfo.getUserId())
+                && (currentUser.isAdmin()) && !profileInfo.isAdmin()) { %>
+        <button id="admin-button" onclick="redirectTo('make_admin.jsp?user_id=' + <%=profileInfo.getUserId()%>)">Make
+            Admin
+        </button>
         <% } %>
         <div id="tabs">
             <button onclick="chooseTab(0)" class="fun-button">Quizzes</button>
@@ -371,8 +392,10 @@
                 }
                 for (Achievement achievement : achievements) { %>
             <div class="achievement-item">
-                <p><%= achievement.getAchivementName()%></p>
-                <img src="data:image/png;base64,<%= Image.GetImage(achievement.getAchivementName()) %>" alt="Amateur Author Achievement" />
+                <p><%= achievement.getAchivementName()%>
+                </p>
+                <img src="data:image/png;base64,<%= Image.GetImage(achievement.getAchivementName()) %>"
+                     alt="Amateur Author Achievement"/>
             </div>
             <% } %>
             <% if (achievements.isEmpty()) { %>

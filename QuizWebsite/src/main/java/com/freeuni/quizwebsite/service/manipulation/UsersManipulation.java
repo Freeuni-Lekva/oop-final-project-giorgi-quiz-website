@@ -73,4 +73,12 @@ public class UsersManipulation {
         NoteMailManipulation.deleteAllMailByReceiverId(userId);
         NoteMailManipulation.deleteAllMailBySenderId(userId);
     }
+
+    public static void makeUserAdmin(int userId) throws SQLException {
+        String makeAdmin = "UPDATE USERS SET is_admin = 1 WHERE user_id = ?";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(makeAdmin);
+        preparedStatement.setInt(1, userId);
+        preparedStatement.executeUpdate();
+    }
 }
