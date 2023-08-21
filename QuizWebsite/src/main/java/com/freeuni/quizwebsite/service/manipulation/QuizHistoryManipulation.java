@@ -18,34 +18,6 @@ public class QuizHistoryManipulation {
         connection.prepareStatement("DELETE FROM QUIZ_HISTORY  WHERE user_id = " + userId +";").executeUpdate();
     }
 
-    public static void deleteFromQuizHistoryBeforeT(Timestamp T) throws SQLException {
-        connection.prepareStatement("DELETE FROM QUIZ_HISTORY  WHERE take_date < \""+T+"\";").executeUpdate();
-    }
-    public static void deleteUserIDsQuizesHistoryBeforeT(int userId,Timestamp T) throws SQLException {
-        connection.prepareStatement("DELETE FROM QUIZ_HISTORY  WHERE take_date < \"" +T+"\" and user_id ="+userId+";").executeUpdate();
-    }
-
-    public static void deleteFromQuizHistoryAfterT(Timestamp T) throws SQLException {
-        connection.prepareStatement("DELETE FROM QUIZ_HISTORY  WHERE take_date >= \""+T+"\"").executeUpdate();
-    }
-    public static void deleteUserIDsQuizesHistoryAfterT(int userId,Timestamp T) throws SQLException {
-        connection.prepareStatement("DELETE FROM QUIZ_HISTORY  WHERE take_date >= \"" +T+"\" and user_id ="+userId+";").executeUpdate();
-    }
-
-    public static void deleteLowScores(double minScore) throws SQLException{
-        connection.prepareStatement("DELETE FROM QUIZ_HISTORY  WHERE score < "+minScore+";").execute();
-    }
-    public static void deleteUsersLowScores(double minScore, int userID) throws SQLException{
-        connection.prepareStatement("DELETE FROM QUIZ_HISTORY  WHERE score < "+minScore+" and user_id ="+userID+";").execute();
-    }
-    public static void deleteHighScores(double maxScore) throws SQLException{
-        connection.prepareStatement("DELETE FROM QUIZ_HISTORY  WHERE score > "+maxScore+";").execute();
-    }
-    public static void deleteUsersHighScores(double maxScore, int userID) throws SQLException{
-        connection.prepareStatement("DELETE FROM QUIZ_HISTORY  WHERE score > "+maxScore+" and user_id ="+userID+";").execute();
-    }
-
-
 
 
 

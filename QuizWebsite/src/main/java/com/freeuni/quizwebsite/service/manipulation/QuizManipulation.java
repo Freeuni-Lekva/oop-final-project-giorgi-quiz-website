@@ -47,29 +47,6 @@ public class QuizManipulation {
         connection.prepareStatement("DELETE FROM quizes WHERE user_id = " + userId +";").executeUpdate();
     }
 
-    public static void deleteUserIDsQuizesBeforeT(int userId,Timestamp T) throws SQLException {
-        List<Quiz> ql=QuizzesInformation.findQuizzesByUserId(userId);
-        for (Quiz q:ql) {
-            if(T.compareTo(q.getCreationDate())<0){
-                QuestionsManipulation.deleteQuestionByQuizId(q.getQuizId());
-            }
-
-        }
-
-        connection.prepareStatement("DELETE FROM quizes WHERE creation_date < \"" +T+"\" and user_id ="+userId+";").executeUpdate();
-    }
-
-    public static void deleteUserIDsQuizesAfterT(int userId,Timestamp T) throws SQLException {
-        List<Quiz> ql=QuizzesInformation.findQuizzesByUserId(userId);
-        for (Quiz q:ql) {
-            if(T.compareTo(q.getCreationDate())>=0){
-                QuestionsManipulation.deleteQuestionByQuizId(q.getQuizId());
-            }
-
-        }
-        connection.prepareStatement("DELETE FROM quizes WHERE creation_date >= \"" +T+"\" and user_id ="+userId+";").executeUpdate();
-    }
-
     public static int addQuiz(int userId,String name, String description,boolean sorted,boolean oneOrMultiple
             ,boolean instantFeedback, boolean practiceMode, String quizStates,int viewCount
     ) throws SQLException {

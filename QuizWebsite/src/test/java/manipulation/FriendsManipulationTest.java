@@ -16,9 +16,9 @@ class FriendsManipulationTest {
 
     @Test
     void addFriendTest() throws SQLException {
-        Friend f = new Friend(1,2);
+        Friend f = new Friend(7,8);
         FriendsManipulation.addFriend(f);
-        assertTrue(FriendsInformation.areFriends(1,2));
+        assertTrue(FriendsInformation.areFriends(7,8));
     }
 
     @Test
