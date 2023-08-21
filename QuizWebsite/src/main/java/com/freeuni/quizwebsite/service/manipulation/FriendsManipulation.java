@@ -12,14 +12,6 @@ public class FriendsManipulation {
 
     private static final Connection connection = ConnectToDB.getConnection();
 
-    public static void addFriend(Friend friendship) throws SQLException {
-        String update = String.format("INSERT INTO FRIENDS (user_one, user_two, relationship_status, add_date) " +
-                        "VALUES (%s, %s, %s, %s);",
-                    friendship.getUserOneId(), friendship.getUserTwoId(),
-                    friendship.getStatus(), friendship.getFriendshipDate());
-        connection.prepareStatement(update).executeUpdate();
-    }
-
     public static void addFriendByIds(int user1id, int user2id) throws SQLException {
         String update = String.format("INSERT INTO FRIENDS (user_one, user_two) " +
                                       "VALUES (%s, %s);",
@@ -54,13 +46,6 @@ public class FriendsManipulation {
         String update = "DELETE FROM FRIENDS " +
                         "WHERE user_one = " + userId + " OR " +
                         "user_two = " + userId + ";";
-        connection.prepareStatement(update).executeUpdate();
-    }
-
-    public static void updateStatus(Friend friendship, RelationshipStatus newStatus) throws SQLException {
-        String update = "UPDATE FRIENDS " +
-                        "SET relationship_status = " + newStatus.name() +
-                        "WHERE friend_id = " + friendship.getFriend_id() + ";";
         connection.prepareStatement(update).executeUpdate();
     }
 

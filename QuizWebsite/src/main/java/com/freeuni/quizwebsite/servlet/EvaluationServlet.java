@@ -1,8 +1,13 @@
 package com.freeuni.quizwebsite.servlet;
 
+import com.freeuni.quizwebsite.model.Achievements;
 import com.freeuni.quizwebsite.model.QuestionType;
+import com.freeuni.quizwebsite.model.db.Achievement;
 import com.freeuni.quizwebsite.model.db.Question;
 import com.freeuni.quizwebsite.service.QuestionInformation;
+import com.freeuni.quizwebsite.service.QuizHistoryInformation;
+import com.freeuni.quizwebsite.service.QuizzesInformation;
+import com.freeuni.quizwebsite.service.manipulation.AchievementsManipulation;
 import com.freeuni.quizwebsite.service.manipulation.QuizHistoryManipulation;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -95,14 +100,38 @@ public class EvaluationServlet extends HttpServlet {
                 }
             }
         }
+        int usId =(int)httpServletRequest.getSession().getAttribute("current_active");
         if (httpServletRequest.getSession().getAttribute("is-practice") == null) {
             try {
-                QuizHistoryManipulation.addQuizHistory((int)httpServletRequest.getSession().getAttribute("current_active"), quizId, result);
+                QuizHistoryManipulation.addQuizHistory(usId, quizId, result);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }else{
+            System.out.println("aq var");
+            try {
+                AchievementsManipulation.addAchievement(usId, "PRACTICE_MAKES_PERFECT");
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
+        try {
+            if(QuizHistoryInformation.getQuizzesHistoryByUserId(usId).size()==10){
+                AchievementsManipulation.addAchievement(usId, "QUIZ_MACHINE");
 
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            if(QuestionInformation.getQuestionsInQuiz(quizId).size()==result){
+                AchievementsManipulation.addAchievement((int)httpServletRequest.getSession().getAttribute("current_active"), "I_AM_THE_GREATEST");
+
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         httpServletRequest.getSession().setAttribute("quizId", quizId);
         httpServletRequest.getSession().setAttribute("result", result);
         httpServletRequest.getSession().setAttribute("resultAns", resultPerQuestion);

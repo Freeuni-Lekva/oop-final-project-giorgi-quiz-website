@@ -14,12 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FriendsManipulationTest {
 
-    @Test
-    void addFriendTest() throws SQLException {
-        Friend f = new Friend(7,8);
-        FriendsManipulation.addFriend(f);
-        assertTrue(FriendsInformation.areFriends(7,8));
-    }
 
     @Test
     void addFriendByIdsTest() throws SQLException {
@@ -53,10 +47,4 @@ class FriendsManipulationTest {
         assertEquals(FriendsInformation.getFriends(10000).size(),0);
     }
 
-    @Test
-    void updateStatusTest() throws SQLException {
-        Friend f = new Friend(3,2);
-        FriendsManipulation.updateStatus(f, RelationshipStatus.BESTIES);
-        assertTrue(FriendsInformation.areOfStatus(3,2, String.valueOf(RelationshipStatus.BESTIES)));
-    }
 }
