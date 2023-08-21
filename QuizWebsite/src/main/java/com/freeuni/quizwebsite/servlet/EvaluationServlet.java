@@ -100,15 +100,17 @@ public class EvaluationServlet extends HttpServlet {
                 }
             }
         }
+        System.out.println("aq var");
         int usId =(int)httpServletRequest.getSession().getAttribute("current_active");
         if (httpServletRequest.getSession().getAttribute("is-practice") == null) {
+            System.out.println("aq var1");
             try {
                 QuizHistoryManipulation.addQuizHistory(usId, quizId, result);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }else{
-            System.out.println("aq var");
+            System.out.println("aq var2");
             try {
                 AchievementsManipulation.addAchievement(usId, "PRACTICE_MAKES_PERFECT");
             } catch (SQLException e) {
@@ -120,10 +122,7 @@ public class EvaluationServlet extends HttpServlet {
                 AchievementsManipulation.addAchievement(usId, "QUIZ_MACHINE");
 
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        try {
+
             if(QuestionInformation.getQuestionsInQuiz(quizId).size()==result){
                 AchievementsManipulation.addAchievement((int)httpServletRequest.getSession().getAttribute("current_active"), "I_AM_THE_GREATEST");
 
