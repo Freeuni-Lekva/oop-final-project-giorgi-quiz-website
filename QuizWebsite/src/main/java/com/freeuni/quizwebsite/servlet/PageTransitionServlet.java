@@ -3,6 +3,8 @@ package com.freeuni.quizwebsite.servlet;
 import com.freeuni.quizwebsite.model.QuestionType;
 import com.freeuni.quizwebsite.model.db.Question;
 import com.freeuni.quizwebsite.service.QuestionInformation;
+import com.freeuni.quizwebsite.service.QuizHistoryInformation;
+import com.freeuni.quizwebsite.service.manipulation.AchievementsManipulation;
 import com.freeuni.quizwebsite.service.manipulation.QuizHistoryManipulation;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -92,12 +94,34 @@ public class PageTransitionServlet extends HttpServlet {
                     throw new RuntimeException(e);
                 }
             }
+            int usId =(int)req.getSession().getAttribute("current_active");
             if(req.getSession().getAttribute("is-practice") == null) {
                 try {
                     QuizHistoryManipulation.addQuizHistory((int) req.getSession().getAttribute("current_active"), questions.get(0).getQuizId(), result);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
+            }else{
+
+                try {
+                    AchievementsManipulation.addAchievement(usId, "PRACTICE_MAKES_PERFECT");
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            try {
+                if(QuizHistoryInformation.getQuizzesHistoryByUserId(usId).size()==10){
+                    AchievementsManipulation.addAchievement(usId, "QUIZ_MACHINE");
+
+                }
+
+                if(questions.size()==result){
+                    AchievementsManipulation.addAchievement(usId, "I_AM_THE_GREATEST");
+
+                }
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
             req.getSession().setAttribute("result", result);
             req.getSession().setAttribute("resultAns", resultPerQuestion);

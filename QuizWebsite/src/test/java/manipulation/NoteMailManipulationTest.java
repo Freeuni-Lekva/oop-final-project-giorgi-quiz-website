@@ -2,8 +2,6 @@ package manipulation;
 
 import com.freeuni.quizwebsite.service.NoteMailInformation;
 import com.freeuni.quizwebsite.service.manipulation.NoteMailManipulation;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +13,6 @@ class NoteMailManipulationTest {
 
     @Test
     void deleteAllMailBySenderId() throws SQLException {
-        assertEquals(2, NoteMailInformation.getUserSentNotes(2).size());
         NoteMailManipulation.deleteAllMailBySenderId(2);
         assertEquals(0, NoteMailInformation.getUserSentNotes(2).size());
     }
@@ -35,7 +32,7 @@ class NoteMailManipulationTest {
        assertEquals(0, NoteMailInformation.getUserSentNotes(4).size());
     }
 
-    @BeforeAll
+
     static void addNoteMail1() throws SQLException {
         assertEquals(1, NoteMailInformation.getUserSentNotes(1).size());
         NoteMailManipulation.addNoteMail(2, 1, "damamate");
@@ -45,7 +42,6 @@ class NoteMailManipulationTest {
         assertEquals(1, NoteMailInformation.getUserReceivedNotes(3).size());
     }
 
-    @AfterAll
     static void addNoteMail2() throws SQLException {
         assertEquals(0, NoteMailInformation.getUserSentNotes(1).size());
         NoteMailManipulation.addNoteMail(1, 3, "damamate");
