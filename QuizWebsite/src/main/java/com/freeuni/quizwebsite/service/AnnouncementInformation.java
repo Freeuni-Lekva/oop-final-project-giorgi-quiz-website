@@ -12,7 +12,7 @@ public class AnnouncementInformation {
     private static final Connection connection = ConnectToDB.getConnection();
 
     //unordered announcements from specific user
-    public static ArrayList<Announcement> getCreatedAnnouncementsById(int user) throws SQLException, SQLException {
+    public static ArrayList<Announcement> getCreatedAnnouncementsById(int user) throws SQLException {
         return getAnnouncements(user, false);
     }
 

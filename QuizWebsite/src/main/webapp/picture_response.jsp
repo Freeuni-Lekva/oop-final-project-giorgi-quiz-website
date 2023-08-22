@@ -135,7 +135,7 @@
             String question = questions.get(cnt).getQuestion(); %>
             <div class="answer-container" id="text-field_question">
                 <p><%=question%></p>
-                <img class="image" src="<%=questions.get(cnt).getPicURL()%>" alt="pic for question <%= cnt + 1 %>" width="500" height="600">
+                <img class="image" src="<%=questions.get(cnt).getPicURL()%>" alt="pic for question <%= cnt + 1 %>" width="600" height="500">
                 <br>
                 <input class="answer-input" type="text" name="<%=cnt%>guess<%=cnt%>" id="<%=cnt%>guess<%=cnt%>"/>
                 <input type="hidden" id="guess<%=cnt%>" name="guess<%=cnt%>" value="" />

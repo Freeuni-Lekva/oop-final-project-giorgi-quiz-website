@@ -358,8 +358,8 @@ VALUES (2, 'Tbilisi'),
        (4, 'cisferi'),
        (4, 'ცისფერი'),
        (5, 'თხამ'),
-       (6, 'xuevoznaet'),
-       (6, 'ხუევოზნაეტ'),
+       (6, 'internetidan'),
+       (6, 'ინტერნეტიდან'),
        (7, 'თიმინი'),
        (7, 'გუანინი'),
        (8, 'მტკვარი'),
@@ -374,7 +374,7 @@ VALUES (2, 'Tbilisi'),
        (10, 'verdzsa');
 
 INSERT INTO QUESTIONS (question_id, quiz_id, picture_url, question_type, question, sort_order)
-VALUES (6, 10000, 'C:\\Users\\Sandro\\Desktop\\სხვ\\fantastika.jpg', 'PICTURE_RESPONSE', 'საიდან მაქვს ეს ფოტოსურათი?',
+VALUES (6, 10000, 'https://cdn.wallpapersafari.com/21/23/PoQyf6.jpg', 'PICTURE_RESPONSE', 'საიდან მაქვს ეს ფოტოსურათი?',
         5);
 
 INSERT INTO POSSIBLE_ANSWERS (question_id, possible_answer)

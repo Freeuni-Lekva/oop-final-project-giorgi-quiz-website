@@ -17,13 +17,26 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+            background-color: rgba(119, 131, 211, 0.67);
             margin: 0;
             padding: 0;
-            color: #333333;
+            color: rgba(107, 47, 211, 1);
         }
 
-        .quiz-container {
+        h1 {
+            color: #00008B;
+            padding-left: 10px;
+        }
+
+        .question-container h3 {
+            text-align: right;
+        }
+
+        .question-container h2 {
+            text-align: left;
+        }
+
+        #quiz-container {
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
@@ -31,14 +44,36 @@
 
         .question-container {
             border: 1px solid #cccccc;
+            color: #333333;
+            background-color: #f2f2f2;
             border-radius: 4px;
             padding: 15px;
+            padding-top: 0;
             margin-bottom: 10px;
         }
 
+        /*.question-container-wrong {*/
+        /*    border: 1px solid #cccccc;*/
+        /*    color: indianred;*/
+        /*    background-color: moccasin;*/
+        /*    border-radius: 4px;*/
+        /*    padding: 15px;*/
+        /*    margin-bottom: 10px;*/
+        /*}*/
+
+        /*.question-container-right {*/
+        /*    border: 1px solid #cccccc;*/
+        /*    color: darkgreen;*/
+        /*    background-color: #cccccc;*/
+        /*    border-radius: 4px;*/
+        /*    padding: 15px;*/
+        /*    margin-bottom: 10px;*/
+        /*}*/
+
         .question-text {
             font-size: 18px;
-            margin-bottom: 10px;
+            margin-bottom: 16px;
+            margin-top: 0;
         }
 
         .answer-container {
@@ -58,33 +93,24 @@
             box-sizing: border-box;
         }
 
-        .add-field-button {
-            background-color: #007bff;
-            color: white;
-            padding: 5px 10px;
+        #tabs {
+            display: flex;
+            margin-left: 15px;
+            margin-top: 7px;
+            margin-bottom: 7px;
+        }
+
+        .fun-button {
+            background-color: #00008B;
+            color: lightcyan;
+            padding: 8px 16px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-size: 14px;
-            margin-top: 5px;
         }
 
-        .add-field-button:hover {
-            background-color: #0056b3;
-        }
-
-        .submit-button {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 20px;
-        }
-
-        .submit-button:hover {
+        .fun-button:hover {
             background-color: #0056b3;
         }
     </style>
@@ -108,8 +134,8 @@
     }
 %>
 
-<h1> <%= QuizzesInformation.findQuizById(quizId).getName() %> </h1>
-<div class="quiz-container">
+<div id="quiz-container">
+    <h1> <%= QuizzesInformation.findQuizById(quizId).getName() %> </h1>
     <form action="evaluation" method="post">
         <%
             List<Question> questions = QuestionInformation.getQuestionsInQuiz(quizId);
@@ -120,25 +146,26 @@
                 Question question = questions.get(i);
                 String questionText = question.getQuestion();
         %>
-        <h2> Question <%= i + 1 %> </h2>
         <input type="hidden" name="questionId<%= i %>" value="<%= question.getQuestionId() %>"/>
         <% if (question.getQuestionType().equals(QuestionType.QUESTION_RESPONSE.name())
             || question.getQuestionType().equals(QuestionType.QUESTION_RESPONSE_MULTIPLE_ANSWER_UNORDERED.name())
                 || question.getQuestionType().equals(QuestionType.QUESTION_RESPONSE_MULTIPLE_ANSWER_ORDERED.name())) { %>
         <div class="question-container" id="question<%= i %>">
+            <h2> Question <%= i + 1 %> </h2>
             <p class="question-text"> <%= questionText %> </p>
             <div class="answer-container" id="text-field_question<%= i %>">
                 <input class="answer-input" type="text" name="guess<%= i %>"/>
             </div>
             <% if (question.getQuestionType().equals(QuestionType.QUESTION_RESPONSE_MULTIPLE_ANSWER_UNORDERED.name())
                     || question.getQuestionType().equals(QuestionType.QUESTION_RESPONSE_MULTIPLE_ANSWER_ORDERED.name())) { %>
-            <button class="add-field-button" type="button" onclick="addTextField(<%= i %>)">Add New Text Field</button>
+            <button class="fun-button" type="button" onclick="addTextField(<%= i %>)">Add New Text Field</button>
             <% } %>
         </div>
         <% } else if (question.getQuestionType().equals(QuestionType.PICTURE_RESPONSE.name())) { %>
         <div class="question-container">
+            <h2> Question <%= i + 1 %> </h2>
             <p> <%= questionText %> </p>
-            <img src="<%=question.getPicURL()%>" alt="pic for question <%= i + 1 %>" width="500" height="600">
+            <img src="<%=question.getPicURL()%>" alt="pic for question <%= i + 1 %>" width="600" height="500">
             <br>
             <input class="answer-input" type="text" name="guess<%= i %>"/>
         </div>
@@ -146,6 +173,7 @@
                 StringTokenizer questionTokens = new StringTokenizer(questionText, "_");
         %>
         <div class="question-container">
+            <h2> Question <%= i + 1 %> </h2>
             <p> Fill in the blanks: </p>
             <p>
                 <% if (questionText.startsWith("_")) { %>
@@ -162,6 +190,7 @@
         </div>
         <% } else if (question.getQuestionType().equals(QuestionType.MULTIPLE_CHOICE.name())) { %>
         <div class="question-container">
+            <h2> Question <%= i + 1 %> </h2>
             <p> <%= questionText %> </p>
             <p> possible answers: </p>
             <%
@@ -175,6 +204,7 @@
         </div>
         <% } else if (question.getQuestionType().equals(QuestionType.MULTIPLE_CHOICE_MULTIPLE_ANSWER.name())) { %>
         <div class="question-container">
+            <h2> Question <%= i + 1 %> </h2>
             <p> <%= questionText %> </p>
             <p> possible answers: </p>
             <%
@@ -191,7 +221,7 @@
         %>
         <input type="hidden" name="numQuestions" value="<%= questions.size() %>"/>
         <br>
-        <input class="submit-button" type="submit" value="Submit All Answers"/>
+        <input class="fun-button" type="submit" value="Submit All Answers"/>
     </form>
 </div>
 </body>

@@ -25,24 +25,14 @@ class AchievementsInformationTest {
     }
 
     @Test
-    void findAchivementsByUserName() throws SQLException {
-        //test0
-        List<Achievement>  achlist = AchievementsInformation.findAchievementsByUserName("Neimar");
-        assertTrue(achlist.stream().anyMatch(e->e.getUserId()==1&& e.getAchivementName().equals(Achievements.AMATEUR_AUTHOR.name())));
-
-        //test1
-        List<Achievement>  achlist1 = AchievementsInformation.findAchievementsByUserName("Manana");
-        assertEquals(0,achlist1.size());
-    }
-    @Test
-    void findAchivementsByAchivementName() throws SQLException {
+    void findAchievementsByAchievementName() throws SQLException {
         //test0
         List<Achievement>  achlist = AchievementsInformation.findAchievementsByAchievementName(Achievements.AMATEUR_AUTHOR.name());
         assertTrue(achlist.stream().anyMatch(e->e.getUserId()==1&& e.getAchivementName().equals(Achievements.AMATEUR_AUTHOR.name())));
 
         //test1
-        List<Achievement>  achlist1 = AchievementsInformation.findAchievementsByUserName(Achievements.QUIZ_MACHINE.name());
-        assertEquals(0,achlist1.size());
+        List<Achievement>  achlist1 = AchievementsInformation.findAchievementsByAchievementName("NONEXISTENT_ACHIEVEMENT");
+        assertEquals(0, achlist1.size());
     }
 
     @Test

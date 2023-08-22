@@ -2,7 +2,6 @@ package com.freeuni.quizwebsite.service;
 
 import com.freeuni.quizwebsite.db_connection.ConnectToDB;
 import com.freeuni.quizwebsite.model.db.Achievement;
-import com.freeuni.quizwebsite.model.db.User;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -46,21 +45,6 @@ public class AchievementsInformation {
 
             }
 
-        }
-        return achievementList;
-    }
-
-    public static List<Achievement> findAchievementsByUserName(String name) throws SQLException {
-        ResultSet resultSet;
-        resultSet = connection.prepareStatement("SELECT * FROM ACHIEVEMENTS A left join users u on A.user_id=u.user_id " +
-                "WHERE u.username=  \"" + name+"\"").executeQuery();
-        List<Achievement> achievementList = new ArrayList<>();
-        while (resultSet.next()) {
-            Achievement achievement = new Achievement(
-                    resultSet.getInt("achievement_id"),
-                    resultSet.getInt("user_id"),
-                    resultSet.getString("achievement"));
-            achievementList.add(achievement);
         }
         return achievementList;
     }
