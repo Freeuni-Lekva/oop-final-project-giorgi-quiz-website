@@ -83,6 +83,13 @@ class FriendRequestManipulationTest {
                                         "VALUES (1, 3), (1, 4);").executeUpdate();
     }
 
+    @Test
+    void deleteAllRequestsByIdTest() throws SQLException {
+        FriendRequestManipulation.deleteAllRequestsById(10);
+        assertEquals(FriendRequestInformation.getSentFriendRequests(10).size(),0);
+        assertEquals(FriendRequestInformation.getReceivedFriendRequests(10).size(),0);
+    }
+
     private List<Integer> getReceiverIds(int senderId) throws SQLException {
         List<FriendRequest> requests = FriendRequestInformation.getSentFriendRequests(senderId);
         List<Integer> receivers = new ArrayList<>();;
