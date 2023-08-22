@@ -76,20 +76,11 @@ public class CreateQuizServlet extends HttpServlet {
                         curCorrect.add(false);
                     }
                     correctMatrix.add(curCorrect);
-                    System.out.println(curCorrect.toString());
                 }
 
                 System.out.println(Arrays.toString(curr));
 
             }
-            for (String question : questions) {
-                System.out.print(question + " ");
-            }
-            System.out.println();
-            for (String question : questionsTypes) {
-                System.out.print(question + " ");
-            }
-            System.out.println();
 
             String tags = httpServletRequest.getParameter("quizTags");
             List<String> tagsList = Arrays.asList(tags.split("\\s*,\\s*"));

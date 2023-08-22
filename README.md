@@ -1,2 +1,5 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/vuIpIQ7W)
-სამაგალითო პროექტის აღწერა ნახეთ Example-Quiz-Website.pdf ფაილში.
+გამოყენებული tool-ები:
+- tomcat 10.1.9
+- Java 17 (corretto-17)
+
+პროექტის აღწერა იხილიეთ project-description დირექტორიაში
