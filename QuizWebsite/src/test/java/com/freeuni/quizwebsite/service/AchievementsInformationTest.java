@@ -16,7 +16,6 @@ class AchievementsInformationTest {
     void findAchivementsByUserId() throws SQLException {
         //test 0
         Set<Achievement> achlist = AchievementsInformation.findAchievementsByUserId(1);
-        //System.out.println(achlist.size());
         assertTrue(achlist.stream().anyMatch(e->e.getUserId()==1&& e.getAchivementName().equals(Achievements.AMATEUR_AUTHOR.name())));
 
         //test 1
@@ -29,7 +28,6 @@ class AchievementsInformationTest {
     void findAchivementsByUserName() throws SQLException {
         //test0
         List<Achievement>  achlist = AchievementsInformation.findAchievementsByUserName("Neimar");
-        //System.out.println(achlist.size());
         assertTrue(achlist.stream().anyMatch(e->e.getUserId()==1&& e.getAchivementName().equals(Achievements.AMATEUR_AUTHOR.name())));
 
         //test1
@@ -40,7 +38,6 @@ class AchievementsInformationTest {
     void findAchivementsByAchivementName() throws SQLException {
         //test0
         List<Achievement>  achlist = AchievementsInformation.findAchievementsByAchievementName(Achievements.AMATEUR_AUTHOR.name());
-        //System.out.println(achlist.size());
         assertTrue(achlist.stream().anyMatch(e->e.getUserId()==1&& e.getAchivementName().equals(Achievements.AMATEUR_AUTHOR.name())));
 
         //test1

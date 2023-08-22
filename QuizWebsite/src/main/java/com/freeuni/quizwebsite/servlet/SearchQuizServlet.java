@@ -33,7 +33,6 @@ public class SearchQuizServlet extends HttpServlet {
                 limitedAlikequizzes = new ArrayList<>();
                 for (int i = 0; i < 5; i++) {
                     limitedAlikequizzes.add(allAlikequizzes.get(i));
-                    System.out.println(limitedAlikequizzes.get(i).getName());
                 }
             } else limitedAlikequizzes = allAlikequizzes;
             if(quizNum < 5) userAllowedNum+=5-quizNum;

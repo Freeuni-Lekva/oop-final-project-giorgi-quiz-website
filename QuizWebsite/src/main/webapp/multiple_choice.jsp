@@ -164,27 +164,30 @@
         radioOptions.forEach(radioButton => {
             radioButton.disabled = true;
         });
-        const userGuess = document.querySelector('input[name="multiple-choice"]:checked').value;
-        document.getElementById('ifChecked').textContent = "Wrong!";
-        const correctos = document.querySelectorAll(".hidden-correct-answer");
-        var correct = false;
-        if (correctos != null) {
-            correctos.forEach(correctAns => {
-                console.log(correctAns.textContent);
-                if (correctAns != null) {
-                    const correctValue = correctAns.textContent.trim();
-                    if (correctValue != null) {
-                        if (correctValue == userGuess) {
-                            correct = true;
+
+
+        if(document.querySelector('input[name="multiple-choice"]:checked') != null) {
+            const userGuess = document.querySelector('input[name="multiple-choice"]:checked').value;
+            const correctos = document.querySelectorAll(".hidden-correct-answer");
+            var correct = false;
+            console.log(correctos);
+            if (correctos != null) {
+                correctos.forEach(correctAns => {
+                    if (correctAns != null) {
+                        const correctValue = correctAns.textContent.trim();
+                        if (correctValue != null) {
+                            if (correctValue == userGuess) {
+                                correct = true;
+                            }
                         }
                     }
+                });
+                if (correct) {
+                    document.getElementById('ifChecked').textContent = "Correct!";
+                } else {
+                    document.getElementById('ifChecked').textContent = "Wrong!";
                 }
-            });
-            if (correct) {
-                document.getElementById('ifChecked').textContent = "Correct!";
-            } else {
-                document.getElementById('ifChecked').textContent = "Wrong!";
             }
-        }
+        } else document.getElementById('ifChecked').textContent = "Wrong!";
     }
 </script>

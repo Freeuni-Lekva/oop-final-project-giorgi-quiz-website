@@ -37,7 +37,6 @@ public class CreateAccountServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(isAdded);
 
         if (isAdded == -1) {
             httpServletRequest.setAttribute("errorMessage", "Username Already Taken");

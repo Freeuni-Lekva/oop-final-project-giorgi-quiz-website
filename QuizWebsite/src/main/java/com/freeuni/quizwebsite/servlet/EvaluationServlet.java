@@ -79,7 +79,6 @@ public class EvaluationServlet extends HttpServlet {
                 } else {
                     String currentAnswer = answered.get(0);
                     if (correctAnswers.contains(currentAnswer)) {
-                        System.out.println("CORRECT!");
                         result++;
                     }
                 }
