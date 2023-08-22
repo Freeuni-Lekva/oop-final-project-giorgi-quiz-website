@@ -116,13 +116,6 @@
             background-color: #0056b3;
         }
 
-        #tabs {
-            display: flex;
-            margin-left: 15px;
-            margin-top: 7px;
-            margin-bottom: 7px;
-        }
-
         .fun-button {
             background-color: #00008B;
             color: lightcyan;
@@ -137,14 +130,6 @@
             background-color: #0056b3;
         }
 
-        /*input[type="checkbox"][aria-disabled="true"] {*/
-        /*    background-color: #B0C4DE;*/
-        /*    pointer-events: none;*/
-        /*}*/
-        /*input[type="radio"][aria-disabled="true"] {*/
-        /*    background-color: #B0C4DE;*/
-        /*    pointer-events: none;*/
-        /*}*/
     </style>
 </head>
 <body>
@@ -228,7 +213,7 @@
                 </div>
                 <div id="userAnswers<%=i%>">
                     <br>
-                    <img src="<%=question.getPicURL()%>" alt="pic for question <%= i + 1 %>" width="500" height="600">
+                    <img src="<%=question.getPicURL()%>" alt="pic for question <%= i + 1 %>" width="600" height="500">
                     <br>
                     <%
                         String picAns = "";
@@ -257,32 +242,56 @@
                 </div>
                 <p> Fill in the blanks: </p>
                 <div class="tabs">
-                    <button id="<%=i%>0" onclick="chooseTab(0, <%= i %>)" class="fun-button">your answers</button>
-                    <button id="<%=i%>1" onclick="chooseTab(1, <%= i %>)" class="fun-button">correct answers</button>
+                    <button id="<%= i %>0" onclick="chooseTab(0, <%= i %>)" class="fun-button">your answers</button>
+                    <button id="<%= i %>1" onclick="chooseTab(1, <%= i %>)" class="fun-button">correct answers</button>
                 </div>
-                <div id="userAnswers<%=i%>">
-                    <p><%=questionTokens.nextToken()%>
+                <div id="userAnswers<%= i %>">
+                    <p> <%
+                        ArrayList<String> fillInAnswers = answers.get(question.getQuestionId());
+                        int iterCount = 0;
+                        String currentFill = "";
+                        if(fillInAnswers != null) {
+                            currentFill = fillInAnswers.get(iterCount);
+                        }
+                        if(questionText.startsWith("_")) { %>
+                        <input type="text"  value="<%=currentFill%>" disabled />
+                        <% iterCount++;;
+                        } %>
+                        <%=questionTokens.nextToken()%>
                         <%
-                            ArrayList<String> fillInAnswers = answers.get(question.getQuestionId());
-                            int iterCount = 0;
-                            String currentFill = " ";
                             while (questionTokens.hasMoreTokens()) {
-                                if(fillInAnswers!=null) currentFill = fillInAnswers.get(iterCount);
-                        %>          <input type="text"  value="<%=currentFill%>" disabled /><%=questionTokens.nextToken()%>
+                                currentFill = fillInAnswers.get(iterCount);
+                        %>      <input type="text"  value="<%=currentFill%>" disabled /><%=questionTokens.nextToken()%>
                         <%      iterCount++;
                             } %>
+                        <% if(questionText.endsWith("_")) { %>
+                        <input type="text"  value="<%= fillInAnswers.get(fillInAnswers.size() - 1) %>" disabled />
+                        <% } %>
                     </p>
                 </div>
                 <div id="correctAnswers<%=i%>" style="display: none">
                     <%StringTokenizer questionTokensForCorrect = new StringTokenizer(questionText, "_");%>
-                    <p><%=questionTokensForCorrect.nextToken()%>
-                        <%
-                            ArrayList<String> correctAnsFill = (ArrayList<String>) QuestionInformation.getCorrectAnswers(question.getQuestionId());
-                            int innerCount = 0;
-                            while (questionTokensForCorrect.hasMoreTokens()) {
-                        %>          <input type="text" value="<%=correctAnsFill.get(innerCount)%>" disabled /><%=questionTokensForCorrect.nextToken()%>
-                        <%      innerCount++;
+                    <p><%
+                        List<String> correctFillInAnswers = QuestionInformation.getCorrectAnswers(question.getQuestionId());
+                        int correctIterCount = 0;
+                        String correctCurrentFill = "";
+                        if(fillInAnswers != null) {
+                            correctCurrentFill = correctFillInAnswers.get(correctIterCount);
+                        }
+                        if(questionText.startsWith("_")) { %>
+                        <input type="text"  value="<%=correctCurrentFill%>" disabled />
+                        <% correctIterCount++;;
                         } %>
+                        <%=questionTokensForCorrect.nextToken()%>
+                        <%
+                            while (questionTokensForCorrect.hasMoreTokens()) {
+                                correctCurrentFill = correctFillInAnswers.get(correctIterCount);
+                        %>      <input type="text"  value="<%=correctCurrentFill%>" disabled /><%=questionTokensForCorrect.nextToken()%>
+                        <%      correctIterCount++;
+                        } %>
+                        <% if(questionText.endsWith("_")) { %>
+                        <input type="text"  value="<%= correctFillInAnswers.get(correctFillInAnswers.size() - 1) %>" disabled />
+                        <% } %>
                     </p>
                 </div>
             </div>

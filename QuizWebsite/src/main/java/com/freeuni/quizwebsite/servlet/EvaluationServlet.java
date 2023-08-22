@@ -40,13 +40,19 @@ public class EvaluationServlet extends HttpServlet {
             String questionType = question.getQuestionType();
             if (questionType.equals(QuestionType.MULTIPLE_CHOICE_MULTIPLE_ANSWER.name())
                 || questionType.equals(QuestionType.QUESTION_RESPONSE_MULTIPLE_ANSWER_UNORDERED.name())
-                    || questionType.equals(QuestionType.QUESTION_RESPONSE_MULTIPLE_ANSWER_ORDERED.name())
-                        || questionType.equals(QuestionType.FILL_IN_BLANK.name())) {
+                    || questionType.equals(QuestionType.QUESTION_RESPONSE_MULTIPLE_ANSWER_ORDERED.name())) {
                 String[] checked = httpServletRequest.getParameterValues("guess"+i);
                 List<String> asList = null;
                 if(checked != null) {
                     asList = Arrays.stream(checked).filter(e->!e.isEmpty()).collect(Collectors.toList());
-                    if(asList.size()==0) asList = null;
+                    if(asList.isEmpty()) asList = null;
+                }
+                questionAndAnswersMap.put(questionId, (ArrayList<String>) asList);
+            } else if (questionType.equals(QuestionType.FILL_IN_BLANK.name())) {
+                String[] filled = httpServletRequest.getParameterValues("guess"+i);
+                List<String> asList = null;
+                if(filled != null) {
+                    asList = new ArrayList<>(Arrays.asList(filled));
                 }
                 questionAndAnswersMap.put(questionId, (ArrayList<String>) asList);
             } else {
@@ -108,7 +114,7 @@ public class EvaluationServlet extends HttpServlet {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-        }else{
+        } else {
 
             try {
                 AchievementsManipulation.addAchievement(usId, "PRACTICE_MAKES_PERFECT");
