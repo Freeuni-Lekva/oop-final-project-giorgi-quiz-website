@@ -2,7 +2,6 @@ package com.freeuni.quizwebsite.service.manipulation;
 
 import com.freeuni.quizwebsite.db_connection.ConnectToDB;
 import com.freeuni.quizwebsite.model.db.Quiz;
-import com.freeuni.quizwebsite.service.QuestionInformation;
 import com.freeuni.quizwebsite.service.QuizzesInformation;
 import com.freeuni.quizwebsite.service.UsersInformation;
 

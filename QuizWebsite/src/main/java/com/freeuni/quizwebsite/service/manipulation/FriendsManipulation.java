@@ -1,7 +1,6 @@
 package com.freeuni.quizwebsite.service.manipulation;
 
 import com.freeuni.quizwebsite.db_connection.ConnectToDB;
-import com.freeuni.quizwebsite.model.RelationshipStatus;
 import com.freeuni.quizwebsite.model.db.Friend;
 import com.freeuni.quizwebsite.model.db.User;
 

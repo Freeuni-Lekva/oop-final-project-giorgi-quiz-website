@@ -124,11 +124,20 @@
             <div class="answer-container">
                 <% StringTokenizer questionTokens = new StringTokenizer(question, "_"); %>
                 <p> Fill in the blanks: </p>
-                <p><%=questionTokens.nextToken()%>
-                <% while (questionTokens.hasMoreTokens()) { %>
-                    <input type="text" name="<%=cnt%>guess<%=cnt%>"/><%=questionTokens.nextToken()%>
+                <p>
+                    <% if (question.startsWith("_")) { %>
+                    <input type="text" name="<%= cnt %>guess<%= cnt %>"/>
                     <input type="hidden" name="guess<%=cnt%>" value="" />
-                <% } %>
+                    <% } %>
+                    <%=questionTokens.nextToken()%>
+                    <% while (questionTokens.hasMoreTokens()) { %>
+                    <input type="text" name="<%= cnt %>guess<%= cnt %>"/><%=questionTokens.nextToken()%>
+                    <input type="hidden" name="guess<%=cnt%>" value="" />
+                    <% }
+                        if (question.endsWith("_")) { %>
+                    <input type="text" name="<%= cnt %>guess<%= cnt %>"/>
+                    <input type="hidden" name="guess<%=cnt%>" value="" />
+                    <% } %>
                 </p>
                 <%
                     cnt++;
@@ -176,7 +185,6 @@
             userGuesses.push(guess.value);
             guess.disabled = true;
         });
-        console.log(userGuesses);
 
         document.getElementById('ifChecked').textContent = "Wrong!";
         const correctAnses = document.querySelectorAll(".hidden-correct-answer");

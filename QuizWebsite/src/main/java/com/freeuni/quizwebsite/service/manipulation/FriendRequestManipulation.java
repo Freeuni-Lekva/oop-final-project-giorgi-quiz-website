@@ -2,7 +2,6 @@ package com.freeuni.quizwebsite.service.manipulation;
 
 import com.freeuni.quizwebsite.db_connection.ConnectToDB;
 import com.freeuni.quizwebsite.model.db.FriendRequest;
-import com.freeuni.quizwebsite.model.db.User;
 
 import java.sql.Connection;
 import java.sql.SQLException;

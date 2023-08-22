@@ -237,9 +237,16 @@
             guessedAll = userGuesses.sort();
         }
 
-        if (correctAll.length === guessedAll.length) {
+        var guessedAllFiltered = [];
+        for(let i = 0; i < userGuesses.length; i++) {
+            if(userGuesses[i] !== '') {
+                guessedAllFiltered.push(userGuesses[i]);
+            }
+        }
+
+        if (correctAll.length === guessedAllFiltered.length) {
             for (let i = 0; i < correctAll.length; i++) {
-                if (correctAll[i] !== guessedAll[i]) {
+                if (correctAll[i] !== guessedAllFiltered[i]) {
                     correct = false;
                 }
             }

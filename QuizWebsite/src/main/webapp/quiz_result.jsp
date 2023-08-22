@@ -178,7 +178,7 @@
                         <input class="answer-input" type="text" name="guess<%= i %>" value="<%=ans%>" disabled />
                     </div>
                     <%  }
-                        if(multipleResponse.size()==0) {
+                        if(multipleResponse.isEmpty()) {
                     %>
                     <div class="answer-container" id="text-field_question<%= i %>">
                         <input class="answer-input" type="text" name="guess<%= i %>" value="" disabled />
@@ -255,7 +255,7 @@
                         }
                         if(questionText.startsWith("_")) { %>
                         <input type="text"  value="<%=currentFill%>" disabled />
-                        <% iterCount++;;
+                        <% iterCount++;
                         } %>
                         <%=questionTokens.nextToken()%>
                         <%

@@ -45,7 +45,9 @@ public class PageTransitionServlet extends HttpServlet {
             String[] checked = req.getParameterValues("guess" + (cnt - 1));
             if (checked != null) {
                 ArrayList<String> asList = new ArrayList<>(Arrays.asList(checked));
-                if (!asList.isEmpty()) answers.put(questions.get(cnt - 1).getQuestionId(), asList);
+                if (!asList.isEmpty()) {
+                    answers.put(questions.get(cnt - 1).getQuestionId(), asList);
+                }
                 else answers.put(questions.get(cnt - 1).getQuestionId(), null);
             } else answers.put(questions.get(cnt - 1).getQuestionId(), null);
 

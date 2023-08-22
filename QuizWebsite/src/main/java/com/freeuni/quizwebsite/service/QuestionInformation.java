@@ -1,7 +1,6 @@
 package com.freeuni.quizwebsite.service;
 
 import com.freeuni.quizwebsite.db_connection.ConnectToDB;
-import com.freeuni.quizwebsite.model.QuestionType;
 import com.freeuni.quizwebsite.model.db.Question;
 
 import java.sql.Connection;
