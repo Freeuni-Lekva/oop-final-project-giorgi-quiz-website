@@ -16,11 +16,12 @@ public class DeleteUserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if(request.getParameter("current_active") == null) {
+        if(request.getSession().getAttribute("current_active") == null) {
             request.setAttribute("not-logged", new Object());
             request.getRequestDispatcher("index.jsp").forward(request, response);
+            return;
         }
-        Integer current_id =  (Integer) request.getSession().getAttribute("current_active");
+        Integer current_id = (Integer) request.getSession().getAttribute("current_active");
         int profile_id = Integer.parseInt(request.getParameter("profile_id"));
         try {
             if((current_id != profile_id) && (UsersInformation.exceptAdmins()
