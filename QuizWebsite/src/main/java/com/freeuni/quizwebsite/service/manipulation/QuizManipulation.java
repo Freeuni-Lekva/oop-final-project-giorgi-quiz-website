@@ -11,10 +11,16 @@ import java.util.List;
 public class QuizManipulation {
     private static final Connection connection = ConnectToDB.getConnection();
 
+    private static void deleteTagsByQuizId(int quizId) throws SQLException {
+        connection.prepareStatement("DELETE FROM TAGS WHERE quiz_id = " + quizId).executeUpdate();
+    }
+
     public static void deleteQuizByQuizId(int quizId) throws SQLException {
         connection.prepareStatement("DELETE FROM quizes WHERE quiz_id = " + quizId +";").executeUpdate();
         QuestionsManipulation.deleteQuestionByQuizId(quizId);
+        deleteTagsByQuizId(quizId);
     }
+
     public static void deleteQuizByName(String name) throws SQLException {
         List<Quiz> ql=QuizzesInformation.findQuizzesByName(name);
         for (Quiz q:ql) {
@@ -30,18 +36,15 @@ public class QuizManipulation {
             if(q.getUserId()==userId){
                 QuestionsManipulation.deleteQuestionByQuizId(q.getQuizId());
             }
-
-
         }
-
         connection.prepareStatement("DELETE FROM quizes WHERE name = \"" +name+"\" and user_id ="+userId+";").executeUpdate();
     }
 
-
     public static void deleteQuizByUserId(int userId) throws SQLException {
-        List<Quiz> ql=QuizzesInformation.findQuizzesByUserId(userId);
-        for (Quiz q:ql) {
+        List<Quiz> ql = QuizzesInformation.findQuizzesByUserId(userId);
+        for (Quiz q : ql) {
             QuestionsManipulation.deleteQuestionByQuizId(q.getQuizId());
+            deleteTagsByQuizId(q.getQuizId());
         }
         connection.prepareStatement("DELETE FROM quizes WHERE user_id = " + userId +";").executeUpdate();
     }
