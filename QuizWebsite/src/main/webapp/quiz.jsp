@@ -8,6 +8,7 @@
 <%@ page import="com.freeuni.quizwebsite.service.QuizHistoryInformation" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="com.freeuni.quizwebsite.service.manipulation.QuizManipulation" %>
+<%@ page import="com.freeuni.quizwebsite.service.TagsInformation" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,7 +55,6 @@
             border-radius: 50%;
             margin-right: 10px;
         }
-
 
 
         #my-quizzes h2 {
@@ -111,6 +111,7 @@
             margin-right: 10px;
             margin-left: 10px;
         }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #e8f5e9;
@@ -235,6 +236,7 @@
             top: 30px;
             right: 30px;
         }
+
         #buttons-container {
             display: flex;
             justify-content: center;
@@ -269,13 +271,12 @@
 </head>
 <body>
 <%
-    if(session.getAttribute("current_active") == null){
+    if (session.getAttribute("current_active") == null) {
         request.setAttribute("not-logged", new Object());
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
     int quizId = Integer.parseInt(request.getParameter("id"));
-
 
 
     Quiz quiz = QuizzesInformation.findQuizById(quizId);
@@ -299,12 +300,25 @@
 <div id="quiz-info">
     <!-- Display the quiz information -->
 
-    <h1>Quiz Name: <%= quiz.getName() %></h1>
+    <h1>Quiz Name: <%= quiz.getName() %>
+    </h1>
+    <%List<String> tags = TagsInformation.getQuizTags(quizId);%>
+    <% if (tags.size() > 0) { %>
+    <h4>
+        <% String tagList = String.join(", ", tags); %>
+        <li>
+            <%= tagList %>
+        </li>
+    </h4>
+    <% } %>
+
     <p>Quiz Creator Name: <a href="profile?user_id=<%=creator.getUserId()%>">
         <%= creator.getUsername() %>
     </a></p>
-    <p>Quiz Creation Date: <%= formatDate(creationDate) %></p>
-    <p>Views: <%= QuizzesInformation.findQuizById(quizId).getViewCount() %></p>
+    <p>Quiz Creation Date: <%= formatDate(creationDate) %>
+    </p>
+    <p>Views: <%= QuizzesInformation.findQuizById(quizId).getViewCount() %>
+    </p>
 </div>
 
 <%
@@ -317,11 +331,13 @@
         <button id="start-quiz-button" class="start-quiz-button" type="submit">Start Quiz</button>
     </form>
     <%
-    if (QuizzesInformation.findQuizById(quizId).isPracticeMode()) { %>
+        if (QuizzesInformation.findQuizById(quizId).isPracticeMode()) { %>
     <form method="get" action="displayQuiz">
         <input type="hidden" name="id" value="<%=quizId%>">
         <input type="hidden" name="is-practice" value="<%=quizId%>">
-        <button id="start-practice-button" class="start-quiz-button" style="background-color: darkslategrey" type="submit">Start Practice</button>
+        <button id="start-practice-button" class="start-quiz-button" style="background-color: darkslategrey"
+                type="submit">Start Practice
+        </button>
     </form>
     <% } %>
 
@@ -348,7 +364,8 @@
         <% for (QuizHistory history : topRatedPlayers) { %>
         <li><a href="profile?user_id=<%=history.getUserId()%>">
             <%= UsersInformation.findUserById(history.getUserId()).getUsername() %>:</a>
-            <%= history.getScore() %></li>
+            <%= history.getScore() %>
+        </li>
         <% } %>
     </ul>
 </div>
@@ -377,7 +394,7 @@
         var username = document.getElementById("username").value;
         var xhr = new XMLHttpRequest();
 
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
                     var isValid = JSON.parse(xhr.responseText);
