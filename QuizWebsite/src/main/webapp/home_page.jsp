@@ -522,7 +522,7 @@
     %>
     <div id="admin-controls">
         <textarea id="announcement_text" placeholder="Enter announcement text" name="announcement-text" required
-              style="width: 100%; resize: none;" rows="5"></textarea>
+              style="width: 95%; resize: none;" rows="5"></textarea>
         <input type="hidden" name="current_active" value="<%= session.getAttribute("current_active") %>">
         <input type="submit" value="Post Announcement" class="post-button">
     </div>

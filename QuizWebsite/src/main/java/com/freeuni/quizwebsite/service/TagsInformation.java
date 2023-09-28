@@ -27,7 +27,7 @@ public class TagsInformation {
         List<Integer> result = new ArrayList<>();
         ResultSet resultSet;
 
-        resultSet = connection.prepareStatement("SELECT distinct(quiz_id) FROM TAGS WHERE tag_name = "+ "\"" + tagName+"\"").executeQuery();
+        resultSet = connection.prepareStatement("SELECT distinct(quiz_id) FROM TAGS WHERE tag_name = " + "\"" + tagName + "\"").executeQuery();
         while (resultSet.next()) {
             Integer quiz_id = resultSet.getInt("quiz_id");
             result.add(quiz_id);
@@ -35,5 +35,15 @@ public class TagsInformation {
         return result;
     }
 
+    public static List<String> getQuizTags(int quizId) throws SQLException {
+        List<String> result = new ArrayList<>();
+        ResultSet resultSet;
 
+        resultSet = connection.prepareStatement("SELECT distinct(tag_name) FROM TAGS WHERE  quiz_id = " + "\"" + quizId + "\"").executeQuery();
+        while (resultSet.next()) {
+            String tag = resultSet.getString("tag_name");
+            result.add(tag);
+        }
+        return result;
+    }
 }
